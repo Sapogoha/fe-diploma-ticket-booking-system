@@ -1,0 +1,21 @@
+.contact {
+   &__item {
+      display: flex;
+      margin-bottom: 3rem;
+
+      &:hover {
+         filter: invert(50%) sepia(55%) saturate(500%) hue-rotate(335deg)
+            brightness(140%) contrast(140%);
+      }
+   }
+   &__icon {
+      width: 3rem;
+      height: 3rem;
+      margin-right: 4rem;
+   }
+   &__text {
+      font-size: 2.4rem;
+      height: 2.8rem;
+      font-weight: 400;
+   }
+}

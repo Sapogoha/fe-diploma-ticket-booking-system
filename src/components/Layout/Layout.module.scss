@@ -1,0 +1,17 @@
+.wrapper {
+   max-width: 192rem;
+   width: 100%;
+   margin: auto;
+
+   &__top {
+      height: 98rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &-main {
+         background-image: url('../../img/main-page/backgrounds/background-top.png');
+         border-bottom: solid 1rem var(--color-yellow-orange);
+      }
+   }
+}

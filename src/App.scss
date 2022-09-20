@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&subset=cyrillic-ext');
+@import './scss/constants';
+@import './scss/mixins';
+
+:root {
+   --color-main-light: #ffffff;
+   --color-secondary-light: #e5e5e5;
+
+   --color-main-dark: #292929;
+   --color-secondary-dark: #2d2b2f;
+
+   --color-hover: #ffca62;
+
+   --color-error: rgba(255, 61, 0, 0.38);
+   --color-info: rgba(255, 245, 0, 0.36);
+
+   --color-yellow-orange: #ffa800;
+   --color-grey-review: #928f94;
+   --color-search-block: rgba(41, 41, 41, 0.8);
+}

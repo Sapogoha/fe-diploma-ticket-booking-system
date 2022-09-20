@@ -1,0 +1,135 @@
+@import '../../scss/mixins';
+
+@mixin input-group {
+   display: flex;
+   color: var(--color-secondary-light);
+   font-weight: 400;
+   font-size: 1.8rem;
+   justify-content: space-between;
+}
+
+@mixin img {
+   > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+   }
+}
+
+@mixin inputs($width, $height, $transform) {
+   position: relative;
+   &__input {
+      min-width: 32rem;
+      max-width: 32rem;
+      min-height: 6rem;
+      max-height: 6rem;
+      padding: 1.9rem 7rem 2rem 2.1rem;
+      border-radius: 3px;
+      background-color: var(--color-main-light);
+
+      &::placeholder {
+         color: var(--color-secondary-light);
+         text-transform: $transform;
+      }
+   }
+   &__icon {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.7rem;
+      width: $width;
+      height: $height;
+      @include img;
+   }
+}
+
+@mixin media {
+   &__input {
+      min-width: 27.5rem;
+      max-width: 23rem;
+   }
+}
+
+.form {
+   background-color: var(--color-search-block);
+   min-width: 100%;
+   min-height: 100%;
+   padding: 8rem 2.4rem 5rem 2.1rem;
+
+   position: relative;
+   display: flex;
+   justify-content: flex-end;
+   flex-wrap: wrap;
+
+   &-wide {
+      padding: 2.5rem 4rem 7.5rem 4rem;
+   }
+
+   .inputGroup {
+      margin-bottom: 2rem;
+      min-width: 68.5rem;
+      &-wide {
+         margin-right: 4rem;
+      }
+      &-normal {
+         margin-bottom: 6rem;
+      }
+      &__header {
+         font-weight: 300;
+         font-size: 3rem;
+         margin-bottom: 2rem;
+         color: var(--color-main-light);
+         text-transform: capitalize;
+      }
+      &__directions {
+         @include input-group;
+         align-items: center;
+         .direction {
+            @include inputs(2.1rem, 3rem, capitalize);
+         }
+         .buttonArrows {
+            width: 2.4rem;
+            height: 2.4rem;
+            border: 0;
+            position: relative;
+            @include img;
+         }
+      }
+      &__dates {
+         @include input-group;
+         .date {
+            @include inputs(3rem, 3.3rem, uppercase);
+         }
+      }
+   }
+   .button {
+      color: var(--color-main-dark);
+      margin-top: 1.8rem;
+      justify-self: flex-end;
+      align-self: flex-end;
+      @include button-gold;
+   }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1099px) {
+   .form {
+      padding-right: 0.4rem;
+      padding-left: 0.1rem;
+
+      .inputGroup {
+         min-width: 59rem;
+         &__directions {
+            .direction {
+               @include media;
+            }
+         }
+         &__dates {
+            .date {
+               @include media;
+            }
+         }
+      }
+   }
+}

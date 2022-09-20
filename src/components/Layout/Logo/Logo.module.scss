@@ -1,0 +1,23 @@
+.logo {
+   font-size: 3.6rem;
+   font-weight: 900;
+   color: var(--color-secondary-light);
+   height: 4.9rem;
+   margin-top: 1.5rem;
+
+   &:hover {
+      color: var(--color-hover);
+   }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1799px) {
+   .logo {
+      margin-left: 6rem;
+   }
+}
+
+@media only screen and (min-width: 1800px) {
+   .logo {
+      margin-left: 26rem;
+   }
+}
