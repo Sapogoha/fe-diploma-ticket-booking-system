@@ -1,28 +1,110 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+import Direction from './Direction/Direction';
+import Calendar from './Calendar/Calendar';
+
+import {
+   swapValues,
+   selectDepartureCity,
+   selectArrivalCity,
+   selectDepartureDate,
+   // selectReturnDate,
+} from '../../store/slices/searchSlice';
 
 import location from './img/location.svg';
 import arrows from './img/arrows.svg';
 import date from './img/date.svg';
 
+import consts from './consts';
+import links from '../../data/links';
+
 import styles from './MainSearchBlock.module.scss';
 
+// store для формы, проверку при сабмите
+
 function MainSearchBlock({ width }) {
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const departureCity = useSelector(selectDepartureCity);
+   const arrivalCity = useSelector(selectArrivalCity);
+   const departureDate = useSelector(selectDepartureDate);
+   // const returnDate = useSelector(selectReturnDate);
    const formCN =
       width === 'wide' ? `${styles.form} ${styles['form-wide']}` : styles.form;
    const inputGroupCN =
       width === 'normal'
          ? `${styles.inputGroup} ${styles['inputGroup-normal']}`
          : `${styles.inputGroup} ${styles['inputGroup-wide']}`;
+
+   const inpGrHeaderStyle = styles.inputGroup__header;
+   const directionStyle = styles.direction;
+   const dateStyle = styles.date;
+
+   const [inpGrHeaderDirClasses, setInpGrHeaderDirClasses] =
+      useState(inpGrHeaderStyle);
+   const [inpGrHeaderDateClasses, setInpGrHeaderDateClasses] =
+      useState(inpGrHeaderStyle);
+   const [depCityDirClasses, setDepCityDirClasses] = useState(directionStyle);
+   const [arrCityDirClasses, setArrCityDirClasses] = useState(directionStyle);
+   const [depDateClasses, setDepDateClasses] = useState(dateStyle);
+
+   const headerInvalidCl = `${inpGrHeaderStyle} ${styles['inputGroup__header-invalid']}`;
+   const directionInvalidCl = `${directionStyle} ${styles['direction-invalid']}`;
+   const dateInvalidCl = `${dateStyle} ${styles['date-invalid']}`;
+
+   useEffect(() => {
+      if (departureCity.name) {
+         setInpGrHeaderDirClasses(inpGrHeaderStyle);
+         setDepCityDirClasses(directionStyle);
+      }
+      if (arrivalCity.name) {
+         setInpGrHeaderDirClasses(inpGrHeaderStyle);
+         setArrCityDirClasses(directionStyle);
+      }
+      if (departureDate) {
+         setInpGrHeaderDateClasses(inpGrHeaderStyle);
+         setDepDateClasses(dateStyle);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [departureCity.name, arrivalCity.name, departureDate]);
+
+   const submitHandler = (evt) => {
+      evt.preventDefault();
+      if (!departureCity.name) {
+         setDepCityDirClasses(directionInvalidCl);
+         setInpGrHeaderDirClasses(headerInvalidCl);
+      }
+      if (!arrivalCity.name) {
+         setInpGrHeaderDirClasses(headerInvalidCl);
+         setArrCityDirClasses(directionInvalidCl);
+      }
+      if (!departureDate) {
+         setInpGrHeaderDateClasses(headerInvalidCl);
+         setDepDateClasses(dateInvalidCl);
+      }
+
+      if (departureCity && arrivalCity && departureDate) {
+         navigate(links.trains);
+      }
+   };
+
+   const clickHandler = (evt) => {
+      evt.preventDefault();
+      dispatch(swapValues());
+   };
+
    return (
-      <form className={formCN}>
+      <form className={formCN} onSubmit={submitHandler}>
          <div className={inputGroupCN}>
-            <div className={styles.inputGroup__header}>направление</div>
+            <div className={inpGrHeaderDirClasses}>направление</div>
             <div className={styles.inputGroup__directions}>
-               <div className={styles.direction}>
-                  <input
+               <div className={depCityDirClasses}>
+                  <Direction
                      className={styles.direction__input}
-                     type="text"
+                     name={consts.depCity}
                      placeholder="откуда"
                   />
                   <div className={styles.direction__icon}>
@@ -30,13 +112,17 @@ function MainSearchBlock({ width }) {
                   </div>
                </div>
 
-               <button className={styles.buttonArrows} type="button">
+               <button
+                  onClick={clickHandler}
+                  className={styles.buttonArrows}
+                  type="button"
+               >
                   <img src={arrows} alt="иконка - круглые стрелки" />
                </button>
-               <div className={styles.direction}>
-                  <input
+               <div className={arrCityDirClasses}>
+                  <Direction
                      className={styles.direction__input}
-                     type="text"
+                     name={consts.arrCity}
                      placeholder="куда"
                   />
                   <div className={styles.direction__icon}>
@@ -46,13 +132,12 @@ function MainSearchBlock({ width }) {
             </div>
          </div>
          <div className={styles.inputGroup}>
-            <div className={styles.inputGroup__header}>дата</div>
+            <div className={inpGrHeaderDateClasses}>дата</div>
             <div className={styles.inputGroup__dates}>
-               <div className={styles.date}>
-                  <input
+               <div className={depDateClasses}>
+                  <Calendar
+                     name={consts.depDate}
                      className={styles.date__input}
-                     //  type="date"
-                     placeholder="дд/мм/гг"
                   />
                   <div className={styles.date__icon}>
                      <img src={date} alt="иконка - календарь" />
@@ -60,10 +145,9 @@ function MainSearchBlock({ width }) {
                </div>
 
                <div className={styles.date}>
-                  <input
+                  <Calendar
+                     name={consts.retDate}
                      className={styles.date__input}
-                     //  type="date"
-                     placeholder="дд/мм/гг"
                   />
                   <div className={styles.date__icon}>
                      <img src={date} alt="иконка - календарь" />

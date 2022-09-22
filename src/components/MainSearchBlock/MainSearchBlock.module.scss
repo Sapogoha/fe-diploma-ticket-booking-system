@@ -2,7 +2,6 @@
 
 @mixin input-group {
    display: flex;
-   color: var(--color-secondary-light);
    font-weight: 400;
    font-size: 1.8rem;
    justify-content: space-between;
@@ -19,17 +18,20 @@
    }
 }
 
+@mixin input {
+   min-width: 32rem;
+   max-width: 32rem;
+   min-height: 6rem;
+   max-height: 6rem;
+   padding: 1.9rem 7rem 2rem 2.1rem;
+   border-radius: 3px;
+   background-color: var(--color-main-light);
+}
+
 @mixin inputs($width, $height, $transform) {
    position: relative;
    &__input {
-      min-width: 32rem;
-      max-width: 32rem;
-      min-height: 6rem;
-      max-height: 6rem;
-      padding: 1.9rem 7rem 2rem 2.1rem;
-      border-radius: 3px;
-      background-color: var(--color-main-light);
-
+      @include input;
       &::placeholder {
          color: var(--color-secondary-light);
          text-transform: $transform;
@@ -46,9 +48,11 @@
 }
 
 @mixin media {
+   max-width: 27.5rem;
+   min-width: 23rem;
    &__input {
-      min-width: 27.5rem;
-      max-width: 23rem;
+      max-width: 27.5rem;
+      min-width: 23rem;
    }
 }
 
@@ -70,6 +74,7 @@
    .inputGroup {
       margin-bottom: 2rem;
       min-width: 68.5rem;
+
       &-wide {
          margin-right: 4rem;
       }
@@ -82,18 +87,26 @@
          margin-bottom: 2rem;
          color: var(--color-main-light);
          text-transform: capitalize;
+         &-invalid {
+            margin-bottom: 1rem;
+            color: var(--color-error-light);
+         }
       }
       &__directions {
          @include input-group;
          align-items: center;
          .direction {
             @include inputs(2.1rem, 3rem, capitalize);
+            &-invalid {
+               border: 5px solid var(--color-error-light);
+            }
          }
          .buttonArrows {
             width: 2.4rem;
             height: 2.4rem;
             border: 0;
             position: relative;
+            cursor: pointer;
             @include img;
          }
       }
@@ -101,6 +114,9 @@
          @include input-group;
          .date {
             @include inputs(3rem, 3.3rem, uppercase);
+            &-invalid {
+               border: 5px solid var(--color-error-light);
+            }
          }
       }
    }

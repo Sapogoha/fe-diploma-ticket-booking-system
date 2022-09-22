@@ -17,7 +17,6 @@ code {
 *::after {
    margin: 0;
    padding: 0;
-   //  box-sizing: inherit;
    box-sizing: border-box;
 }
 
@@ -45,11 +44,8 @@ a.text {
 }
 
 body {
-   font-family: 'Roboto', sans-serif;
+   font-family: var(--font-family);
    margin: 0;
-
-   //  font-weight: 300;
-   //   line-height: 1.6;
 }
 
 button,

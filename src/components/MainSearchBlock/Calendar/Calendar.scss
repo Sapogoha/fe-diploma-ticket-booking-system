@@ -1,0 +1,106 @@
+@import '../MainSearchBlock.module.scss';
+
+.react-datepicker {
+   width: 32rem;
+
+   &__close-icon {
+      width: 3rem;
+      left: 24rem;
+      &::after {
+         width: 3rem;
+         height: 3rem;
+         background-color: var(--color-secondary-light);
+      }
+   }
+
+   &__input-container {
+      @include input;
+      > input {
+         &::placeholder {
+            color: var(--color-secondary-light);
+            text-transform: uppercase;
+         }
+      }
+   }
+   &__month-container {
+      padding: none;
+      border-radius: 5px;
+   }
+   &__navigation {
+      top: 1.9rem;
+   }
+   &__header {
+      border: none;
+      background-color: var(--color-main-light);
+      padding: 2rem;
+   }
+   &__current-month {
+      font-family: var(--font-family);
+      font-size: 2.4rem;
+      font-weight: 400;
+      text-transform: capitalize;
+   }
+   &__month-container {
+      width: 100%;
+      font-size: 1.8rem;
+   }
+   &__month {
+      margin: 1rem auto;
+      border-top: solid 2px var(--color-secondary-light);
+   }
+   &__day-names {
+      display: none;
+   }
+   &__day {
+      font-family: var(--font-family);
+      width: 3.6rem;
+      height: 3.2rem;
+      text-align: center;
+      line-height: 3rem;
+      &:hover {
+         background: var(--color-bg-calendar);
+      }
+      &--weekend {
+         font-weight: 700;
+      }
+      &--today {
+         font-weight: 400;
+      }
+      &--outside-month {
+         font-family: var(--font-family);
+         font-size: 1.8rem;
+         font-weight: 500;
+         color: var(--color-secondary-light);
+      }
+      &--disabled {
+         font-family: var(--font-family);
+         font-size: 1.8rem;
+         font-weight: 100;
+         color: var(--color-secondary-light);
+      }
+
+      &--selected {
+         background: var(--color-bg-calendar);
+         border: 2px solid var(--color-yellow-orange);
+         border-radius: 5px;
+         color: var(--color-main-dark);
+      }
+      &--keyboard-selected {
+         background-color: var(--color-bg-calendar);
+         color: var(--color-main-dark);
+      }
+   }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1099px) {
+   .react-datepicker {
+      width: 27.5rem;
+      &__close-icon {
+         left: 20rem;
+      }
+      &__input-container {
+         min-width: 27.5rem;
+         max-width: 27.5rem;
+      }
+   }
+}
