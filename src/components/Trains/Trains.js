@@ -20,15 +20,15 @@ function Trains() {
    const departureDate = useSelector(selectDepartureDate);
    const returnDate = useSelector(selectReturnDate);
 
-   if (departureCity && arrivalCity && departureDate) {
-      const dateStart = dayjs(departureDate).format('YYYY-DD-MM').toString();
-      let url = `${process.env.REACT_APP_SEARCH_ROUTES}?from_city_id=${departureCity.id}&to_city_id=${arrivalCity.id}&date_start=${dateStart}`;
-      if (returnDate) {
-         const dateEnd = dayjs(returnDate).format('YYYY-DD-MM').toString();
-         url += `&date_end=${dateEnd}`;
-      }
-      console.log(url);
-   }
+   // if (departureCity && arrivalCity && departureDate) {
+   //    const dateStart = dayjs(departureDate).format('YYYY-DD-MM').toString();
+   //    let url = `${process.env.REACT_APP_SEARCH_ROUTES}?from_city_id=${departureCity.id}&to_city_id=${arrivalCity.id}&date_start=${dateStart}`;
+   //    if (returnDate) {
+   //       const dateEnd = dayjs(returnDate).format('YYYY-DD-MM').toString();
+   //       url += `&date_end=${dateEnd}`;
+   //    }
+   //    console.log(url);
+   // }
    return (
       <div>
          <div>departureCity: {departureCity.name}</div>
