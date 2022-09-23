@@ -42,6 +42,12 @@ function MainSearchBlock({ width }) {
    const inpGrHeaderStyle = styles.inputGroup__header;
    const directionStyle = styles.direction;
    const dateStyle = styles.date;
+   const btnStyle = styles.button;
+
+   const headerInvalidCl = `${inpGrHeaderStyle} ${styles['inputGroup__header-invalid']}`;
+   const directionInvalidCl = `${directionStyle} ${styles['direction-invalid']}`;
+   const dateInvalidCl = `${dateStyle} ${styles['date-invalid']}`;
+   const btnInvCl = `${btnStyle} ${styles['button-invalid']}`;
 
    const [inpGrHeaderDirClasses, setInpGrHeaderDirClasses] =
       useState(inpGrHeaderStyle);
@@ -50,17 +56,16 @@ function MainSearchBlock({ width }) {
    const [depCityDirClasses, setDepCityDirClasses] = useState(directionStyle);
    const [arrCityDirClasses, setArrCityDirClasses] = useState(directionStyle);
    const [depDateClasses, setDepDateClasses] = useState(dateStyle);
-
-   const headerInvalidCl = `${inpGrHeaderStyle} ${styles['inputGroup__header-invalid']}`;
-   const directionInvalidCl = `${directionStyle} ${styles['direction-invalid']}`;
-   const dateInvalidCl = `${dateStyle} ${styles['date-invalid']}`;
+   const [disabled, setDisabled] = useState(true);
+   const [btnClasses, setBtnClasses] = useState(btnInvCl);
 
    useEffect(() => {
-      if (departureCity.name) {
+      // если поля стали валидными - снимаем выделения
+      if (departureCity.name && departureCity?.name !== arrivalCity?.name) {
          setInpGrHeaderDirClasses(inpGrHeaderStyle);
          setDepCityDirClasses(directionStyle);
       }
-      if (arrivalCity.name) {
+      if (arrivalCity.name && departureCity?.name !== arrivalCity?.name) {
          setInpGrHeaderDirClasses(inpGrHeaderStyle);
          setArrCityDirClasses(directionStyle);
       }
@@ -68,26 +73,43 @@ function MainSearchBlock({ width }) {
          setInpGrHeaderDateClasses(inpGrHeaderStyle);
          setDepDateClasses(dateStyle);
       }
+      if (departureCity && arrivalCity && departureDate) {
+         setDisabled(false);
+         setBtnClasses(btnStyle);
+      }
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [departureCity.name, arrivalCity.name, departureDate]);
 
    const submitHandler = (evt) => {
       evt.preventDefault();
-      if (!departureCity.name) {
-         setDepCityDirClasses(directionInvalidCl);
-         setInpGrHeaderDirClasses(headerInvalidCl);
-      }
-      if (!arrivalCity.name) {
-         setInpGrHeaderDirClasses(headerInvalidCl);
-         setArrCityDirClasses(directionInvalidCl);
-      }
-      if (!departureDate) {
-         setInpGrHeaderDateClasses(headerInvalidCl);
-         setDepDateClasses(dateInvalidCl);
-      }
+      setDisabled(true);
+      setBtnClasses(btnInvCl);
 
-      if (departureCity && arrivalCity && departureDate) {
+      if (
+         departureCity &&
+         arrivalCity &&
+         departureDate &&
+         departureCity?.name !== arrivalCity?.name
+      ) {
+         setDisabled(false);
+         setBtnClasses(btnStyle);
          navigate(links.trains);
+      } else {
+         // выделяем невалидные поля
+
+         if (!departureCity.name || departureCity?.name === arrivalCity?.name) {
+            setDepCityDirClasses(directionInvalidCl);
+            setInpGrHeaderDirClasses(headerInvalidCl);
+         }
+         if (!arrivalCity.name || departureCity?.name === arrivalCity?.name) {
+            setInpGrHeaderDirClasses(headerInvalidCl);
+            setArrCityDirClasses(directionInvalidCl);
+         }
+         if (!departureDate) {
+            setInpGrHeaderDateClasses(headerInvalidCl);
+            setDepDateClasses(dateInvalidCl);
+         }
       }
    };
 
@@ -155,7 +177,7 @@ function MainSearchBlock({ width }) {
                </div>
             </div>
          </div>
-         <button type="submit" className={styles.button}>
+         <button type="submit" className={btnClasses} disabled={disabled}>
             найти билеты
          </button>
       </form>

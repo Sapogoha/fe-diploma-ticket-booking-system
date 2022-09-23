@@ -46,13 +46,15 @@
       @include img;
    }
 }
+@mixin input-width-tablet {
+   min-width: 27.5rem;
+   max-width: 27.5rem;
+}
 
 @mixin media {
-   max-width: 27.5rem;
-   min-width: 23rem;
+   @include input-width-tablet;
    &__input {
-      max-width: 27.5rem;
-      min-width: 23rem;
+      @include input-width-tablet;
    }
 }
 
@@ -126,6 +128,14 @@
       justify-self: flex-end;
       align-self: flex-end;
       @include button-gold;
+      &-invalid {
+         background-color: var(--color-btn-disabled);
+         color: var(--color-main-light);
+         &:hover {
+            background-color: var(--color-btn-disabled);
+            color: var(--color-main-light);
+         }
+      }
    }
 }
 

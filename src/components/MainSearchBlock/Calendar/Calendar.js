@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+/* eslint-disable camelcase */
+
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import dayjsGenerateConfig from 'rc-picker/lib/generate/dayjs';
+import generatePicker from 'antd/es/date-picker/generatePicker';
+import { ConfigProvider } from 'antd';
+import ru_RU from 'antd/lib/locale/ru_RU';
 
-import DatePicker, { registerLocale } from 'react-datepicker';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import ru from 'date-fns/locale/ru';
-
-import 'react-datepicker/dist/react-datepicker.css';
+import 'antd/es/date-picker/style/index';
 import './Calendar.scss';
 
-import dayjs from 'dayjs';
 import consts from '../consts';
 
 import {
@@ -19,7 +21,11 @@ import {
    selectReturnDate,
 } from '../../../store/slices/searchSlice';
 
-registerLocale('ru', ru);
+require('dayjs/locale/ru');
+
+dayjs.locale('ru');
+
+const DatePicker = generatePicker(dayjsGenerateConfig);
 
 function Calendar({ name }) {
    const dispatch = useDispatch();
@@ -27,7 +33,15 @@ function Calendar({ name }) {
    const departureDate = useSelector(selectDepartureDate);
    const returnDate = useSelector(selectReturnDate);
 
-   // надо видимо переводить на DatePicker antd - делал этот компонент первым, поэтому с другой библиотекой. Бесят разные крестики для автоочистки. Позже переделаю.
+   useEffect(() => {
+      if (name === consts.depDate && departureDate) {
+         setSelectedDate(dayjs(new Date(departureDate)));
+      }
+      if (name === consts.retDate && returnDate) {
+         setSelectedDate(dayjs(new Date(returnDate)));
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    let minDate = new Date();
    // максимум 100 дней от текущей даты
@@ -39,22 +53,26 @@ function Calendar({ name }) {
       maxDate = new Date(returnDate);
    }
 
+   const disabledDate = (current) =>
+      current && (current <= dayjs(minDate) || current >= dayjs(maxDate));
+
    const changeHandler = (date) => {
       setSelectedDate(date);
       dispatch(changeSearchFields({ name, value: dayjs(date).toJSON() }));
    };
 
    return (
-      <DatePicker
-         locale="ru"
-         placeholderText="дд/мм/гг"
-         selected={selectedDate}
-         onChange={changeHandler}
-         minDate={minDate}
-         maxDate={maxDate}
-         dateFormat="dd/MM/yy"
-         isClearable
-      />
+      <ConfigProvider locale={ru_RU}>
+         <DatePicker
+            placeholder="дд/мм/гг"
+            onChange={changeHandler}
+            disabledDate={disabledDate}
+            format="DD/MM/YY"
+            allowClear
+            showToday={false}
+            value={selectedDate}
+         />
+      </ConfigProvider>
    );
 }
 Calendar.propTypes = {

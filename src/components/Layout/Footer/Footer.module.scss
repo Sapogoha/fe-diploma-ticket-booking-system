@@ -2,6 +2,7 @@
 @mixin h3 {
    > h3 {
       padding-bottom: 3rem;
+      color: var(--color-main-light);
    }
 }
 
@@ -27,6 +28,7 @@
    @include h3;
 
    &__subheader {
+      color: var(--color-main-light);
       font-size: 2.4rem;
       margin-bottom: 2rem;
    }

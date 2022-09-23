@@ -21,13 +21,14 @@ import './Direction.scss';
 
 function Direction({ name, placeholder, className }) {
    const dispatch = useDispatch();
-   const [inputValue, setInputValue] = useState('');
-   const [citiesList, setCitiesList] = useState([]);
    //  const [loading, setLoading] = useState(false);
    const [error, setError] = useState(null);
-   const debouncedSearch = useDebounce(inputValue, 500);
    const departureCity = useSelector(selectDepartureCity);
    const arrivalCity = useSelector(selectArrivalCity);
+   const [inputValue, setInputValue] = useState('');
+   const [citiesList, setCitiesList] = useState([]);
+
+   const debouncedSearch = useDebounce(inputValue, 500);
 
    useEffect(() => {
       if (name === consts.depCity && departureCity) {
