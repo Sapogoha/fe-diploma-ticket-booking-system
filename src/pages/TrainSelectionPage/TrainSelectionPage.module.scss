@@ -1,0 +1,30 @@
+.wrapper {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   .search {
+      min-width: 149rem;
+      max-width: 149rem;
+      height: 32rem;
+      margin: auto;
+   }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1419px) {
+   .wrapper {
+      .search {
+         min-width: 100%;
+         max-width: 100%;
+      }
+   }
+}
+
+@media only screen and (min-width: 1420px) and (max-width: 1500px) {
+   .wrapper {
+      .search {
+         min-width: 142rem;
+         max-width: 142rem;
+      }
+   }
+}

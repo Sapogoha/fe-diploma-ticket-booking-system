@@ -27,7 +27,7 @@ dayjs.locale('ru');
 
 const DatePicker = generatePicker(dayjsGenerateConfig);
 
-function Calendar({ name }) {
+function Calendar({ name, className }) {
    const dispatch = useDispatch();
    const [selectedDate, setSelectedDate] = useState('');
    const departureDate = useSelector(selectDepartureDate);
@@ -64,6 +64,7 @@ function Calendar({ name }) {
    return (
       <ConfigProvider locale={ru_RU}>
          <DatePicker
+            className={className}
             placeholder="дд/мм/гг"
             onChange={changeHandler}
             disabledDate={disabledDate}
@@ -77,6 +78,7 @@ function Calendar({ name }) {
 }
 Calendar.propTypes = {
    name: PropTypes.string.isRequired,
+   className: PropTypes.node.isRequired,
 };
 
 export default Calendar;

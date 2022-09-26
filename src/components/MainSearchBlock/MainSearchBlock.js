@@ -11,7 +11,6 @@ import {
    selectDepartureCity,
    selectArrivalCity,
    selectDepartureDate,
-   // selectReturnDate,
 } from '../../store/slices/searchSlice';
 
 import location from './img/location.svg';
@@ -37,16 +36,16 @@ function MainSearchBlock({ width }) {
    const inputGroupCN =
       width === 'normal'
          ? `${styles.inputGroup} ${styles['inputGroup-normal']}`
-         : `${styles.inputGroup} ${styles['inputGroup-wide']}`;
+         : `${styles.inputGroup} ${styles['inputGroup-wide']} ${styles['inputGroup-directions']}}`;
 
    const inpGrHeaderStyle = styles.inputGroup__header;
-   const directionStyle = styles.direction;
-   const dateStyle = styles.date;
+   const directionStyle = styles.direction__input;
+   const dateStyle = styles.date__input;
    const btnStyle = styles.button;
 
    const headerInvalidCl = `${inpGrHeaderStyle} ${styles['inputGroup__header-invalid']}`;
-   const directionInvalidCl = `${directionStyle} ${styles['direction-invalid']}`;
-   const dateInvalidCl = `${dateStyle} ${styles['date-invalid']}`;
+   const directionInvalidCl = `${directionStyle} ${styles['direction__input-invalid']}`;
+   const dateInvalidCl = `${dateStyle} ${styles['date__input-invalid']}`;
    const btnInvCl = `${btnStyle} ${styles['button-invalid']}`;
 
    const [inpGrHeaderDirClasses, setInpGrHeaderDirClasses] =
@@ -87,8 +86,8 @@ function MainSearchBlock({ width }) {
       setBtnClasses(btnInvCl);
 
       if (
-         departureCity &&
-         arrivalCity &&
+         departureCity.name &&
+         arrivalCity.name &&
          departureDate &&
          departureCity?.name !== arrivalCity?.name
       ) {
@@ -123,9 +122,9 @@ function MainSearchBlock({ width }) {
          <div className={inputGroupCN}>
             <div className={inpGrHeaderDirClasses}>направление</div>
             <div className={styles.inputGroup__directions}>
-               <div className={depCityDirClasses}>
+               <div className={styles.direction}>
                   <Direction
-                     className={styles.direction__input}
+                     className={depCityDirClasses}
                      name={consts.depCity}
                      placeholder="откуда"
                   />
@@ -141,9 +140,9 @@ function MainSearchBlock({ width }) {
                >
                   <img src={arrows} alt="иконка - круглые стрелки" />
                </button>
-               <div className={arrCityDirClasses}>
+               <div className={styles.direction}>
                   <Direction
-                     className={styles.direction__input}
+                     className={arrCityDirClasses}
                      name={consts.arrCity}
                      placeholder="куда"
                   />
@@ -153,14 +152,11 @@ function MainSearchBlock({ width }) {
                </div>
             </div>
          </div>
-         <div className={styles.inputGroup}>
+         <div className={`${styles.inputGroup} ${styles['inputGroup-dates']}`}>
             <div className={inpGrHeaderDateClasses}>дата</div>
             <div className={styles.inputGroup__dates}>
-               <div className={depDateClasses}>
-                  <Calendar
-                     name={consts.depDate}
-                     className={styles.date__input}
-                  />
+               <div className={styles.date}>
+                  <Calendar name={consts.depDate} className={depDateClasses} />
                   <div className={styles.date__icon}>
                      <img src={date} alt="иконка - календарь" />
                   </div>
