@@ -39,3 +39,64 @@
       border-color: var(--color-yellow-orange);
    }
 }
+
+// Sliders
+
+@mixin border($border) {
+   position: absolute;
+   border: 1px solid var(--color-bars-light);
+   border-radius: 0.8rem;
+   height: $border;
+}
+@mixin slider($handle, $border) {
+   .ant-slider {
+      &-handle {
+         position: absolute;
+         height: $handle;
+         width: $handle;
+
+         background-color: var(--color-main-light);
+         border: 0;
+         cursor: pointer;
+      }
+      &-rail {
+         @include border($border);
+         width: 100%;
+         background-color: var(--color-bars);
+      }
+
+      &-track {
+         @include border($border);
+         background-color: var(--color-yellow-orange);
+      }
+   }
+}
+
+@mixin hover {
+   &:hover &-track {
+      background-color: var(--color-yellow-orange);
+   }
+
+   &:hover &-rail {
+      background-color: var(--color-bars);
+   }
+}
+
+@mixin tooltip {
+   font-weight: 400;
+   font-size: 1.6rem;
+   line-height: 1.9rem;
+   color: var(--color-secondary-light);
+
+   &-inner {
+      box-shadow: none;
+      background-color: transparent;
+   }
+
+   &-placement-bottom {
+      padding-top: 0;
+   }
+   &-arrow {
+      display: none;
+   }
+}

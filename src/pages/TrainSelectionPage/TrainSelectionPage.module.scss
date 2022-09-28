@@ -1,3 +1,39 @@
+.body {
+   margin: 9.5rem 0 19.5rem;
+   display: flex;
+   justify-content: space-between;
+
+   aside {
+      .last-tickets {
+         width: 100%;
+         // min-width: 36rem;
+         // max-width: 36rem;
+         min-height: 58rem;
+         background-color: lightblue;
+         margin-top: 9.5rem;
+      }
+   }
+   main {
+      width: 96rem;
+      // min-width: 96rem;
+      // max-width: 96rem;
+      .sorting {
+         min-height: 2.2rem;
+         margin-bottom: 5rem;
+         background-color: lightgreen;
+      }
+      .tickets {
+         min-height: 188rem;
+         margin-bottom: 14rem;
+         background-color: lightyellow;
+      }
+      .pages {
+         min-height: 7.5rem;
+         background-color: lightsalmon;
+      }
+   }
+}
+
 .wrapper {
    display: flex;
    justify-content: space-between;
@@ -11,7 +47,9 @@
    }
 }
 
-@media only screen and (min-width: 900px) and (max-width: 1419px) {
+// при ширине меньше 1200 прятать aside в бургер?
+
+@media only screen and (min-width: 900px) and (max-width: 1399px) {
    .wrapper {
       .search {
          min-width: 100%;
@@ -20,11 +58,40 @@
    }
 }
 
-@media only screen and (min-width: 1420px) and (max-width: 1500px) {
+@media only screen and (min-width: 1400px) and (max-width: 1499px) {
    .wrapper {
       .search {
          min-width: 142rem;
          max-width: 142rem;
       }
+   }
+}
+
+@media only screen and (min-width: 1500px) and (max-width: 1599px) {
+   .body {
+      margin: 9.5rem 5rem 19.5rem;
+   }
+}
+@media only screen and (min-width: 1600px) and (max-width: 1699px) {
+   .body {
+      margin: 9.5rem 10rem 19.5rem;
+   }
+}
+
+@media only screen and (min-width: 1700px) and (max-width: 1799px) {
+   .body {
+      margin: 9.5rem 15rem 19.5rem 15rem;
+   }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 1899px) {
+   .body {
+      margin: 9.5rem 20rem 19.5rem;
+   }
+}
+
+@media only screen and (min-width: 1900px) {
+   .body {
+      margin: 9.5rem 25rem 19.5rem 26rem;
    }
 }

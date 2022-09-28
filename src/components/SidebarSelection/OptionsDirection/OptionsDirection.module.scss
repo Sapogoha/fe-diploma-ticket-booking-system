@@ -1,0 +1,33 @@
+@import '../SidebarSelection.module.scss';
+.header {
+   @include header;
+   display: flex;
+   justify-content: space-between;
+   align-items: baseline;
+
+   .direction {
+      &__text {
+         color: var(--color-main-light);
+         font-weight: 700;
+         margin-left: 1.2rem;
+         text-transform: capitalize;
+      }
+   }
+}
+
+.expanded {
+   &__header {
+      font-weight: 400;
+      font-size: 2.4rem;
+      line-height: 2.8rem;
+
+      color: var(--color-secondary-light);
+   }
+   &__ret {
+      margin-top: 2rem;
+      .expanded__header {
+         text-align: right;
+      }
+   }
+   padding-bottom: 2rem;
+}

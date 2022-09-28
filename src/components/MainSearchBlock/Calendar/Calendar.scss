@@ -7,7 +7,7 @@
 }
 
 .ant-picker {
-   @include input;
+   @include input(32rem, 6rem);
    &-dropdown {
       width: 32rem;
    }
@@ -69,7 +69,7 @@
       }
    }
    &-clear {
-      left: 22rem;
+      left: 95%;
    }
 }
 
@@ -85,10 +85,6 @@
       @include input-width-tablet;
       &-dropdown {
          @include input-width-tablet;
-      }
-
-      &-clear {
-         left: 17rem;
       }
    }
 }

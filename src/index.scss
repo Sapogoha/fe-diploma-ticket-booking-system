@@ -23,10 +23,6 @@ code {
 html {
    box-sizing: border-box;
    font-size: 62.5%; // 10px/16px = 62.5% -> 1rem = 10px
-
-   // @media only screen and (max-width: $bp-largest) {
-   //     font-size: 50%;
-   // }
 }
 
 ul,
@@ -50,9 +46,16 @@ body {
 
 button,
 input,
-h4 {
+h4,
+h5,
+h6 {
    font-size: inherit;
    font-weight: inherit;
    font-family: inherit;
    border: none;
+}
+
+button {
+   background-color: transparent;
+   cursor: pointer;
 }

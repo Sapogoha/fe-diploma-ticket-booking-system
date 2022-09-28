@@ -27,6 +27,7 @@ dayjs.locale('ru');
 
 const DatePicker = generatePicker(dayjsGenerateConfig);
 
+// eslint-disable-next-line react/prop-types
 function Calendar({ name, className }) {
    const dispatch = useDispatch();
    const [selectedDate, setSelectedDate] = useState('');
@@ -34,14 +35,14 @@ function Calendar({ name, className }) {
    const returnDate = useSelector(selectReturnDate);
 
    useEffect(() => {
-      if (name === consts.depDate && departureDate) {
-         setSelectedDate(dayjs(new Date(departureDate)));
+      if (name === consts.depDate) {
+         setSelectedDate(departureDate ? dayjs(new Date(departureDate)) : '');
       }
-      if (name === consts.retDate && returnDate) {
-         setSelectedDate(dayjs(new Date(returnDate)));
+
+      if (name === consts.retDate) {
+         setSelectedDate(returnDate ? dayjs(new Date(returnDate)) : '');
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+   }, [departureDate, returnDate, name]);
 
    let minDate = new Date();
    // максимум 100 дней от текущей даты
@@ -78,7 +79,7 @@ function Calendar({ name, className }) {
 }
 Calendar.propTypes = {
    name: PropTypes.string.isRequired,
-   className: PropTypes.node.isRequired,
+   // className: PropTypes.node.isRequired,
 };
 
 export default Calendar;

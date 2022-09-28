@@ -1,0 +1,42 @@
+@import '../MainSearchBlock/MainSearchBlock.module.scss';
+
+@mixin header {
+   font-weight: 400;
+   font-size: 3rem;
+   line-height: 3.5rem;
+   padding-top: 2rem;
+   padding-bottom: 1.5rem;
+
+   color: var(--color-main-light);
+   &-invalid {
+      color: var(--color-error-light);
+   }
+}
+
+.wrapper {
+   background-color: var(--color-bars);
+
+   .section {
+      min-height: 5rem;
+      padding: 2rem 1rem;
+      border-bottom: 1px solid var(--color-secondary-light);
+      &:last-child {
+         border-bottom: none;
+      }
+      &__header {
+         @include header;
+      }
+      .date {
+         @include inputs(2rem, 2.2rem, 1rem, 2rem, uppercase, 29.5rem, 4.3rem);
+         margin-bottom: 1.5rem;
+      }
+   }
+}
+
+@media only screen and (min-width: 1400px) {
+   .wrapper {
+      .section {
+         padding: 2rem 3.6rem 2rem 2.9rem;
+      }
+   }
+}
