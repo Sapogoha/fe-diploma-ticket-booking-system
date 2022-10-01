@@ -40,6 +40,17 @@
    }
 }
 
+@mixin img {
+   > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+   }
+}
+
 // Sliders
 
 @mixin border($border) {
@@ -99,4 +110,18 @@
    &-arrow {
       display: none;
    }
+}
+
+// Last Tickets - card
+
+@mixin card {
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 19px;
+   color: var(--color-grey);
+   padding: 1.8rem;
+   background-color: var(--color-main-light);
+   margin-bottom: 1.7rem;
+   border: 1px solid var(--color-bars-light);
+   height: 16rem;
 }

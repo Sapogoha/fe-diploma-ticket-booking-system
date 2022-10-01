@@ -15,11 +15,11 @@ const initialState = {
    time: {
       to: {
          departure: { min: 0, max: 24 * 60 },
-         return: { min: 0, max: 24 * 60 },
+         arrival: { min: 0, max: 24 * 60 },
       },
       back: {
          departure: { min: 0, max: 24 * 60 },
-         return: { min: 0, max: 24 * 60 },
+         arrival: { min: 0, max: 24 * 60 },
       },
    },
 };

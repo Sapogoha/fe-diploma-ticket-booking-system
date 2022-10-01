@@ -1,0 +1,32 @@
+.filters {
+   font-weight: 400;
+   font-size: 1.8rem;
+   line-height: 2.1rem;
+   color: var(--color-grey);
+
+   display: flex;
+   justify-content: space-between;
+   align-items: baseline;
+
+   margin-bottom: 5rem;
+
+   //  .found {
+   //  }
+   //  .wrapper-right {
+   //     display: flex;
+   //     justify-content: flex-end;
+   //     align-items: baseline;
+   .sort {
+      display: flex;
+      align-items: baseline;
+   }
+   .show {
+      &__title {
+         margin-right: 1rem;
+      }
+      &__amount {
+         margin-right: 1rem;
+      }
+   }
+   //  }
+}

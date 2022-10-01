@@ -1,0 +1,90 @@
+.card {
+   width: 96rem;
+   display: flex;
+   background: var(--color-main-light);
+   border: 1px solid var(--color-bars-light);
+   box-shadow: var(--border-shadow-trains-card);
+   margin-bottom: 5rem;
+
+   &__left {
+      width: 19.7rem;
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: var(--color-quaterniary-light);
+
+      .img {
+         width: 8.6rem;
+         height: 8.6rem;
+         margin: 0 auto;
+      }
+      .train-name {
+         font-weight: 500;
+         font-size: 2.4rem;
+         line-height: 2.8rem;
+         text-transform: uppercase;
+         text-align: center;
+         color: var(--color-bars);
+         padding: 1.7rem 0;
+      }
+      .departure-city,
+      .arrival-city {
+         text-align: left;
+         font-weight: 400;
+         font-size: 1.6rem;
+         line-height: 1.9rem;
+         color: var(--color-main-dark);
+         text-transform: capitalize;
+      }
+      .departure-arrow {
+         margin-left: 0.5rem;
+      }
+   }
+   &__middle {
+      width: 48rem;
+      border-right: 1px dashed var(--color-secondary-light);
+      padding: 5rem 3.5rem 1.5rem 4rem;
+   }
+   &__right {
+      width: 28.3rem;
+      padding: 4rem 2.2rem 2.5rem 2.7rem;
+   }
+}
+
+@media only screen and (min-width: 1150px) and (max-width: 1250px) {
+   .card {
+      width: 78rem;
+      &__left {
+         width: 14.7rem;
+         padding: 3rem 0;
+      }
+      &__middle {
+         width: 42rem;
+         border-right: 1px dashed var(--color-secondary-light);
+         padding: 5rem 0.5rem 0.5rem 0.5rem;
+      }
+      &__right {
+         width: 24.3rem;
+         padding: 4rem 0.2rem 2.5rem 0.7rem;
+      }
+   }
+}
+@media only screen and (min-width: 1251px) and (max-width: 1399px) {
+   .card {
+      width: 91rem;
+      &__left {
+         width: 16.7rem;
+         padding: 3rem 1rem;
+      }
+      &__middle {
+         width: 46rem;
+         border-right: 1px dashed var(--color-secondary-light);
+         padding: 5rem 2.5rem 2.5rem 2rem;
+      }
+      &__right {
+         width: 28.3rem;
+         padding: 4rem 2.2rem 2.5rem 2.7rem;
+      }
+   }
+}

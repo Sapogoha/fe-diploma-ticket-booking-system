@@ -3,34 +3,14 @@
    display: flex;
    justify-content: space-between;
 
-   aside {
-      .last-tickets {
-         width: 100%;
-         // min-width: 36rem;
-         // max-width: 36rem;
-         min-height: 58rem;
-         background-color: lightblue;
-         margin-top: 9.5rem;
-      }
+   .last-tickets {
+      width: 100%;
+      background-color: lightblue;
+      margin-top: 9.5rem;
    }
-   main {
+
+   .wrapper-main {
       width: 96rem;
-      // min-width: 96rem;
-      // max-width: 96rem;
-      .sorting {
-         min-height: 2.2rem;
-         margin-bottom: 5rem;
-         background-color: lightgreen;
-      }
-      .tickets {
-         min-height: 188rem;
-         margin-bottom: 14rem;
-         background-color: lightyellow;
-      }
-      .pages {
-         min-height: 7.5rem;
-         background-color: lightsalmon;
-      }
    }
 }
 
@@ -49,11 +29,29 @@
 
 // при ширине меньше 1200 прятать aside в бургер?
 
-@media only screen and (min-width: 900px) and (max-width: 1399px) {
+@media only screen and (min-width: 1150px) and (max-width: 1250px) {
    .wrapper {
       .search {
          min-width: 100%;
          max-width: 100%;
+      }
+   }
+   .body {
+      .wrapper-main {
+         width: 78rem;
+      }
+   }
+}
+@media only screen and (min-width: 1251px) and (max-width: 1399px) {
+   .wrapper {
+      .search {
+         min-width: 100%;
+         max-width: 100%;
+      }
+   }
+   .body {
+      .wrapper-main {
+         width: 91rem;
       }
    }
 }

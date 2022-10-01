@@ -1,0 +1,21 @@
+@import '../../scss/mixins';
+
+.last-tickets {
+   margin-top: 9.5rem;
+   &__header {
+      font-weight: 500;
+      font-size: 3rem;
+      line-height: 3.5rem;
+      text-transform: uppercase;
+      margin-bottom: 2.6rem;
+
+      color: var(--color-black);
+   }
+
+   &__error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include card;
+   }
+}

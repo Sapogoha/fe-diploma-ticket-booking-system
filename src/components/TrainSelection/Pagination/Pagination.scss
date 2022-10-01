@@ -1,0 +1,39 @@
+@mixin box {
+   width: 8.5rem;
+   height: 7.5rem;
+   color: var(--color-grey);
+   border: 2px solid var(--color-bars-light);
+   padding: 2rem;
+   border-radius: 0.5rem;
+   font-weight: 700;
+   font-size: 3rem;
+   line-height: 3.5rem;
+}
+
+.pagination {
+   display: flex;
+   justify-content: flex-end;
+   .ant-pagination {
+      &-item {
+         @include box;
+         > a {
+            text-decoration: none;
+            color: var(--color-grey);
+         }
+         &-active {
+            background: var(--color-yellow-orange);
+
+            > a {
+               color: var(--color-main-light);
+            }
+         }
+      }
+      &-prev,
+      &-next {
+         @include box;
+      }
+      &-item-link {
+         border: none;
+      }
+   }
+}

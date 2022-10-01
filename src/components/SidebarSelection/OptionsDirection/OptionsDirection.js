@@ -23,7 +23,7 @@ function OptionsDirection({ img, direction, name }) {
          <TimeSlider name={name} direction="departure" />
          <div className={styles.expanded__ret}>
             <h6 className={styles.expanded__header}>Время прибытия</h6>
-            <TimeSlider name={name} direction="return" />
+            <TimeSlider name={name} direction="arrival" />
          </div>
       </div>
    );

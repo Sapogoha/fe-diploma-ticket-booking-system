@@ -9,6 +9,8 @@ import {
    changeTimeFields,
 } from '../../../store/slices/sidebarSelectSlice';
 
+import { formatter } from '../../../utils/timeFormatters';
+
 import 'antd/dist/antd.css';
 import './TimeSlider.scss';
 import styles from './TimeSlider.module.scss';
@@ -22,12 +24,6 @@ function TimeSlider({ name, direction }) {
    const max = 24 * 60;
 
    const defaultValue = [time.min, time.max];
-
-   const formatter = (value) => {
-      const hours = Math.floor(value / 60);
-      const minutes = value % 60;
-      return `${`0${hours}`.slice(-2)}:${`0${minutes}`.slice(-2)}`;
-   };
 
    const onAfterChange = (value) => {
       dispatch(changeTimeFields({ name, direction, value }));

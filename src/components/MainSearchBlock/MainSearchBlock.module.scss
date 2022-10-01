@@ -44,9 +44,9 @@
    position: relative;
    &__input {
       @include input($InpWidth, $InpHeight);
+      text-transform: $transform;
       &::placeholder {
          color: var(--color-secondary-light);
-         text-transform: $transform;
       }
    }
    &__icon {
@@ -185,10 +185,10 @@
 
       @include button-gold;
       &-invalid {
-         background-color: var(--color-btn-disabled);
+         background-color: var(--color-grey);
          color: var(--color-main-light);
          &:hover {
-            background-color: var(--color-btn-disabled);
+            background-color: var(--color-grey);
             color: var(--color-main-light);
          }
       }

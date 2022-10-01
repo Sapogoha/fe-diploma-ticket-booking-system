@@ -1,0 +1,49 @@
+.card {
+   display: flex;
+   align-items: baseline;
+   justify-content: space-around;
+   font-weight: 400;
+   font-size: 1.6rem;
+   line-height: 1.9rem;
+   margin-bottom: 3.3rem;
+   .type {
+      color: var(--color-bars);
+      width: 8.6rem;
+   }
+   .seats {
+      font-weight: 500;
+
+      color: var(--color-yellow-orange);
+   }
+   .price {
+      display: flex;
+      align-items: baseline;
+
+      &__wrapper {
+         display: flex;
+         align-items: baseline;
+         justify-content: end;
+         .price {
+            &__start {
+               color: var(--color-grey);
+               margin-right: 0.5rem;
+            }
+            &__number {
+               font-weight: 700;
+               font-size: 2.4rem;
+               line-height: 2.8rem;
+               color: var(--color-secondary-dark);
+               margin-right: 0.5rem;
+            }
+            &__currency {
+               width: 1.6rem;
+               height: 1.6rem;
+            }
+         }
+      }
+   }
+}
+
+// .popover {
+//    // padding: 2.5rem 1.7rem 2.1rem 3.2rem;
+// }

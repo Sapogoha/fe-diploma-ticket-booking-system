@@ -1,0 +1,74 @@
+@import '../../../scss/mixins';
+
+.card {
+   @include card;
+
+   display: grid;
+   grid-template-rows: repeat(2, 1fr);
+   grid-template-columns: repeat(2, 1fr);
+   grid-template-areas:
+      'from to'
+      'icons price';
+   background: var(--color-main-light);
+   border: 1px solid var(--color-bars-light);
+   box-shadow: var(--border-shadow-last-ticket);
+
+   .direction {
+      &__city {
+         font-size: 2rem;
+         line-height: 23px;
+
+         color: var(--color-main-dark);
+         text-transform: capitalize;
+         display: flex;
+         flex-direction: column;
+      }
+      &__from {
+         grid-area: from;
+      }
+      &__to {
+         grid-area: to;
+         text-align: right;
+      }
+   }
+   .icons {
+      grid-area: icons;
+      display: flex;
+      align-items: flex-end;
+
+      &__content {
+         width: 2.1rem;
+         height: 2.1rem;
+         margin-right: 1rem;
+      }
+   }
+   .price {
+      grid-area: price;
+      display: flex;
+      align-items: flex-end;
+      justify-content: end;
+
+      &__wrapper {
+         display: flex;
+         align-items: baseline;
+         justify-content: end;
+      }
+
+      &__start {
+         margin-right: 0.5rem;
+      }
+
+      &__number {
+         font-weight: 700;
+         font-size: 3.6rem;
+         line-height: 4.2rem;
+
+         color: var(--color-yellow-orange);
+      }
+      &__currency {
+         margin-left: 0.5rem;
+         width: 2rem;
+         height: 2.5rem;
+      }
+   }
+}

@@ -1,0 +1,66 @@
+@mixin info {
+   &__time {
+      font-weight: 700;
+      font-size: 2.4rem;
+      line-height: 2.8rem;
+      color: var(--color-black);
+   }
+   &__city {
+      font-weight: 400;
+      font-size: 1.8rem;
+      line-height: 2.1rem;
+      color: var(--color-main-dark);
+      text-transform: capitalize;
+   }
+   &__station {
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+      color: var(--color-grey);
+   }
+}
+
+.direction {
+   display: flex;
+   //  flex-direction: row;
+   align-items: baseline;
+   justify-content: space-evenly;
+   //  padding-top: 5rem;
+   //  padding-bottom: 8rem;
+   padding-bottom: 6.5rem;
+
+   &__from {
+      display: flex;
+      flex-direction: column;
+      width: 16.5rem;
+      margin-right: 2rem;
+      .from {
+         @include info;
+      }
+   }
+   &__time {
+      display: flex;
+      flex-direction: column;
+      .time {
+         &__time {
+            font-weight: 400;
+            font-size: 1.8rem;
+            line-height: 2.1rem;
+            color: var(--color-bars-light);
+         }
+         &__arrow {
+            width: 3rem;
+            height: 2rem;
+         }
+      }
+   }
+   &__to {
+      display: flex;
+      flex-direction: column;
+      width: 16.5rem;
+      margin-left: 2rem;
+      .to {
+         @include info;
+      }
+   }
+}

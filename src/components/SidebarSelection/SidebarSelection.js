@@ -42,7 +42,7 @@ function SidebarSelection() {
    }, [departureDate]);
 
    return (
-      <div className={styles.wrapper}>
+      <section className={styles.wrapper}>
          <div className={styles.section}>
             <h4 className={inpGrHeaderDateClasses}> Дата поездки</h4>
 
@@ -79,7 +79,7 @@ function SidebarSelection() {
                img={back}
             />
          </div>
-      </div>
+      </section>
    );
 }
 

@@ -9,15 +9,11 @@ import styles from './Layout.module.scss';
 function Layout({ pic, children, body }) {
    return (
       <div className={styles.wrapper}>
-         <div
-            className={`${styles.wrapper__top} ${
-               styles[`wrapper__top-${pic}`]
-            }`}
-         >
+         <header className={`${styles.header} ${styles[`header-${pic}`]}`}>
             <HeaderNavigation />
             {children}
-         </div>
-         {body}
+         </header>
+         <main>{body}</main>
          <Footer />
       </div>
    );
