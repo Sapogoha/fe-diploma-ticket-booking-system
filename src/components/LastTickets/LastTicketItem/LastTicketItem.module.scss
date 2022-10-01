@@ -46,12 +46,12 @@
       grid-area: price;
       display: flex;
       align-items: flex-end;
-      justify-content: end;
+      justify-content: flex-end;
 
       &__wrapper {
          display: flex;
          align-items: baseline;
-         justify-content: end;
+         justify-content: flex-end;
       }
 
       &__start {

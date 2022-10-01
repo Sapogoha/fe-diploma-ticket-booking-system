@@ -22,7 +22,7 @@
       &__wrapper {
          display: flex;
          align-items: baseline;
-         justify-content: end;
+         justify-content: flex-end;
          .price {
             &__start {
                color: var(--color-grey);
