@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import TimeSlider from '../TimeSlider/TimeSlider';
+import TimeSlider from './TimeSlider/TimeSlider';
 
 import styles from './OptionsDirection.module.scss';
 
 import plus from '../img/plus.svg';
 import minus from '../img/minus.svg';
 
-function OptionsDirection({ img, direction, name }) {
+function OptionsDirection({ img, direction, name, onChangeOption }) {
    const [expanded, setExpanded] = useState(false);
 
    const expandIcon = expanded ? minus : plus;
@@ -20,10 +20,18 @@ function OptionsDirection({ img, direction, name }) {
    const exp = (
       <div className={styles.expanded}>
          <h6 className={styles.expanded__header}>Время отбытия</h6>
-         <TimeSlider name={name} direction="departure" />
+         <TimeSlider
+            name={name}
+            direction="departure"
+            onChangeOption={onChangeOption}
+         />
          <div className={styles.expanded__ret}>
             <h6 className={styles.expanded__header}>Время прибытия</h6>
-            <TimeSlider name={name} direction="arrival" />
+            <TimeSlider
+               name={name}
+               direction="arrival"
+               onChangeOption={onChangeOption}
+            />
          </div>
       </div>
    );
@@ -57,6 +65,7 @@ OptionsDirection.propTypes = {
    img: PropTypes.node.isRequired,
    direction: PropTypes.string.isRequired,
    name: PropTypes.string.isRequired,
+   onChangeOption: PropTypes.func.isRequired,
 };
 
 export default OptionsDirection;

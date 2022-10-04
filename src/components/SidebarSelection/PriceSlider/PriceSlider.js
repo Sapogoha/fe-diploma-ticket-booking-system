@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { Slider } from 'antd';
 
@@ -12,7 +13,7 @@ import 'antd/dist/antd.css';
 import './PriceSlider.scss';
 import styles from './PriceSlider.module.scss';
 
-function PriceSlider() {
+function PriceSlider({ onChangeOption }) {
    const dispatch = useDispatch();
    const prices = useSelector(selectPrices);
 
@@ -24,6 +25,7 @@ function PriceSlider() {
 
    const onAfterChange = (value) => {
       dispatch(changePriceFields(value));
+      onChangeOption();
    };
    return (
       <div className={styles.wrapper}>
@@ -48,5 +50,9 @@ function PriceSlider() {
       </div>
    );
 }
+
+PriceSlider.propTypes = {
+   onChangeOption: PropTypes.func.isRequired,
+};
 
 export default PriceSlider;

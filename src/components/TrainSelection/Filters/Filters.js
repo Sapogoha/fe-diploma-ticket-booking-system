@@ -1,15 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SelectItem from './SelectItem/SelectItem';
 import Button from './Button/Button';
 
 import { selectTotalCount } from '../../../store/slices/trainsSlice';
+import { changeOffset, setCurrentPage } from '../../../store/slices/sortSlice';
 
 import styles from './Filters.module.scss';
 
-function Filters({ onChangeFilters }) {
+function Filters() {
+   const dispatch = useDispatch();
    const totalCount = useSelector(selectTotalCount);
    const sortOptions = [
       {
@@ -27,6 +28,11 @@ function Filters({ onChangeFilters }) {
    ];
 
    const amounts = [5, 10, 20];
+
+   const onChangeFilters = () => {
+      dispatch(changeOffset(0));
+      dispatch(setCurrentPage(1));
+   };
 
    return (
       <section className={styles.filters}>
@@ -56,7 +62,5 @@ function Filters({ onChangeFilters }) {
       </section>
    );
 }
-
-Filters.propTypes = { onChangeFilters: PropTypes.func.isRequired };
 
 export default Filters;

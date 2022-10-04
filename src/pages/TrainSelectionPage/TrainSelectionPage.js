@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Layout from '../../components/Layout/Layout';
@@ -11,9 +11,10 @@ import TrainSelection from '../../components/TrainSelection/TrainSelection';
 import PaginationItem from '../../components/TrainSelection/Pagination/Pagination';
 
 import {
-   selectOffset,
    selectLimit,
+   selectCurrentPage,
    changeOffset,
+   setCurrentPage,
 } from '../../store/slices/sortSlice';
 
 import { selectTotalCount } from '../../store/slices/trainsSlice';
@@ -22,18 +23,13 @@ import styles from './TrainSelectionPage.module.scss';
 
 function TrainSelectionPage() {
    const dispatch = useDispatch();
-   const offset = useSelector(selectOffset);
    const limit = useSelector(selectLimit);
    const total = useSelector(selectTotalCount);
+   const currentPage = useSelector(selectCurrentPage);
 
-   const [currentPage, setCurrentPage] = useState(offset / limit + 1);
    const onChangePage = (value) => {
-      setCurrentPage(value);
+      dispatch(setCurrentPage(value));
       dispatch(changeOffset(value * limit - limit));
-   };
-   const onChangeFilters = () => {
-      dispatch(changeOffset(0));
-      setCurrentPage(1);
    };
    const body = (
       <>
@@ -44,7 +40,7 @@ function TrainSelectionPage() {
                <LastTickets />
             </div>
             <div className={styles['wrapper-main']}>
-               <Filters onChangeFilters={onChangeFilters} />
+               <Filters />
                <TrainSelection />
 
                <PaginationItem

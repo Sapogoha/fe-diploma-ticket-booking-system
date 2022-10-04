@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
@@ -14,12 +15,14 @@ import 'antd/es/date-picker/style/index';
 import './Calendar.scss';
 
 import consts from '../consts';
+import links from '../../../data/links';
 
 import {
    changeSearchFields,
    selectDepartureDate,
    selectReturnDate,
 } from '../../../store/slices/searchSlice';
+import { changeOffset, setCurrentPage } from '../../../store/slices/sortSlice';
 
 require('dayjs/locale/ru');
 
@@ -27,8 +30,9 @@ dayjs.locale('ru');
 
 const DatePicker = generatePicker(dayjsGenerateConfig);
 
-// eslint-disable-next-line react/prop-types
 function Calendar({ name, className }) {
+   const { pathname } = useLocation();
+   const navigate = useNavigate();
    const dispatch = useDispatch();
    const [selectedDate, setSelectedDate] = useState('');
    const departureDate = useSelector(selectDepartureDate);
@@ -60,6 +64,11 @@ function Calendar({ name, className }) {
    const changeHandler = (date) => {
       setSelectedDate(date);
       dispatch(changeSearchFields({ name, value: dayjs(date).toJSON() }));
+      dispatch(changeOffset(0));
+      dispatch(setCurrentPage(1));
+      if (pathname === links.seats) {
+         navigate(links.trains);
+      }
    };
 
    return (
@@ -79,7 +88,7 @@ function Calendar({ name, className }) {
 }
 Calendar.propTypes = {
    name: PropTypes.string.isRequired,
-   // className: PropTypes.node.isRequired,
+   className: PropTypes.node.isRequired,
 };
 
 export default Calendar;

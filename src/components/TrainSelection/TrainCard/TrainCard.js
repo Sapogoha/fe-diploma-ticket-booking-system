@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import MiddlePart from './MiddlePart/MiddlePart';
@@ -9,12 +10,15 @@ import arrow from './img/arrow.svg';
 import arrowRight from './img/arrow-right.svg';
 import arrowLeft from './img/arrow-left.svg';
 
+import links from '../../../data/links';
+
 import styles from './TrainCard.module.scss';
 
-// цены и количество билетов наверное совмещать для двух поездов - сейчас так делаю?
-// или отдельно выводить для поезда туда и для поезда обратно?
+// цены и количество билетов совмещать для двух поездов? - сейчас так делаю
+// или отдельно выводить для поезда туда и для поезда обратно? - тогда размер карточки увеличится. но это логичнее.
 
 function TrainCard({ ticket }) {
+   const navigate = useNavigate();
    const availableSeats = ticket?.available_seats_info;
    // const availableSeatsDep = ticket?.departure?.available_seats_info;
    // const availableSeatsArr = ticket?.arrival?.available_seats_info;
@@ -25,8 +29,20 @@ function TrainCard({ ticket }) {
    const departureTo = ticket?.departure?.to;
    const arrivalFrom = ticket?.arrival?.from;
    const arrivalTo = ticket?.arrival?.to;
+
+   const onClick = (evt) => {
+      evt.preventDefault();
+      navigate(links.seats);
+   };
    return (
-      <div className={styles.card}>
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+      <div
+         className={styles.card}
+         onClick={onClick}
+         role="button"
+         tabIndex={0}
+         // onKeyPress={onClick}
+      >
          <div className={styles.card__left}>
             <div className={styles.img}>
                <img src={train} alt="иконка поезда" />

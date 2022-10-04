@@ -5,6 +5,7 @@ const initialState = {
    limit: 5,
    sort: { label: 'времени', value: 'date' },
    offset: 0,
+   currentPage: 1,
 };
 
 const sortSlice = createSlice({
@@ -20,14 +21,27 @@ const sortSlice = createSlice({
       changeOffset(state, action) {
          state.offset = action.payload;
       },
+      setCurrentPage(state, action) {
+         state.currentPage = action.payload;
+      },
+      // changeCurrentPage(state) {
+      //    state.currentPage = state.offset / state.limit + 1;
+      // },
    },
    extraReducers: {},
 });
 
-export const { changeLimit, changeSort, changeOffset } = sortSlice.actions;
+export const {
+   changeLimit,
+   changeSort,
+   changeOffset,
+   // changeCurrentPage,
+   setCurrentPage,
+} = sortSlice.actions;
 
 export const selectLimit = (state) => state.sort.limit;
 export const selectSort = (state) => state.sort.sort;
 export const selectOffset = (state) => state.sort.offset;
+export const selectCurrentPage = (state) => state.sort.currentPage;
 
 export default sortSlice;

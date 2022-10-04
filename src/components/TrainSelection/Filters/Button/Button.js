@@ -37,8 +37,8 @@ function Button({ amount, className, onChangeFilters }) {
          onClick={clickHandler}
          className={`${buttonStyle} ${className}`}
          disabled={
-            (amount === 10 && totalCount < amount - 5) ||
-            (amount === 20 && totalCount < amount - 10)
+            (amount === 10 && totalCount <= amount - 5) ||
+            (amount === 20 && totalCount <= amount - 10)
          }
       >
          {amount}

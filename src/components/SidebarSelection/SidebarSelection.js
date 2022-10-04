@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Calendar from '../MainSearchBlock/Calendar/Calendar';
 import Options from './Options/Options';
@@ -7,6 +8,9 @@ import PriceSlider from './PriceSlider/PriceSlider';
 import OptionsDirection from './OptionsDirection/OptionsDirection';
 
 import { selectDepartureDate } from '../../store/slices/searchSlice';
+import { changeOffset, setCurrentPage } from '../../store/slices/sortSlice';
+
+import links from '../../data/links';
 
 import date from './img/date.svg';
 
@@ -17,6 +21,9 @@ import consts from '../MainSearchBlock/consts';
 import styles from './SidebarSelection.module.scss';
 
 function SidebarSelection() {
+   const { pathname } = useLocation();
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
    const departureDate = useSelector(selectDepartureDate);
    const inpGrHeaderStyle = styles.section__header;
    const dateStyle = styles.date__input;
@@ -41,6 +48,14 @@ function SidebarSelection() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [departureDate]);
 
+   const onChangeOption = () => {
+      dispatch(changeOffset(0));
+      dispatch(setCurrentPage(1));
+      if (pathname !== links.trains) {
+         navigate(links.trains);
+      }
+   };
+
    return (
       <section className={styles.wrapper}>
          <div className={styles.section}>
@@ -62,17 +77,23 @@ function SidebarSelection() {
             </div>
          </div>
          <div className={styles.section}>
-            <Options />
+            <Options onChangeOption={onChangeOption} />
          </div>
          <div className={styles.section}>
             <h4 className={styles.section__header}> Стоимость</h4>
-            <PriceSlider />
-         </div>
-         <div className={styles.section}>
-            <OptionsDirection direction="туда" name="to" img={to} />
+            <PriceSlider onChangeOption={onChangeOption} />
          </div>
          <div className={styles.section}>
             <OptionsDirection
+               onChangeOption={onChangeOption}
+               direction="туда"
+               name="to"
+               img={to}
+            />
+         </div>
+         <div className={styles.section}>
+            <OptionsDirection
+               onChangeOption={onChangeOption}
                className={styles.section__header}
                direction="обратно"
                name="back"

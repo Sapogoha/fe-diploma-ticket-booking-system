@@ -7,15 +7,15 @@ import { Slider } from 'antd';
 import {
    selectTime,
    changeTimeFields,
-} from '../../../store/slices/sidebarSelectSlice';
+} from '../../../../store/slices/sidebarSelectSlice';
 
-import { formatter } from '../../../utils/timeFormatters';
+import { formatter } from '../../../../utils/timeFormatters';
 
 import 'antd/dist/antd.css';
 import './TimeSlider.scss';
 import styles from './TimeSlider.module.scss';
 
-function TimeSlider({ name, direction }) {
+function TimeSlider({ name, direction, onChangeOption }) {
    const dispatch = useDispatch();
    const time = useSelector(selectTime)[name][direction];
 
@@ -27,6 +27,7 @@ function TimeSlider({ name, direction }) {
 
    const onAfterChange = (value) => {
       dispatch(changeTimeFields({ name, direction, value }));
+      onChangeOption();
    };
    return (
       <div className={styles.wrapper}>
@@ -55,6 +56,7 @@ function TimeSlider({ name, direction }) {
 TimeSlider.propTypes = {
    name: PropTypes.string.isRequired,
    direction: PropTypes.string.isRequired,
+   onChangeOption: PropTypes.func.isRequired,
 };
 
 export default TimeSlider;

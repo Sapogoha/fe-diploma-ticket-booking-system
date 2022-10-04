@@ -12,7 +12,7 @@ import styles from './OptionItem.module.scss';
 import on from './img/on.svg';
 import off from './img/off.svg';
 
-function OptionItem({ img, title, name }) {
+function OptionItem({ img, title, name, onChangeOption }) {
    const dispatch = useDispatch();
    const options = useSelector(selectOptions);
 
@@ -20,6 +20,7 @@ function OptionItem({ img, title, name }) {
 
    const clickHandler = () => {
       dispatch(changeOptionsFields({ name, value: !status }));
+      onChangeOption();
    };
 
    const imgIcon = status ? on : off;
@@ -49,6 +50,7 @@ OptionItem.propTypes = {
    img: PropTypes.node.isRequired,
    title: PropTypes.string.isRequired,
    name: PropTypes.string.isRequired,
+   onChangeOption: PropTypes.func.isRequired,
 };
 
 export default OptionItem;

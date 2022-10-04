@@ -13,6 +13,7 @@ import {
    selectDepartureCity,
    selectArrivalCity,
 } from '../../../store/slices/searchSlice';
+import { changeOffset, setCurrentPage } from '../../../store/slices/sortSlice';
 
 import consts from '../consts';
 
@@ -85,6 +86,8 @@ function Direction({ name, placeholder, className }) {
       dispatch(
          changeSearchFields({ name, value: { id: data, name: cityName } })
       );
+      dispatch(changeOffset(0));
+      dispatch(setCurrentPage(1));
    };
 
    return (
@@ -95,8 +98,7 @@ function Direction({ name, placeholder, className }) {
                onSelect={selectHandler}
                onSearch={searchHandler}
                value={inputValue}
-               // eslint-disable-next-line react/jsx-boolean-value
-               allowClear={true}
+               allowClear
             >
                <input
                   name={name}

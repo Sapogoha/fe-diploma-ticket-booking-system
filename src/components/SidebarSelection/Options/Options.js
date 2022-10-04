@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import OptionItem from './OptionItem/OptionItem';
 
 import options from '../../../data/options/options';
 
-function Options() {
+function Options({ onChangeOption }) {
    return (
       <div>
          {options.map((item) => (
@@ -13,10 +14,15 @@ function Options() {
                title={item.title}
                img={item.img}
                name={item.name}
+               onChangeOption={onChangeOption}
             />
          ))}
       </div>
    );
 }
+
+Options.propTypes = {
+   onChangeOption: PropTypes.func.isRequired,
+};
 
 export default Options;
