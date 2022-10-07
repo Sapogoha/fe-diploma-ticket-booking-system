@@ -14,6 +14,7 @@ import {
    selectArrivalCity,
 } from '../../../store/slices/searchSlice';
 import { changeOffset, setCurrentPage } from '../../../store/slices/sortSlice';
+import { removeTrainInfo } from '../../../store/slices/trainSlice';
 
 import consts from '../consts';
 
@@ -88,6 +89,7 @@ function Direction({ name, placeholder, className }) {
       );
       dispatch(changeOffset(0));
       dispatch(setCurrentPage(1));
+      dispatch(removeTrainInfo());
    };
 
    return (

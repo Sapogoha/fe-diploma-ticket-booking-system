@@ -1,0 +1,47 @@
+@import '../SelectionBlock.module.scss';
+
+.seats {
+   border-bottom: 1px dashed var(--color-bars-light);
+   .title {
+      @include title;
+   }
+
+   .form {
+      display: grid;
+      min-height: 19rem;
+      @include font(400, 1.6rem, 1.9rem, var(--color-main-dark));
+      grid-template-columns: repeat(3, 1fr);
+
+      .formItem {
+         margin-bottom: 5rem;
+         padding: 2rem 3.5rem;
+         display: flex;
+         flex-direction: column;
+         justify-content: flex-start;
+         align-items: center;
+         color: var(--color-grey);
+         border: 1px solid transparent;
+
+         &:hover {
+            border: 1px solid var(--color-border-num-of-tickets);
+         }
+
+         &:focus-within {
+            color: var(--color-black);
+            background: var(--color-quinary-light);
+            border: 1px solid var(--color-quinary-light);
+            box-shadow: var(--box-shadow-selection-block);
+         }
+
+         .input {
+            margin-bottom: 2.5rem;
+            box-sizing: border-box;
+            width: 24rem;
+            height: 5rem;
+            background: var(--color-main-light);
+            border: 1px solid var(--color-grey);
+            border-radius: 5px;
+         }
+      }
+   }
+}

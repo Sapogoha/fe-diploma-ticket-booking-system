@@ -15,6 +15,7 @@
    justify-content: flex-end;
    .ant-pagination {
       &-item {
+         background-color: transparent;
          @include box;
          > a {
             text-decoration: none;
@@ -26,6 +27,9 @@
             > a {
                color: var(--color-main-light);
             }
+         }
+         &-link {
+            background-color: transparent;
          }
       }
       &-prev,

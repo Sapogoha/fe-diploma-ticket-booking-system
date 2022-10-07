@@ -1,15 +1,20 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import MiddlePart from './MiddlePart/MiddlePart';
 import RightPart from './RightPart/RightPart';
+
+import { setTrains } from '../../../store/slices/trainSlice';
 
 import train from './img/train.svg';
 import arrow from './img/arrow.svg';
 import arrowRight from './img/arrow-right.svg';
 import arrowLeft from './img/arrow-left.svg';
 
+import directions from '../../../data/directions';
 import links from '../../../data/links';
 
 import styles from './TrainCard.module.scss';
@@ -19,9 +24,8 @@ import styles from './TrainCard.module.scss';
 
 function TrainCard({ ticket }) {
    const navigate = useNavigate();
+   const dispatch = useDispatch();
    const availableSeats = ticket?.available_seats_info;
-   // const availableSeatsDep = ticket?.departure?.available_seats_info;
-   // const availableSeatsArr = ticket?.arrival?.available_seats_info;
    const priceDep = ticket?.departure?.price_info;
    const priceArr = ticket?.arrival?.price_info;
 
@@ -32,17 +36,19 @@ function TrainCard({ ticket }) {
 
    const onClick = (evt) => {
       evt.preventDefault();
+      dispatch(
+         setTrains({ value: ticket.departure, direction: directions.departure })
+      );
+      if (ticket.arrival) {
+         dispatch(
+            setTrains({ value: ticket.arrival, direction: directions.arrival })
+         );
+      }
       navigate(links.seats);
    };
    return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <div
-         className={styles.card}
-         onClick={onClick}
-         role="button"
-         tabIndex={0}
-         // onKeyPress={onClick}
-      >
+      <div className={styles.card} onClick={onClick} role="button" tabIndex={0}>
          <div className={styles.card__left}>
             <div className={styles.img}>
                <img src={train} alt="иконка поезда" />

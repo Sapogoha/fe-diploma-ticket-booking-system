@@ -1,0 +1,21 @@
+@import '../../scss/_mixins';
+.seats-selection {
+   &__header {
+      font-weight: 500;
+      font-size: 3rem;
+      line-height: 3.5rem;
+      text-transform: uppercase;
+      color: var(--color-main-dark);
+      margin-bottom: 5rem;
+   }
+   &__button-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      color: var(--color-main-light);
+      margin-top: 10rem;
+      margin-bottom: 12rem;
+      > button {
+         @include button-gold;
+      }
+   }
+}

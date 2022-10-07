@@ -1,0 +1,27 @@
+@import '../SelectionBlock.module.scss';
+.coaches {
+   background: rgba(255, 168, 0, 0.44);
+   width: 100%;
+   padding: 0.4rem 1.7rem 0.4rem 3.3rem;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   .text {
+      @include font(400, 1.6rem, 1.9rem, var(--color-main-dark));
+   }
+   .available {
+      display: flex;
+      align-items: center;
+      .title {
+         margin-right: 0.5rem;
+      }
+      .coachNames {
+         @include font(700, 2.4rem, 2.8rem, var(--color-black));
+         margin-right: 0.5rem;
+         &-active {
+            color: var(--color-main-light);
+         }
+      }
+   }
+}

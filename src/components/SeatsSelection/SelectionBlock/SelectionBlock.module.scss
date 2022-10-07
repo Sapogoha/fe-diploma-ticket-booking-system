@@ -1,0 +1,56 @@
+@mixin flexCenter {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}
+
+@mixin font($fw, $fs, $lh, $c) {
+   font-weight: $fw;
+   font-size: $fs;
+   line-height: $lh;
+   color: $c;
+}
+
+@mixin title {
+   @include font(700, 3rem, 3.5rem, var(--color-main-dark));
+   padding: 2.7rem 0 2.5rem 2rem;
+}
+
+.card {
+   background: var(--color-main-light);
+   border: 1px solid var(--color-bars-light);
+   box-shadow: var(--box-shadow-selection-block);
+   margin-bottom: 3rem;
+   &__change-train {
+      display: flex;
+      padding: 4rem 2rem 3rem;
+
+      .img {
+         width: 7.6rem;
+         height: 6rem;
+         margin-right: 1rem;
+      }
+      > button {
+         @include font(700, 2.4rem, 2.8rem, var(--color-main-dark));
+         padding: 1.4rem 3.4rem;
+         border: 2px solid var(--color-main-dark);
+         border-radius: 5px;
+      }
+
+      &-arrival {
+         justify-content: flex-end;
+      }
+   }
+
+   .seats {
+      .title {
+         @include title;
+      }
+      .tickets {
+         height: 19.2rem;
+         background-color: rgb(198, 224, 233);
+         padding-bottom: 5rem;
+         border-bottom: 1px dashed var(--color-bars-light);
+      }
+   }
+}

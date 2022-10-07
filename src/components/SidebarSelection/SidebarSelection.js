@@ -9,6 +9,7 @@ import OptionsDirection from './OptionsDirection/OptionsDirection';
 
 import { selectDepartureDate } from '../../store/slices/searchSlice';
 import { changeOffset, setCurrentPage } from '../../store/slices/sortSlice';
+import { removeTrainInfo } from '../../store/slices/trainSlice';
 
 import links from '../../data/links';
 
@@ -51,6 +52,8 @@ function SidebarSelection() {
    const onChangeOption = () => {
       dispatch(changeOffset(0));
       dispatch(setCurrentPage(1));
+      dispatch(removeTrainInfo());
+
       if (pathname !== links.trains) {
          navigate(links.trains);
       }
