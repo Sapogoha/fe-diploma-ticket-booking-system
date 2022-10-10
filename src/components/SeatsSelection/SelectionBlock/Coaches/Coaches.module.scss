@@ -1,6 +1,6 @@
 @import '../SelectionBlock.module.scss';
 .coaches {
-   background: rgba(255, 168, 0, 0.44);
+   background-color: var(--color-tickets);
    width: 100%;
    padding: 0.4rem 1.7rem 0.4rem 3.3rem;
    display: flex;
@@ -22,6 +22,9 @@
          &-active {
             color: var(--color-main-light);
          }
+      }
+      .error {
+         color: var(--color-error);
       }
    }
 }

@@ -15,6 +15,8 @@ import thirdActive from './img/third-active.svg';
 import secondActive from './img/second-active.svg';
 import firstActive from './img/first-active.svg';
 
+import classes from '../../classes';
+
 import styles from './CoachType.module.scss';
 
 function CoachType({ direction }) {
@@ -24,7 +26,7 @@ function CoachType({ direction }) {
          id: 4,
          img: fourth,
          imgActive: fourthActive,
-         name: 'fourth',
+         name: classes.fourth,
          nameRus: 'сидячий',
          available: train?.have_fourth_class,
       },
@@ -32,7 +34,7 @@ function CoachType({ direction }) {
          id: 3,
          img: third,
          imgActive: thirdActive,
-         name: 'third',
+         name: classes.third,
          nameRus: 'плацкарт',
          available: train?.have_third_class,
       },
@@ -40,7 +42,7 @@ function CoachType({ direction }) {
          id: 2,
          img: second,
          imgActive: secondActive,
-         name: 'second',
+         name: classes.second,
          nameRus: 'купе',
          available: train?.have_second_class,
       },
@@ -48,7 +50,7 @@ function CoachType({ direction }) {
          id: 1,
          img: first,
          imgActive: firstActive,
-         name: 'first',
+         name: classes.first,
          nameRus: 'люкс',
          available: train?.have_first_class,
       },

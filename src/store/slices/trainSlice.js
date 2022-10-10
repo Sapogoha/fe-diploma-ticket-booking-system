@@ -8,19 +8,19 @@ const initialState = {
    },
    selectedClasses: {
       departure: {
-         firstClass: false,
-         secondClass: false,
-         thirdClass: false,
-         fourthClass: false,
+         first: false,
+         second: false,
+         third: false,
+         fourth: false,
       },
       arrival: {
-         firstClass: false,
-         secondClass: false,
-         thirdClass: false,
-         fourthClass: false,
+         first: false,
+         second: false,
+         third: false,
+         fourth: false,
       },
    },
-   selectedCouches: {
+   selectedCoaches: {
       departure: null,
       arrival: null,
    },
@@ -40,15 +40,22 @@ const trainSlice = createSlice({
       },
       setSelectedClasses(state, action) {
          const { name, value, direction } = action.payload;
-         state.selectedClasses[direction][`${name}Class`] = value;
+         state.selectedClasses[direction][name] = value;
       },
-      setSelectedCouches(state, action) {
+      removeSelectedClasses(state) {
+         state.selectedClasses = initialState.selectedClasses;
+      },
+      setSelectedCoaches(state, action) {
          const { name, direction } = action.payload;
-         state.selectedCouches[direction] =
-            state.selectedCouches[direction] === name ? null : name;
+         state.selectedCoaches[direction] = name;
       },
-      removeSelectedCouches(state, action) {
-         state.selectedCouches[action.payload] = null;
+      toggleSelectedCoaches(state, action) {
+         const { name, direction } = action.payload;
+         state.selectedCoaches[direction] =
+            state.selectedCoaches[direction] === name ? null : name;
+      },
+      removeSelectedCoaches(state, action) {
+         state.selectedCoaches[action.payload] = null;
       },
    },
    extraReducers: {},
@@ -58,12 +65,14 @@ export const {
    setTrains,
    removeTrainInfo,
    setSelectedClasses,
-   setSelectedCouches,
-   removeSelectedCouches,
+   removeSelectedClasses,
+   setSelectedCoaches,
+   toggleSelectedCoaches,
+   removeSelectedCoaches,
 } = trainSlice.actions;
 
 export const selectTrains = (state) => state.train.trains;
 export const selectSelectedClasses = (state) => state.train.selectedClasses;
-export const selectSelectedCouches = (state) => state.train.selectedCouches;
+export const selectSelectedCoaches = (state) => state.train.selectedCoaches;
 
 export default trainSlice;

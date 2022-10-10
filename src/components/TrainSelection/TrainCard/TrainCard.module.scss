@@ -5,7 +5,6 @@
    border: 1px solid var(--color-bars-light);
    box-shadow: var(--border-shadow-trains-card);
    margin-bottom: 5rem;
-   cursor: pointer;
 
    &__left {
       width: 19.7rem;
@@ -50,6 +49,9 @@
    &__right {
       width: 28.3rem;
       padding: 4rem 2.2rem 2.5rem 2.7rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
    }
 }
 

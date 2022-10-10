@@ -1,0 +1,15 @@
+.icons-tooltip {
+   background: var(--color-popover);
+   box-shadow: var(--box-shadow-popover);
+   padding: 1rem;
+   border-radius: 0.8rem;
+
+   .ant-tooltip-inner {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      text-align: center;
+
+      color: #292929;
+   }
+}

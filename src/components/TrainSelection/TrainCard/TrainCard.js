@@ -48,7 +48,7 @@ function TrainCard({ ticket }) {
    };
    return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <div className={styles.card} onClick={onClick} role="button" tabIndex={0}>
+      <div className={styles.card} role="button" tabIndex={0}>
          <div className={styles.card__left}>
             <div className={styles.img}>
                <img src={train} alt="иконка поезда" />
@@ -94,11 +94,18 @@ function TrainCard({ ticket }) {
          </div>
          <div className={styles.card__right}>
             <RightPart
+               onClick={onClick}
                availableSeats={availableSeats}
-               // availableSeatsDep={availableSeatsDep}
-               // availableSeatsArr={availableSeatsArr}
                priceDep={priceDep}
                priceArr={priceArr}
+               wifi={ticket?.departure?.have_wifi || ticket?.arrival?.have_wifi}
+               conditioner={
+                  ticket?.departure?.have_air_conditioning ||
+                  ticket?.arrival?.have_air_conditioning
+               }
+               express={
+                  ticket?.departure?.is_express || ticket?.arrival?.is_express
+               }
             />
          </div>
       </div>

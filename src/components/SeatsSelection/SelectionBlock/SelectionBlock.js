@@ -5,6 +5,7 @@ import TrainInfo from './TrainInfo/TrainInfo';
 import NumberOfTickets from './NumberOfTickets/NumberOfTickets';
 import CoachType from './CoachType/CoachType';
 import Coaches from './Coaches/Coaches';
+import Coach from './Coach/Coach';
 
 import departureArrow from './img/arrow-departure.svg';
 import arrivalArrow from './img/arrow-arrival.svg';
@@ -34,6 +35,7 @@ function SelectionBlock({ direction }) {
          <NumberOfTickets />
          <CoachType direction={direction} />
          <Coaches direction={direction} />
+         <Coach direction={direction} />
       </div>
    );
 }

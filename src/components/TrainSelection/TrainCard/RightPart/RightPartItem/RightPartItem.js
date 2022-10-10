@@ -23,10 +23,7 @@ function RightPartItem({ type, seatsNum, priceDep, priceArr }) {
       ].filter((item) => typeof item === 'number');
 
    const popoverContent = (
-      <>
-         <PopoverItem type={type} priceDep={priceDep} priceArr={priceArr} />
-         {/* <PopoverItem /> */}
-      </>
+      <PopoverItem type={type} priceDep={priceDep} priceArr={priceArr} />
    );
 
    return (

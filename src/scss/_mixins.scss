@@ -125,3 +125,12 @@
    border: 1px solid var(--color-bars-light);
    height: 16rem;
 }
+
+// font
+
+@mixin font($fw, $fs, $lh, $c) {
+   font-weight: $fw;
+   font-size: $fs;
+   line-height: $lh;
+   color: $c;
+}
