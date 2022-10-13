@@ -1,0 +1,23 @@
+@import '../../SelectionBlock.module.scss';
+.price {
+   text-align: right;
+   margin-right: 4rem;
+   margin-bottom: 2rem;
+   @include font(700, 2.4rem, 2.8rem, var(--color-yellow-orange));
+   .total {
+      margin-bottom: 3rem;
+      .currency {
+         margin-left: 1rem;
+      }
+   }
+
+   .text {
+      @include font(500, 2.1rem, 2.5rem, var(--color-main-dark));
+      margin-top: 2rem;
+   }
+   .prompt {
+      @include font(400, 1.6rem, 1.9rem, var(--color-yellow-orange));
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+   }
+}

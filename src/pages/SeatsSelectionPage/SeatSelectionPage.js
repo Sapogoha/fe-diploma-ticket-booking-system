@@ -7,6 +7,9 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import LastTickets from '../../components/LastTickets/LastTickets';
 import SeatsSelection from '../../components/SeatsSelection/SeatsSelection';
 
+import widthOptions from '../../components/MainSearchBlock/widthOptions';
+import picsOptions from '../../components/Layout/picsOptions';
+
 import styles from './SeatsSelectionPage.module.scss';
 
 function SeatsSelectionPage() {
@@ -25,12 +28,8 @@ function SeatsSelectionPage() {
       </>
    );
    return (
-      <Layout pic="search" body={body}>
-         <div className={styles.wrapper}>
-            <div className={styles.search}>
-               <MainSearchBlock width="wide" />
-            </div>
-         </div>
+      <Layout pic={picsOptions.search} body={body}>
+         <MainSearchBlock width={widthOptions.wide} />
       </Layout>
    );
 }

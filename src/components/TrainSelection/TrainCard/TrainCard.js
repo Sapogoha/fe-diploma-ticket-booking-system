@@ -46,6 +46,7 @@ function TrainCard({ ticket }) {
       }
       navigate(links.seats);
    };
+
    return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
       <div className={styles.card} role="button" tabIndex={0}>

@@ -18,6 +18,10 @@ import {
 } from '../../store/slices/sortSlice';
 import { selectTotalCount } from '../../store/slices/trainsSlice';
 import { removeTrainInfo } from '../../store/slices/trainSlice';
+import { removeAllSelectedSeats } from '../../store/slices/seatsSlice';
+
+import widthOptions from '../../components/MainSearchBlock/widthOptions';
+import picsOptions from '../../components/Layout/picsOptions';
 
 import styles from './TrainSelectionPage.module.scss';
 
@@ -29,6 +33,7 @@ function TrainSelectionPage() {
 
    useEffect(() => {
       dispatch(removeTrainInfo());
+      dispatch(removeAllSelectedSeats());
    }, [dispatch]);
 
    const onChangePage = (value) => {
@@ -58,12 +63,8 @@ function TrainSelectionPage() {
       </>
    );
    return (
-      <Layout pic="search" body={body}>
-         <div className={styles.wrapper}>
-            <div className={styles.search}>
-               <MainSearchBlock width="wide" />
-            </div>
-         </div>
+      <Layout pic={picsOptions.search} body={body}>
+         <MainSearchBlock width={widthOptions.wide} />
       </Layout>
    );
 }

@@ -9,8 +9,8 @@
    background-color: transparent;
    color: var(--color-main-light);
    text-align: center;
-   border: 1px solid var(--color-secondary-light);
-   border-radius: 3px;
+   border: 0.1rem solid var(--color-secondary-light);
+   border-radius: 0.3rem;
 
    cursor: pointer;
    &:hover {
@@ -31,8 +31,7 @@
    font-size: 2.4rem;
    padding: 1.7rem 6.5rem;
    background-color: var(--color-yellow-orange);
-   border-radius: 5px;
-   cursor: pointer;
+   border-radius: 0.5rem;
    &:active {
       background-color: transparent;
       color: var(--color-yellow-orange);
@@ -55,7 +54,7 @@
 
 @mixin border($border) {
    position: absolute;
-   border: 1px solid var(--color-bars-light);
+   border: 0.1rem solid var(--color-bars-light);
    border-radius: 0.8rem;
    height: $border;
 }
@@ -116,13 +115,13 @@
 
 @mixin card {
    font-weight: 400;
-   font-size: 16px;
-   line-height: 19px;
+   font-size: 1.6rem;
+   line-height: 1.9rem;
    color: var(--color-grey);
    padding: 1.8rem;
    background-color: var(--color-main-light);
    margin-bottom: 1.7rem;
-   border: 1px solid var(--color-bars-light);
+   border: 0.1rem solid var(--color-bars-light);
    height: 16rem;
 }
 

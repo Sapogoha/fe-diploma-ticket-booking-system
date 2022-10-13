@@ -5,6 +5,9 @@ import Reviews from '../../components/Reviews/Reviews';
 import HowItWorks from '../../components/HowItWorks/HowItWorks';
 import MainSearchBlock from '../../components/MainSearchBlock/MainSearchBlock';
 
+import widthOptions from '../../components/MainSearchBlock/widthOptions';
+import picsOptions from '../../components/Layout/picsOptions';
+
 import styles from './MainPage.module.scss';
 
 function MainPage() {
@@ -22,15 +25,14 @@ function MainPage() {
       </>
    );
    return (
-      <Layout pic="main" body={body}>
+      <Layout pic={picsOptions.main} body={body}>
          <div className={styles.wrapper}>
             <h1 className={styles.title}>
                Вся жизнь -{' '}
                <span className={styles['title-bold']}>путешествие!</span>
             </h1>
-            <div className={styles.search}>
-               <MainSearchBlock width="normal" />
-            </div>
+
+            <MainSearchBlock width={widthOptions.regular} />
          </div>
       </Layout>
    );

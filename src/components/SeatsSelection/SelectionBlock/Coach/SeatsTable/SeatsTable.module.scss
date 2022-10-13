@@ -1,0 +1,19 @@
+@import '../../../SelectionBlock/SelectionBlock.module.scss';
+
+.seatsTotal {
+   color: var(--color-black);
+   margin-left: 1rem;
+}
+
+.details {
+   @include font(400, 2.4rem, 2.8rem, var(--color-black));
+   text-transform: capitalize;
+
+   .seatsNumber {
+      font-weight: 700;
+      margin-left: 1rem;
+   }
+   &:nth-child(n):not(:last-child) {
+      margin-bottom: 2.5rem;
+   }
+}

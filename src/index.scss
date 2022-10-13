@@ -23,6 +23,7 @@ code {
 html {
    box-sizing: border-box;
    font-size: 62.5%; // 10px/16px = 62.5% -> 1rem = 10px
+   text-size-adjust: none;
 }
 
 ul,
@@ -59,4 +60,7 @@ h6 {
 button {
    background-color: transparent;
    cursor: pointer;
+   &:disabled {
+      cursor: not-allowed;
+   }
 }

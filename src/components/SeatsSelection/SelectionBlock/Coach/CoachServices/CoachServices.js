@@ -24,7 +24,7 @@ import foodHover from './img/hover/food.svg';
 import styles from './CoachServices.module.scss';
 
 function CoachServices({ direction }) {
-   const activeCoach = useSelector(selectSelectedCoaches)[direction];
+   const activeCoach = useSelector(selectSelectedCoaches)[direction].name;
    const coach = useSelector(selectSeatsOptions)[direction]?.filter(
       (item) => item?.coach?.name === activeCoach
    )[0]?.coach;
@@ -65,7 +65,7 @@ function CoachServices({ direction }) {
             (service) =>
                service.status && (
                   <CoachServiceItem
-                     key={service.name}
+                     key={activeCoach + service.name}
                      className={styles.icon}
                      name={service.name}
                      included={service.included}

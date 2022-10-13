@@ -21,8 +21,8 @@ const initialState = {
       },
    },
    selectedCoaches: {
-      departure: null,
-      arrival: null,
+      departure: {},
+      arrival: {},
    },
 };
 
@@ -46,13 +46,15 @@ const trainSlice = createSlice({
          state.selectedClasses = initialState.selectedClasses;
       },
       setSelectedCoaches(state, action) {
-         const { name, direction } = action.payload;
-         state.selectedCoaches[direction] = name;
+         const { name, direction, coachId } = action.payload;
+         state.selectedCoaches[direction] = { coachId, name };
       },
       toggleSelectedCoaches(state, action) {
-         const { name, direction } = action.payload;
+         const { name, direction, coachId } = action.payload;
          state.selectedCoaches[direction] =
-            state.selectedCoaches[direction] === name ? null : name;
+            state.selectedCoaches[direction].coachId === coachId
+               ? {}
+               : { coachId, name };
       },
       removeSelectedCoaches(state, action) {
          state.selectedCoaches[action.payload] = null;

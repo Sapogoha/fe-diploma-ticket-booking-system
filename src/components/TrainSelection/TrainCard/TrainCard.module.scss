@@ -2,7 +2,7 @@
    width: 96rem;
    display: flex;
    background: var(--color-main-light);
-   border: 1px solid var(--color-bars-light);
+   border: 0.1rem solid var(--color-bars-light);
    box-shadow: var(--border-shadow-trains-card);
    margin-bottom: 5rem;
 
@@ -43,7 +43,7 @@
    }
    &__middle {
       width: 48rem;
-      border-right: 1px dashed var(--color-secondary-light);
+      border-right: 0.1rem dashed var(--color-secondary-light);
       padding: 5rem 3.5rem 1.5rem 4rem;
    }
    &__right {
@@ -64,7 +64,7 @@
       }
       &__middle {
          width: 42rem;
-         border-right: 1px dashed var(--color-secondary-light);
+         border-right: 0.1rem dashed var(--color-secondary-light);
          padding: 5rem 0.5rem 0.5rem 0.5rem;
       }
       &__right {
@@ -82,7 +82,7 @@
       }
       &__middle {
          width: 46rem;
-         border-right: 1px dashed var(--color-secondary-light);
+         border-right: 0.1rem dashed var(--color-secondary-light);
          padding: 5rem 2.5rem 2.5rem 2rem;
       }
       &__right {

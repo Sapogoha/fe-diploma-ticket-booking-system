@@ -1,31 +1,56 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Form, Input } from 'antd';
+
+import {
+   setNumOfPassengers,
+   selectNumberOfPassengers,
+} from '../../../../store/slices/passengersSlice';
 
 import ticketWordFormatter from '../../../../utils/ticketWordFormatter';
 
-import styles from './NumberOfTickets.module.scss';
+import styles from './NumberOfPassengers.module.scss';
 
-function NumberOfTickets() {
+function NumberOfPassengers({ direction }) {
+   const dispatch = useDispatch();
    const maxAdultTicketsCount = 5;
-   const [adultCount, setAdultCount] = useState(0);
-   const [childrenCount, setChildrenCount] = useState(0);
    const [childrenMax, setChildrenMax] = useState(0);
-   const [toddlerCount, setToddlerCount] = useState(0);
    const [toddlerMax, setToddlerMax] = useState(0);
+
+   const numberOfPassengers = useSelector(selectNumberOfPassengers)[direction];
+
+   const adultCount = numberOfPassengers.adults;
+   const childrenCount = numberOfPassengers.children;
+   const toddlerCount = numberOfPassengers.toddlers;
 
    const ticketWord = ticketWordFormatter(childrenMax);
 
    useEffect(() => {
       const rest = adultCount * 2 - childrenCount - toddlerCount;
+
       if (rest < 0 && toddlerCount > 0) {
-         setToddlerCount(toddlerCount - 1);
+         dispatch(
+            setNumOfPassengers({
+               category: 'toddlers',
+               direction,
+               value: toddlerCount - 1,
+            })
+         );
       }
       if (rest < 0 && toddlerCount === 0) {
-         setChildrenCount(childrenCount - 1);
+         dispatch(
+            setNumOfPassengers({
+               category: 'children',
+               direction,
+               value: childrenCount - 1,
+            })
+         );
       }
       setChildrenMax(rest);
       setToddlerMax(rest);
-   }, [adultCount, childrenCount, toddlerCount]);
+   }, [adultCount, childrenCount, direction, dispatch, toddlerCount]);
+
    return (
       <div className={styles.seats}>
          <h4 className={styles.title}>Количество билетов</h4>
@@ -39,7 +64,15 @@ function NumberOfTickets() {
                   min={0}
                   max={maxAdultTicketsCount}
                   className={styles.input}
-                  onChange={(evt) => setAdultCount(Number(evt.target.value))}
+                  onChange={(evt) =>
+                     dispatch(
+                        setNumOfPassengers({
+                           category: 'adults',
+                           direction,
+                           value: Number(evt.target.value),
+                        })
+                     )
+                  }
                />
                <div>
                   {` Можно добавить еще ${maxAdultTicketsCount - adultCount}  ${
@@ -58,7 +91,15 @@ function NumberOfTickets() {
                   min={0}
                   max={childrenMax + childrenCount}
                   className={styles.input}
-                  onChange={(evt) => setChildrenCount(Number(evt.target.value))}
+                  onChange={(evt) =>
+                     dispatch(
+                        setNumOfPassengers({
+                           category: 'children',
+                           direction,
+                           value: Number(evt.target.value),
+                        })
+                     )
+                  }
                />
                <div>
                   {`Можно добавить еще ${childrenMax} ${ticketWord} для детей до 10 лет.
@@ -75,7 +116,15 @@ function NumberOfTickets() {
                   min={0}
                   max={toddlerMax + toddlerCount}
                   className={styles.input}
-                  onChange={(evt) => setToddlerCount(Number(evt.target.value))}
+                  onChange={(evt) =>
+                     dispatch(
+                        setNumOfPassengers({
+                           category: 'toddlers',
+                           direction,
+                           value: Number(evt.target.value),
+                        })
+                     )
+                  }
                />
                <div>
                   {` Можно добавить еще ${toddlerMax} ${ticketWord} для младенцев.`}
@@ -86,4 +135,8 @@ function NumberOfTickets() {
    );
 }
 
-export default NumberOfTickets;
+NumberOfPassengers.propTypes = {
+   direction: PropTypes.string.isRequired,
+};
+
+export default NumberOfPassengers;

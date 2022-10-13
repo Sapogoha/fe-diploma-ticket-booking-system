@@ -13,12 +13,6 @@
          font-weight: 700;
       }
    }
-
-   .search {
-      min-width: 73rem;
-      max-width: 73rem;
-      height: 56.5rem;
-   }
 }
 
 @media only screen and (min-width: 900px) and (max-width: 1099px) {
@@ -27,10 +21,6 @@
          font-size: 4.2rem;
          line-height: 4.5rem;
          width: 30rem;
-      }
-      .search {
-         min-width: 60rem;
-         max-width: 60rem;
       }
    }
 }

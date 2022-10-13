@@ -2,7 +2,7 @@
 .train {
    display: grid;
    background-color: var(--color-quinary-light);
-   height: 12.5rem;
+   min-height: 12.5rem;
    align-items: center;
    grid-template-columns: 1fr 2fr 1fr;
 
@@ -34,8 +34,8 @@
    .middle {
       padding: 2.8rem 3.6rem 2.6rem;
       height: 100%;
-      border-left: 1px solid var(--color-main-light);
-      border-right: 1px solid var(--color-main-light);
+      border-left: 0.1rem solid var(--color-main-light);
+      border-right: 0.1rem solid var(--color-main-light);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -66,6 +66,23 @@
          > span {
             @include font(400, 1.8rem, 2.1rem, var(--color-main-dark));
          }
+      }
+   }
+}
+
+@media only screen and (min-width: 1152px) and (max-width: 1300px) {
+   .train {
+      .left {
+         padding-left: 1.5rem;
+         .img {
+            margin-right: 1rem;
+         }
+      }
+      .middle {
+         padding: 2.8rem 1.6rem 2.6rem;
+      }
+      .right {
+         padding-left: 1.5rem;
       }
    }
 }

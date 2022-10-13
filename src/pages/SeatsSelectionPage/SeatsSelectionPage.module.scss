@@ -13,53 +13,13 @@
    }
 }
 
-.wrapper {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-
-   .search {
-      min-width: 149rem;
-      max-width: 149rem;
-      height: 32rem;
-      margin: auto;
-   }
-}
-
 // при ширине меньше 1150 прятать aside в бургер?
 
-@media only screen and (min-width: 1150px) and (max-width: 1250px) {
-   .wrapper {
-      .search {
-         min-width: 100%;
-         max-width: 100%;
-      }
-   }
+@media only screen and (min-width: 1150px) and (max-width: 1399px) {
    .body {
       .wrapper-main {
-         width: 78rem;
-      }
-   }
-}
-@media only screen and (min-width: 1251px) and (max-width: 1399px) {
-   .wrapper {
-      .search {
-         min-width: 100%;
-         max-width: 100%;
-      }
-   }
-   .body {
-      .wrapper-main {
-         width: 91rem;
-      }
-   }
-}
-
-@media only screen and (min-width: 1400px) and (max-width: 1499px) {
-   .wrapper {
-      .search {
-         min-width: 142rem;
-         max-width: 142rem;
+         width: 90rem;
+         margin-left: 1rem;
       }
    }
 }

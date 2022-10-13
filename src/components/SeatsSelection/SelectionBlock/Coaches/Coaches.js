@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -44,6 +45,8 @@ function Coaches({ direction }) {
          setSelectedCoaches({
             direction,
             name: coachesToDisplay[0]?.coach?.name,
+
+            coachId: coachesToDisplay[0]?.coach?._id,
          })
       );
    }, [coachesToDisplay, direction, dispatch]);
@@ -54,6 +57,7 @@ function Coaches({ direction }) {
             <span className={`${styles.text} ${styles.title}`}>Вагоны</span>
             {coachesToDisplay?.map((item) => (
                <CoachItem
+                  coachId={item?.coach?._id}
                   direction={direction}
                   key={item?.coach?.name}
                   name={item?.coach?.name}

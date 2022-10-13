@@ -5,6 +5,7 @@ import trainsSlice from './slices/trainsSlice';
 import sortSlice from './slices/sortSlice';
 import trainSlice from './slices/trainSlice';
 import seatsSlice from './slices/seatsSlice';
+import passengersSlice from './slices/passengersSlice';
 
 const reducer = combineReducers({
    search: searchSlice.reducer,
@@ -13,6 +14,7 @@ const reducer = combineReducers({
    sort: sortSlice.reducer,
    train: trainSlice.reducer,
    seats: seatsSlice.reducer,
+   passengers: passengersSlice.reducer,
 });
 
 const store = configureStore({

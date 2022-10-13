@@ -9,15 +9,15 @@ import {
 
 import styles from './CoachItem.module.scss';
 
-function CoachItem({ name, direction }) {
+function CoachItem({ name, direction, coachId }) {
    const dispatch = useDispatch();
    const activeCoach = useSelector(selectSelectedCoaches)[direction];
 
    const clickHandler = () => {
-      dispatch(toggleSelectedCoaches({ direction, name }));
+      dispatch(toggleSelectedCoaches({ direction, coachId, name }));
    };
    const classNames =
-      name === activeCoach
+      name === activeCoach.name
          ? `${styles.coachNames} ${styles['coachNames-active']}`
          : styles.coachNames;
 
@@ -31,6 +31,7 @@ function CoachItem({ name, direction }) {
 CoachItem.propTypes = {
    name: PropTypes.string.isRequired,
    direction: PropTypes.string.isRequired,
+   coachId: PropTypes.string.isRequired,
 };
 
 export default CoachItem;

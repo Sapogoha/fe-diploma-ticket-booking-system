@@ -19,6 +19,7 @@ import date from './img/date.svg';
 
 import consts from './consts';
 import links from '../../data/links';
+import widthOptions from './widthOptions';
 
 import styles from './MainSearchBlock.module.scss';
 
@@ -32,10 +33,12 @@ function MainSearchBlock({ width }) {
    const departureDate = useSelector(selectDepartureDate);
    // const returnDate = useSelector(selectReturnDate);
    const formCN =
-      width === 'wide' ? `${styles.form} ${styles['form-wide']}` : styles.form;
+      width === widthOptions.wide
+         ? `${styles.form} ${styles['form-wide']}`
+         : styles.form;
    const inputGroupCN =
-      width === 'normal'
-         ? `${styles.inputGroup} ${styles['inputGroup-normal']}`
+      width === widthOptions.regular
+         ? `${styles.inputGroup} ${styles['inputGroup-regular']}`
          : `${styles.inputGroup} ${styles['inputGroup-wide']} ${styles['inputGroup-directions']}}`;
 
    const inpGrHeaderStyle = styles.inputGroup__header;
@@ -117,66 +120,78 @@ function MainSearchBlock({ width }) {
       dispatch(swapValues());
    };
 
+   const classNames =
+      width === widthOptions.wide
+         ? `${styles.wrapper} ${styles.wide}`
+         : ` ${styles.wrapper} ${styles.regular}`;
+
    return (
-      <form className={formCN} onSubmit={submitHandler}>
-         <div className={inputGroupCN}>
-            <div className={inpGrHeaderDirClasses}>направление</div>
-            <div className={styles.inputGroup__directions}>
-               <div className={styles.direction}>
-                  <Direction
-                     className={depCityDirClasses}
-                     name={consts.depCity}
-                     placeholder="откуда"
-                  />
-                  <div className={styles.direction__icon}>
-                     <img src={location} alt="иконка - геолокация" />
+      <section className={classNames}>
+         <form className={formCN} onSubmit={submitHandler}>
+            <div className={inputGroupCN}>
+               <div className={inpGrHeaderDirClasses}>направление</div>
+               <div className={styles.inputGroup__directions}>
+                  <div className={styles.direction}>
+                     <Direction
+                        className={depCityDirClasses}
+                        name={consts.depCity}
+                        placeholder="откуда"
+                     />
+                     <div className={styles.direction__icon}>
+                        <img src={location} alt="иконка - геолокация" />
+                     </div>
                   </div>
-               </div>
 
-               <button
-                  onClick={clickHandler}
-                  className={styles.buttonArrows}
-                  type="button"
-               >
-                  <img src={arrows} alt="иконка - круглые стрелки" />
-               </button>
-               <div className={styles.direction}>
-                  <Direction
-                     className={arrCityDirClasses}
-                     name={consts.arrCity}
-                     placeholder="куда"
-                  />
-                  <div className={styles.direction__icon}>
-                     <img src={location} alt="иконка - геолокация" />
+                  <button
+                     onClick={clickHandler}
+                     className={styles.buttonArrows}
+                     type="button"
+                  >
+                     <img src={arrows} alt="иконка - круглые стрелки" />
+                  </button>
+                  <div className={styles.direction}>
+                     <Direction
+                        className={arrCityDirClasses}
+                        name={consts.arrCity}
+                        placeholder="куда"
+                     />
+                     <div className={styles.direction__icon}>
+                        <img src={location} alt="иконка - геолокация" />
+                     </div>
                   </div>
                </div>
             </div>
-         </div>
-         <div className={`${styles.inputGroup} ${styles['inputGroup-dates']}`}>
-            <div className={inpGrHeaderDateClasses}>дата</div>
-            <div className={styles.inputGroup__dates}>
-               <div className={styles.date}>
-                  <Calendar name={consts.depDate} className={depDateClasses} />
-                  <div className={styles.date__icon}>
-                     <img src={date} alt="иконка - календарь" />
+            <div
+               className={`${styles.inputGroup} ${styles['inputGroup-dates']}`}
+            >
+               <div className={inpGrHeaderDateClasses}>дата</div>
+               <div className={styles.inputGroup__dates}>
+                  <div className={styles.date}>
+                     <Calendar
+                        name={consts.depDate}
+                        className={depDateClasses}
+                     />
+                     <div className={styles.date__icon}>
+                        <img src={date} alt="иконка - календарь" />
+                     </div>
                   </div>
-               </div>
 
-               <div className={styles.date}>
-                  <Calendar
-                     name={consts.retDate}
-                     className={styles.date__input}
-                  />
-                  <div className={styles.date__icon}>
-                     <img src={date} alt="иконка - календарь" />
+                  <div className={styles.date}>
+                     <Calendar
+                        name={consts.retDate}
+                        className={styles.date__input}
+                     />
+                     <div className={styles.date__icon}>
+                        <img src={date} alt="иконка - календарь" />
+                     </div>
                   </div>
                </div>
             </div>
-         </div>
-         <button type="submit" className={btnClasses} disabled={disabled}>
-            найти билеты
-         </button>
-      </form>
+            <button type="submit" className={btnClasses} disabled={disabled}>
+               найти билеты
+            </button>
+         </form>
+      </section>
    );
 }
 

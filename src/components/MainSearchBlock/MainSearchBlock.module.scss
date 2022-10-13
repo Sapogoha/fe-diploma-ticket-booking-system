@@ -25,10 +25,10 @@
    min-height: $height;
    max-height: $height;
    padding: 1.9rem 7rem 2rem 2.1rem;
-   border-radius: 3px;
+   border-radius: 0.3rem;
    background-color: var(--color-main-light);
    &-invalid {
-      border: 3px solid var(--color-error-light);
+      border: 0.3rem solid var(--color-error-light);
    }
 }
 
@@ -102,143 +102,123 @@
    }
 }
 
-.form {
-   background-color: var(--color-search-block);
-   min-width: 100%;
-   min-height: 100%;
-   padding: 8rem 2.4rem 5rem 2.1rem;
+.wrapper {
+   .form {
+      background-color: var(--color-search-block);
+      min-width: 100%;
+      min-height: 100%;
+      padding: 8rem 2.4rem 5rem 2.1rem;
 
-   position: relative;
-   display: flex;
-   justify-content: space-between;
-   flex-wrap: wrap;
-
-   &-wide {
-      padding: 2.5rem 4rem 5rem 4rem;
-   }
-
-   .inputGroup {
-      margin-bottom: 2rem;
-      min-width: 68.5rem;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
 
       &-wide {
-         margin-right: 0.1rem;
+         padding: 2.5rem 4rem 5rem 4rem;
       }
-      &-normal {
-         margin-bottom: 6rem;
-      }
-      &__header {
-         font-weight: 300;
-         font-size: 3rem;
-         margin-bottom: 2rem;
-         color: var(--color-main-light);
-         text-transform: capitalize;
-         &-invalid {
-            color: var(--color-error-light);
-         }
-      }
-      &__directions {
-         @include input-group;
-         align-items: center;
-         .direction {
-            @include inputs(
-               2.1rem,
-               3rem,
-               1.5rem,
-               1.7rem,
-               capitalize,
-               32rem,
-               6rem
-            );
-         }
-         .buttonArrows {
-            width: 2.4rem;
-            height: 2.4rem;
-            border: 0;
-            position: relative;
-            cursor: pointer;
-            @include img;
-         }
-      }
-      &__dates {
-         @include input-group;
-         .date {
-            @include inputs(
-               2.1rem,
-               3rem,
-               1.5rem,
-               1.7rem,
-               capitalize,
-               32rem,
-               6rem
-            );
-         }
-      }
-   }
-   .button {
-      color: var(--color-main-dark);
-      margin-top: 1.8rem;
-      margin-bottom: auto;
-      justify-self: flex-end;
-      align-self: flex-end;
-      margin-left: auto;
-
-      @include button-gold;
-      &-invalid {
-         background-color: var(--color-grey);
-         color: var(--color-main-light);
-         &:hover {
-            background-color: var(--color-grey);
-            color: var(--color-main-light);
-         }
-      }
-   }
-}
-
-@media only screen and (min-width: 900px) and (max-width: 1151px) {
-   .form {
-      padding-right: 0.2rem;
-      padding-left: 0.3rem;
 
       .inputGroup {
-         min-width: 59rem;
+         margin-bottom: 2rem;
+         min-width: 68.5rem;
+
+         &-wide {
+            margin-right: 0.1rem;
+         }
+         &-regular {
+            margin-bottom: 6rem;
+         }
+         &__header {
+            font-weight: 300;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--color-main-light);
+            text-transform: capitalize;
+            &-invalid {
+               color: var(--color-error-light);
+            }
+         }
          &__directions {
+            @include input-group;
+            align-items: center;
             .direction {
-               @include media;
+               @include inputs(
+                  2.1rem,
+                  3rem,
+                  1.5rem,
+                  1.7rem,
+                  capitalize,
+                  32rem,
+                  6rem
+               );
+            }
+            .buttonArrows {
+               width: 2.4rem;
+               height: 2.4rem;
+               border: 0;
+               position: relative;
+               cursor: pointer;
+               @include img;
             }
          }
          &__dates {
+            @include input-group;
             .date {
-               @include media;
+               @include inputs(
+                  2.1rem,
+                  3rem,
+                  1.5rem,
+                  1.7rem,
+                  capitalize,
+                  32rem,
+                  6rem
+               );
             }
          }
       }
       .button {
-         padding: 1.7rem 4rem;
-      }
+         color: var(--color-main-dark);
+         margin-top: 1.8rem;
+         margin-bottom: auto;
+         justify-self: flex-end;
+         align-self: flex-end;
+         margin-left: auto;
 
-      &-wide {
-         @include grid(60% 30%, 0 1.5rem);
+         @include button-gold;
+         &-invalid {
+            background-color: var(--color-grey);
+            color: var(--color-main-light);
+            &:hover {
+               background-color: var(--color-grey);
+               color: var(--color-main-light);
+            }
+         }
       }
    }
 }
 
-@media only screen and (min-width: 1152px) and (max-width: 1299px) {
-   .form {
-      &-wide {
-         @include grid(68.5rem 1fr, 1.5rem);
-      }
-   }
+.regular {
+   min-width: 73rem;
+   max-width: 73rem;
+   height: 56.5rem;
 }
-@media only screen and (min-width: 1300px) and (max-width: 1419px) {
-   .form {
-      justify-content: space-between;
-      &-wide {
-         padding-right: 2.5rem;
-         padding-left: 2.5rem;
+
+.wide {
+   min-width: 149rem;
+   max-width: 149rem;
+   height: 32rem;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1151px) {
+   .wrapper {
+      .form {
+         padding-right: 0.2rem;
+         padding-left: 0.3rem;
+
          .inputGroup {
             min-width: 59rem;
-            max-width: 59rem;
             &__directions {
                .direction {
                   @include media;
@@ -251,18 +231,78 @@
             }
          }
          .button {
-            padding: 1.7rem 4.5rem;
+            padding: 1.7rem 4rem;
+         }
+
+         &-wide {
+            @include grid(60% 30%, 0 1.5rem);
          }
       }
+   }
+   .regular {
+      min-width: 60rem;
+      max-width: 60rem;
+   }
+}
+
+@media only screen and (min-width: 1152px) and (max-width: 1299px) {
+   .wrapper {
+      .form {
+         &-wide {
+            @include grid(68.5rem 1fr, 1.5rem);
+         }
+      }
+   }
+   .wide {
+      min-width: 100%;
+      max-width: 100%;
+   }
+}
+@media only screen and (min-width: 1300px) and (max-width: 1419px) {
+   .wrapper {
+      .form {
+         justify-content: space-between;
+         &-wide {
+            padding-right: 2.5rem;
+            padding-left: 2.5rem;
+            .inputGroup {
+               min-width: 59rem;
+               max-width: 59rem;
+               &__directions {
+                  .direction {
+                     @include media;
+                  }
+               }
+               &__dates {
+                  .date {
+                     @include media;
+                  }
+               }
+            }
+            .button {
+               padding: 1.7rem 4.5rem;
+            }
+         }
+      }
+   }
+   .wide {
+      min-width: 100%;
+      max-width: 100%;
    }
 }
 
 @media only screen and (min-width: 1420px) and (max-width: 1500px) {
-   .form {
-      justify-content: space-between;
-      &-wide {
-         padding-right: 1.5rem;
-         padding-left: 1.5rem;
+   .wrapper {
+      .form {
+         justify-content: space-between;
+         &-wide {
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+         }
       }
+   }
+   .wide {
+      min-width: 142rem;
+      max-width: 142rem;
    }
 }

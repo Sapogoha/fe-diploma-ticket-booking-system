@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import CoachServices from './CoachServices/CoachServices';
+import Seats from './Seats/Seats';
+import SeatsTable from './SeatsTable/SeatsTable';
+import PricesTable from './PricesTable/PricesTable';
 
 import {
    selectTrains,
@@ -14,14 +17,12 @@ import { fetchSeats } from '../../../../store/thunks/asyncThunks';
 
 import classes from '../../classes';
 
-import rub from './rub.svg';
-
 import styles from './Coach.module.scss';
 
-function Coach({ direction }) {
+function Coach({ direction, NumOfPplView }) {
    const dispatch = useDispatch();
    const train = useSelector(selectTrains)[direction];
-   const activeCoach = useSelector(selectSelectedCoaches)[direction];
+   const activeCoach = useSelector(selectSelectedCoaches)[direction].name;
 
    const coach = useSelector(selectSeatsOptions)[direction]?.filter(
       (item) => item?.coach?.name === activeCoach
@@ -31,8 +32,29 @@ function Coach({ direction }) {
       .map((item) => (item.available ? item.index : null))
       .filter((item) => item !== null);
 
-   let url;
+   let prices;
+   switch (coach?.coach?.class_type) {
+      case classes.first:
+         prices = { bottom: coach?.coach?.price };
+         break;
+      case classes.second:
+         prices = {
+            top: coach?.coach?.top_price,
+            bottom: coach?.coach?.bottom_price,
+         };
+         break;
+      case classes.third:
+         prices = {
+            bottom: coach?.coach?.bottom_price,
+            top: coach?.coach?.top_price,
+            side: coach?.coach?.side_price,
+         };
+         break;
+      default:
+         prices = { bottom: coach?.coach?.bottom_price };
+   }
 
+   let url;
    if (train?._id) {
       url = `${process.env.REACT_APP_SEARCH_ROUTES}/${train?._id}/seats`;
    }
@@ -49,129 +71,83 @@ function Coach({ direction }) {
       (item) => item <= 36 && item % 2 === 1
    ).length;
 
-   const top = (
-      <div className={styles.details}>
-         <span>верхние</span>
-         <span className={styles.seatsNumber}>
-            {numOfTop === -1 ? 0 : numOfTop}
-         </span>
-      </div>
-   );
-
-   const bottom = (
-      <div className={styles.details}>
-         <span>нижние</span>
-         {(coach?.coach?.class_type === classes.first ||
-            coach?.coach?.class_type === classes.fourth) && (
-            <span className={styles.seatsNumber}>{availableSeats?.length}</span>
-         )}
-         {(coach?.coach?.class_type === classes.second ||
-            coach?.coach?.class_type === classes.third) && (
-            <span className={styles.seatsNumber}>
-               {numOfBottom === -1 ? 0 : numOfBottom}
-            </span>
-         )}
-      </div>
-   );
-
-   const side = (
-      <div className={styles.details}>
-         <span>боковые</span>
-         <span className={styles.seatsNumber}>
-            {numOfSide === -1 ? 0 : numOfSide}
-         </span>
-      </div>
-   );
-
-   const topPrice = (
-      <div className={styles.priceAmount}>
-         <span>{coach?.coach?.top_price}</span>
-         <div className={styles.currency}>
-            <img src={rub} alt="иконка - руб." />
-         </div>
-      </div>
-   );
-
-   const bottomPrice = (
-      <div className={styles.priceAmount}>
-         {coach?.coach?.class_type !== classes.first && (
-            <span>{coach?.coach?.bottom_price}</span>
-         )}
-         {coach?.coach?.class_type === classes.first && (
-            <span>{coach?.coach?.price}</span>
-         )}
-         <div className={styles.currency}>
-            <img src={rub} alt="иконка - руб." />
-         </div>
-      </div>
-   );
-
-   const sidePrice = (
-      <div className={styles.priceAmount}>
-         <div>{coach?.coach?.side_price}</div>
-         <span className={styles.currency}>
-            <img src={rub} alt="иконка - руб." />
-         </span>
+   const viewers = (
+      <div className={styles.middle}>
+         {` ${NumOfPplView} 
+   ${
+      `${NumOfPplView}`.slice(-1) >= 2 && `${NumOfPplView}`.slice(-1) <= 4
+         ? 'человека'
+         : 'человек'
+   } 
+   выбирают места в этом поезде`}
       </div>
    );
 
    return (
-      <div className={styles.coach}>
-         <div className={styles.top}>
-            <div className={styles.coachNumber}>
-               <span className={styles.coachNumber__name}>
-                  {coach?.coach?.name}
-               </span>
-               <span className={styles.coachNumber__coach}>вагон</span>
-            </div>
-            <div className={styles.seats}>
-               <div className={styles.header}>
-                  <span>места</span>
-                  <span className={styles.seatsTotal}>
-                     {availableSeats?.length}
-                  </span>
+      <>
+         {activeCoach && (
+            <div className={styles.coach}>
+               <div className={styles.top}>
+                  <div className={styles.coachNumber}>
+                     <span className={styles.coachNumber__name}>
+                        {coach?.coach?.name}
+                     </span>
+                     <span className={styles.coachNumber__coach}>вагон</span>
+                  </div>
+                  <div className={styles.seats}>
+                     <div className={styles.header}>
+                        <span>места</span>
+                        <span className={styles.seatsTotal}>
+                           {availableSeats?.length}
+                        </span>
+                     </div>
+                     <SeatsTable
+                        coach={coach}
+                        numOfTop={numOfTop}
+                        numOfBottom={numOfBottom}
+                        numOfSide={numOfSide}
+                        numOfSeats={availableSeats?.length}
+                     />
+                  </div>
+                  <div className={styles.price}>
+                     <div className={styles.header}>стоимость</div>
+                     <PricesTable
+                        coach={coach}
+                        numOfTop={numOfTop}
+                        numOfBottom={numOfBottom}
+                        numOfSide={numOfSide}
+                     />
+                  </div>
+
+                  <div className={styles.service}>
+                     <div className={styles.header}>
+                        <span>обслуживание</span>
+                        <span className={styles.serviceProvider}>фпк</span>
+                     </div>
+
+                     <CoachServices direction={direction} />
+                  </div>
                </div>
-               {(coach?.coach?.class_type === classes.second ||
-                  coach?.coach?.class_type === classes.third) &&
-                  numOfTop > 0 &&
-                  top}
-
-               {numOfBottom > 0 && bottom}
-
-               {coach?.coach?.class_type === classes.third &&
-                  numOfSide > 0 &&
-                  side}
-            </div>
-            <div className={styles.price}>
-               <div className={styles.header}>стоимость</div>
-               <div>
-                  {(coach?.coach?.class_type === classes.second ||
-                     coach?.coach?.class_type === classes.third) &&
-                     numOfTop > 0 &&
-                     topPrice}
-
-                  {numOfBottom > 0 && bottomPrice}
-
-                  {coach?.coach?.class_type === classes.third &&
-                     numOfSide > 0 &&
-                     sidePrice}
+               {viewers}
+               <div className={styles.bottom}>
+                  <Seats
+                     direction={direction}
+                     coachId={coach?.coach?._id}
+                     availableSeats={availableSeats}
+                     classType={coach?.coach?.class_type}
+                     prices={prices}
+                  />
                </div>
             </div>
-
-            <div className={styles.service}>
-               <div className={styles.header}>
-                  <span>обслуживание</span>
-                  <span className={styles.serviceProvider}>фпк</span>
-               </div>
-
-               <CoachServices direction={direction} />
-            </div>
-         </div>
-         <div>{availableSeats}</div>
-      </div>
+         )}
+         {!activeCoach && <div className={styles.noCoach}>Выберите вагон</div>}
+      </>
    );
 }
 
-Coach.propTypes = { direction: PropTypes.string.isRequired };
+Coach.propTypes = {
+   direction: PropTypes.string.isRequired,
+   NumOfPplView: PropTypes.number.isRequired,
+};
 
 export default Coach;

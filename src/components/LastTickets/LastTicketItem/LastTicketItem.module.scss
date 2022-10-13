@@ -10,7 +10,7 @@
       'from to'
       'icons price';
    background: var(--color-main-light);
-   border: 1px solid var(--color-bars-light);
+   border: 0.1rem solid var(--color-bars-light);
    box-shadow: var(--border-shadow-last-ticket);
 
    .direction {

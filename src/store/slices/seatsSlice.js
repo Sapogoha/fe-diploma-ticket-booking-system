@@ -7,21 +7,51 @@ const initialState = {
    seatsOptions: { departure: [], arrival: [] },
    loading: false,
    error: null,
-   selectedSeats: { departure: [], arrival: [] },
+   selectedSeats: {
+      departure: [],
+      arrival: [],
+   },
 };
 
 const seatsSlice = createSlice({
    name: 'seatsSlice',
    initialState,
    reducers: {
-      // addSelectedSeats(state, action) {
-      //    const { numbers, direction } = action.payload;
-      //    state.selectedSeats[direction] = [...state.selectedSeats[direction], numbers];
-      // },
-      // removeSelectedSeat(state, action) {
-      //    const { number, direction } = action.payload;
-      //    state.selectedSeats[direction].filter(item => item!===number)
-      // },
+      addSelectedSeats(state, action) {
+         const { number, direction, coachId, price } = action.payload;
+         const ids = state.selectedSeats[direction].map((el) => el.coachId);
+         const sameId = ids.indexOf(coachId);
+
+         if (sameId !== -1) {
+            state.selectedSeats[direction][sameId].seats = [
+               ...state.selectedSeats[direction][sameId].seats,
+               { seat: number, price },
+            ];
+         } else {
+            state.selectedSeats[direction] = [
+               ...state.selectedSeats[direction],
+               { coachId, seats: [{ seat: number, price }] },
+            ];
+         }
+      },
+      removeSelectedSeat(state, action) {
+         const { number, direction, coachId } = action.payload;
+         state.selectedSeats[direction].forEach((el) => {
+            if (el.coachId === coachId) {
+               el.seats = el.seats.filter((item) => item.seat !== number);
+            }
+         });
+      },
+      removeAllSelectedSeatsFromCoach(state, action) {
+         const { direction, coachId } = action.payload;
+         state.selectedSeats[direction] = state.selectedSeats[direction].filter(
+            (el) => el.coachId !== coachId
+         );
+      },
+
+      removeAllSelectedSeats(state) {
+         state.selectedSeats = initialState.selectedSeats;
+      },
    },
    extraReducers: {
       [fetchSeats.pending]: (state) => {
@@ -41,7 +71,12 @@ const seatsSlice = createSlice({
    },
 });
 
-// export const { setSelectedSeats } = seatsSlice.actions;
+export const {
+   addSelectedSeats,
+   removeSelectedSeat,
+   removeAllSelectedSeatsFromCoach,
+   removeAllSelectedSeats,
+} = seatsSlice.actions;
 
 export const selectSeatsOptions = (state) => state.seats.seatsOptions;
 export const selectSelectedSeats = (state) => state.seats.selectedSeats;
