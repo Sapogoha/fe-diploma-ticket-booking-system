@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import rub from './rub.svg';
 
-import classes from '../../../classes';
+import classes from '../../../../classes';
 import styles from './PricesTable.module.scss';
 
 function PricesTable({ coach, numOfTop, numOfBottom, numOfSide }) {

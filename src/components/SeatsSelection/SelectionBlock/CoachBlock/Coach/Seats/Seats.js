@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import SeatItem from './SeatItem/SeatItem';
 
-import { selectSelectedSeats } from '../../../../../store/slices/seatsSlice';
+import { selectSelectedSeats } from '../../../../../../store/slices/seatsSlice';
 
-import classes from '../../../classes';
+import classes from '../../../../classes';
 
 import styles from './Seats.module.scss';
 

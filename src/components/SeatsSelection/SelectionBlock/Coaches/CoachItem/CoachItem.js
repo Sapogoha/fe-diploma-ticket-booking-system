@@ -3,23 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
-   toggleSelectedCoaches,
+   setSelectedCoach,
    selectSelectedCoaches,
+   removeSelectedCoach,
 } from '../../../../../store/slices/trainSlice';
 
 import styles from './CoachItem.module.scss';
 
 function CoachItem({ name, direction, coachId }) {
    const dispatch = useDispatch();
-   const activeCoach = useSelector(selectSelectedCoaches)[direction];
+   const activeCoaches = useSelector(selectSelectedCoaches)[direction];
+   const sameCoach = activeCoaches?.find((el) => el.coachId === coachId);
 
    const clickHandler = () => {
-      dispatch(toggleSelectedCoaches({ direction, coachId, name }));
+      if (sameCoach) {
+         dispatch(removeSelectedCoach({ direction, coachId }));
+      } else {
+         dispatch(setSelectedCoach({ direction, coachId, name }));
+      }
    };
-   const classNames =
-      name === activeCoach.name
-         ? `${styles.coachNames} ${styles['coachNames-active']}`
-         : styles.coachNames;
+   const classNames = sameCoach
+      ? `${styles.coachNames} ${styles['coachNames-active']}`
+      : styles.coachNames;
 
    return (
       <button type="button" className={classNames} onClick={clickHandler}>

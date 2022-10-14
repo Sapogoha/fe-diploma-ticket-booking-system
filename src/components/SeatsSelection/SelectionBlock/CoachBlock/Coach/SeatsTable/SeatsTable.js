@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import classes from '../../../classes';
+import classes from '../../../../classes';
 import styles from './SeatsTable.module.scss';
 
 function SeatsTable({ coach, numOfTop, numOfBottom, numOfSide, numOfSeats }) {

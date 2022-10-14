@@ -12,7 +12,9 @@ import {
 } from '../../../../store/slices/seatsSlice';
 import {
    selectSelectedClasses,
-   setSelectedCoaches,
+   setSelectedCoach,
+   selectSelectedCoaches,
+   removeAllSelectedCoaches,
 } from '../../../../store/slices/trainSlice';
 
 import styles from './Coaches.module.scss';
@@ -22,6 +24,7 @@ function Coaches({ direction }) {
    const coaches = useSelector(selectSeatsOptions)[direction];
    const error = useSelector(selectError);
    const selectedClasses = useSelector(selectSelectedClasses)[direction];
+   const activeCoaches = useSelector(selectSelectedCoaches)[direction];
    let coachesToDisplay;
 
    const filter = Object.entries(selectedClasses)
@@ -41,15 +44,23 @@ function Coaches({ direction }) {
    }
 
    useEffect(() => {
-      dispatch(
-         setSelectedCoaches({
-            direction,
-            name: coachesToDisplay[0]?.coach?.name,
-
-            coachId: coachesToDisplay[0]?.coach?._id,
-         })
-      );
-   }, [coachesToDisplay, direction, dispatch]);
+      const name = coachesToDisplay[0]?.coach?.name;
+      const coachId = coachesToDisplay[0]?.coach?._id;
+      const sameCoach = activeCoaches?.find((el) => el.coachId === coachId);
+      if (
+         name &&
+         (!sameCoach || activeCoaches.length > coachesToDisplay.length)
+      ) {
+         dispatch(removeAllSelectedCoaches(direction));
+         dispatch(
+            setSelectedCoach({
+               direction,
+               name,
+               coachId,
+            })
+         );
+      }
+   }, [filter, coachesToDisplay, direction, dispatch, activeCoaches]);
 
    return (
       <div className={styles.coaches}>

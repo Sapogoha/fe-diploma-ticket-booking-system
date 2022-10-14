@@ -21,8 +21,8 @@ const initialState = {
       },
    },
    selectedCoaches: {
-      departure: {},
-      arrival: {},
+      departure: [],
+      arrival: [],
    },
 };
 
@@ -38,26 +38,28 @@ const trainSlice = createSlice({
       removeTrainInfo() {
          return initialState;
       },
-      setSelectedClasses(state, action) {
+      setSelectedClass(state, action) {
          const { name, value, direction } = action.payload;
          state.selectedClasses[direction][name] = value;
       },
       removeSelectedClasses(state) {
          state.selectedClasses = initialState.selectedClasses;
       },
-      setSelectedCoaches(state, action) {
+      setSelectedCoach(state, action) {
          const { name, direction, coachId } = action.payload;
-         state.selectedCoaches[direction] = { coachId, name };
+         state.selectedCoaches[direction] = [
+            ...state.selectedCoaches[direction],
+            { coachId, name },
+         ];
       },
-      toggleSelectedCoaches(state, action) {
-         const { name, direction, coachId } = action.payload;
-         state.selectedCoaches[direction] =
-            state.selectedCoaches[direction].coachId === coachId
-               ? {}
-               : { coachId, name };
+      removeSelectedCoach(state, action) {
+         const { direction, coachId } = action.payload;
+         state.selectedCoaches[direction] = state.selectedCoaches[
+            direction
+         ].filter((el) => el.coachId !== coachId);
       },
-      removeSelectedCoaches(state, action) {
-         state.selectedCoaches[action.payload] = null;
+      removeAllSelectedCoaches(state, action) {
+         state.selectedCoaches[action.payload] = [];
       },
    },
    extraReducers: {},
@@ -66,11 +68,11 @@ const trainSlice = createSlice({
 export const {
    setTrains,
    removeTrainInfo,
-   setSelectedClasses,
+   setSelectedClass,
    removeSelectedClasses,
-   setSelectedCoaches,
-   toggleSelectedCoaches,
-   removeSelectedCoaches,
+   setSelectedCoach,
+   removeSelectedCoach,
+   removeAllSelectedCoaches,
 } = trainSlice.actions;
 
 export const selectTrains = (state) => state.train.trains;

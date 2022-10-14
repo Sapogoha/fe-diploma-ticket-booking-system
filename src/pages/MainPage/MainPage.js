@@ -31,7 +31,6 @@ function MainPage() {
                Вся жизнь -{' '}
                <span className={styles['title-bold']}>путешествие!</span>
             </h1>
-
             <MainSearchBlock width={widthOptions.regular} />
          </div>
       </Layout>

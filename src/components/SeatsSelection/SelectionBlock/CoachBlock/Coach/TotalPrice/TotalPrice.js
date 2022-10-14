@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { selectSelectedSeats } from '../../../../../store/slices/seatsSlice';
-import { selectNumberOfPassengers } from '../../../../../store/slices/passengersSlice';
+import { selectSelectedSeats } from '../../../../../../store/slices/seatsSlice';
+import { selectNumberOfPassengers } from '../../../../../../store/slices/passengersSlice';
 
-import seatsWordFormatter from '../../../../../utils/seatsWordFormatter';
-import coachesWordFormatter from '../../../../../utils/coachesWordFormatter';
+import seatsWordFormatter from '../../../../../../utils/seatsWordFormatter';
+import coachesWordFormatter from '../../../../../../utils/coachesWordFormatter';
 
 import rub from './rub.svg';
 
@@ -44,6 +44,10 @@ function TotalPrice({ direction }) {
 
    return (
       <div className={styles.price}>
+         <div className={styles.text}>
+            Вы выбрали {prices.length} {seatsWordFormatter(prices.length)} в{' '}
+            {numOfCoaches} {coachesWordFormatter(numOfCoaches)}
+         </div>
          {sum >= 0 && (
             <div className={styles.total}>
                {sum}
@@ -65,10 +69,6 @@ function TotalPrice({ direction }) {
                количеству выбранных вами мест
             </div>
          )}
-         <div className={styles.text}>
-            Вы выбрали {prices.length} {seatsWordFormatter(prices.length)} в{' '}
-            {numOfCoaches} {coachesWordFormatter(numOfCoaches)}
-         </div>
       </div>
    );
 }

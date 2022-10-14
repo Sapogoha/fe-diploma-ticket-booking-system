@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -6,8 +7,8 @@ import TrainInfo from './TrainInfo/TrainInfo';
 import NumberOfPassengers from './NumberOfPassengers/NumberOfPassengers';
 import CoachType from './CoachType/CoachType';
 import Coaches from './Coaches/Coaches';
-import Coach from './Coach/Coach';
-import TotalPrice from './Coach/TotalPrice/TotalPrice';
+import CoachBlock from './CoachBlock/CoachBlock';
+import TotalPrice from './CoachBlock/Coach/TotalPrice/TotalPrice';
 
 import departureArrow from './img/arrow-departure.svg';
 import arrivalArrow from './img/arrow-arrival.svg';
@@ -53,7 +54,7 @@ function SelectionBlock({ direction }) {
          <NumberOfPassengers direction={direction} />
          <CoachType direction={direction} />
          <Coaches direction={direction} />
-         <Coach direction={direction} NumOfPplView={NumOfPplView} />
+         <CoachBlock direction={direction} NumOfPplView={NumOfPplView} />
          <TotalPrice direction={direction} />
       </div>
    );

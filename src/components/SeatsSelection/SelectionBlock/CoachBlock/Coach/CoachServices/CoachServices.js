@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import CoachServiceItem from './CoachServiceItem/CoachServiceItem';
 
-import { selectSelectedCoaches } from '../../../../../store/slices/trainSlice';
-import { selectSeatsOptions } from '../../../../../store/slices/seatsSlice';
+import { selectSeatsOptions } from '../../../../../../store/slices/seatsSlice';
 
 import serviceNames from './serviceNames';
 
@@ -23,10 +22,9 @@ import foodHover from './img/hover/food.svg';
 
 import styles from './CoachServices.module.scss';
 
-function CoachServices({ direction }) {
-   const activeCoach = useSelector(selectSelectedCoaches)[direction].name;
+function CoachServices({ direction, coachName }) {
    const coach = useSelector(selectSeatsOptions)[direction]?.filter(
-      (item) => item?.coach?.name === activeCoach
+      (item) => item?.coach?.name === coachName
    )[0]?.coach;
 
    const services = [
@@ -65,7 +63,7 @@ function CoachServices({ direction }) {
             (service) =>
                service.status && (
                   <CoachServiceItem
-                     key={activeCoach + service.name}
+                     key={coachName + service.name}
                      className={styles.icon}
                      name={service.name}
                      included={service.included}
@@ -83,6 +81,7 @@ function CoachServices({ direction }) {
 
 CoachServices.propTypes = {
    direction: PropTypes.string.isRequired,
+   coachName: PropTypes.string.isRequired,
 };
 
 export default CoachServices;

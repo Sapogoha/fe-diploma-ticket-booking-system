@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { setSelectedClasses } from '../../../../../store/slices/trainSlice';
+import { setSelectedClass } from '../../../../../store/slices/trainSlice';
 
 import styles from './CoachTypeItem.module.scss';
 
@@ -12,7 +12,7 @@ function CoachTypeItem({ coach, direction }) {
    const clickHandler = () => {
       setIconActive(!iconActive);
       dispatch(
-         setSelectedClasses({ direction, name: coach.name, value: !iconActive })
+         setSelectedClass({ direction, name: coach.name, value: !iconActive })
       );
    };
    const icon = iconActive ? coach?.imgActive : coach?.img;

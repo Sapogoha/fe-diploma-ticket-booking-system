@@ -49,8 +49,8 @@ const seatsSlice = createSlice({
          );
       },
 
-      removeAllSelectedSeats(state) {
-         state.selectedSeats = initialState.selectedSeats;
+      clearSeatsSlice() {
+         return initialState;
       },
    },
    extraReducers: {
@@ -75,7 +75,7 @@ export const {
    addSelectedSeats,
    removeSelectedSeat,
    removeAllSelectedSeatsFromCoach,
-   removeAllSelectedSeats,
+   clearSeatsSlice,
 } = seatsSlice.actions;
 
 export const selectSeatsOptions = (state) => state.seats.seatsOptions;
