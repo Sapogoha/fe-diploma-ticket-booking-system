@@ -12,41 +12,33 @@ import rub from './rub.svg';
 
 import styles from './TotalPrice.module.scss';
 
-function TotalPrice({ direction }) {
-   // нет механики расчета цены, поэтому сортирую по возрастанию, детям делаю скидку 50% на самые дешевые билеты
+function TotalPrice({ direction, adultSeats, childrenSeats }) {
    const seats = useSelector(selectSelectedSeats)[direction];
-   const pricesDraft = seats?.map((el) => el.seats.map((seat) => seat.price));
-   const prices = pricesDraft?.flat();
-   const numOfCoaches = pricesDraft.filter((el) => el.length > 0).length;
+   const sum = seats.map((el) =>
+      el.seats
+         .map((item) => item.price * item.priceCoefficient)
+         .reduce((curNumber, item) => curNumber + item, 0)
+   );
+
    const numberOfPassengers = useSelector(selectNumberOfPassengers)[direction];
+   const numOfAdults = numberOfPassengers?.adults;
+   const numOfChildren = numberOfPassengers?.children;
 
-   let priceCoefficients;
-   if (numberOfPassengers?.children) {
-      const children = Array.from(
-         Array(numberOfPassengers?.children),
-         () => 0.5
-      );
-      const adult = Array.from(Array(numberOfPassengers?.adults), () => 1);
-      priceCoefficients = [...children, ...adult];
-   } else {
-      priceCoefficients = Array.from(
-         Array(numberOfPassengers?.adults),
-         () => 1
-      );
-   }
-
-   let sum = 0;
-   sum = prices.reduce(
-      (curNumber, value, index) =>
-         curNumber + value * priceCoefficients[index] || -1,
+   const numsDraft = seats?.map(
+      (el) => el.seats.filter((item) => item.seat).length
+   );
+   const numOfCoaches = numsDraft?.length;
+   const numOfPassengers = numsDraft?.reduce(
+      (curNumber, item) => curNumber + item,
       0
    );
 
    return (
       <div className={styles.price}>
          <div className={styles.text}>
-            Вы выбрали {prices.length} {seatsWordFormatter(prices.length)} в{' '}
-            {numOfCoaches} {coachesWordFormatter(numOfCoaches)}
+            Вы выбрали {numOfPassengers} {seatsWordFormatter(numOfPassengers)} в{' '}
+            {numOfCoaches} {coachesWordFormatter(numOfCoaches)}: взрослых -{' '}
+            {adultSeats} и детских - {childrenSeats}
          </div>
          {sum >= 0 && (
             <div className={styles.total}>
@@ -63,16 +55,26 @@ function TotalPrice({ direction }) {
                Для рассчета суммы выберите количество взрослых и детских билетов
             </div>
          )}
-         {priceCoefficients.length !== prices.length && (
+         {numOfAdults + numOfChildren !== numOfPassengers && (
             <div className={styles.prompt}>
                Суммарное количество взрослых и детских билетов должно быть равно
                количеству выбранных вами мест
+            </div>
+         )}
+         {numOfChildren < childrenSeats && (
+            <div className={styles.alert}>
+               Добавьте взрослые билеты - для перевозки такого количества детей
+               нужно больше взрослых.
             </div>
          )}
       </div>
    );
 }
 
-TotalPrice.propTypes = { direction: PropTypes.string.isRequired };
+TotalPrice.propTypes = {
+   direction: PropTypes.string.isRequired,
+   adultSeats: PropTypes.number.isRequired,
+   childrenSeats: PropTypes.number.isRequired,
+};
 
 export default TotalPrice;

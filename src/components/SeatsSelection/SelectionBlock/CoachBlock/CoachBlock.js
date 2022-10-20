@@ -13,7 +13,7 @@ import { fetchSeats } from '../../../../store/thunks/asyncThunks';
 
 import styles from './CoachBlock.module.scss';
 
-function CoachBlock({ direction, NumOfPplView }) {
+function CoachBlock({ direction, NumOfPplView, adultSeats, childrenSeats }) {
    const dispatch = useDispatch();
    const activeCoaches = useSelector(selectSelectedCoaches)[direction];
    const train = useSelector(selectTrains)[direction];
@@ -50,6 +50,9 @@ function CoachBlock({ direction, NumOfPplView }) {
          {activeCoaches.length > 0 &&
             activeCoaches.map((coach, index) => (
                <Coach
+                  adultSeats={adultSeats}
+                  childrenSeats={childrenSeats}
+                  key={coach.name}
                   className={classMaker(index)}
                   direction={direction}
                   NumOfPplView={NumOfPplView}
@@ -68,6 +71,8 @@ function CoachBlock({ direction, NumOfPplView }) {
 CoachBlock.propTypes = {
    direction: PropTypes.string.isRequired,
    NumOfPplView: PropTypes.number.isRequired,
+   adultSeats: PropTypes.number.isRequired,
+   childrenSeats: PropTypes.number.isRequired,
 };
 
 export default CoachBlock;

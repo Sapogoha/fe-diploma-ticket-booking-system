@@ -14,7 +14,14 @@ import classes from '../../../classes';
 
 import styles from './Coach.module.scss';
 
-function Coach({ direction, NumOfPplView, coachName, className }) {
+function Coach({
+   direction,
+   NumOfPplView,
+   coachName,
+   className,
+   adultSeats,
+   childrenSeats,
+}) {
    const coach = useSelector(selectSeatsOptions)[direction]?.filter(
       (item) => item?.coach?.name === coachName
    )[0];
@@ -111,6 +118,8 @@ function Coach({ direction, NumOfPplView, coachName, className }) {
          {viewers}
          <div className={styles.bottom}>
             <Seats
+               adultSeats={adultSeats}
+               childrenSeats={childrenSeats}
                direction={direction}
                coachId={coach?.coach?._id}
                availableSeats={availableSeats}
@@ -127,6 +136,8 @@ Coach.propTypes = {
    NumOfPplView: PropTypes.number.isRequired,
    coachName: PropTypes.string.isRequired,
    className: PropTypes.node,
+   adultSeats: PropTypes.number.isRequired,
+   childrenSeats: PropTypes.number.isRequired,
 };
 
 Coach.defaultProps = {

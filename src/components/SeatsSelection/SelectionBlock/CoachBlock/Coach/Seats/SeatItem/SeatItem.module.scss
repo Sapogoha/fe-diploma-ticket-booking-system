@@ -87,6 +87,9 @@ $border: 0.4rem solid var(--color-grey);
    background-color: var(--color-tertiarly-light);
 
    &-clicked {
+      background-color: var(--color-info);
+   }
+   &-chosen {
       background-color: var(--color-hover);
    }
    &-taken {

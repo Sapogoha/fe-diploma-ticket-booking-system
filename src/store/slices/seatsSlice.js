@@ -18,19 +18,20 @@ const seatsSlice = createSlice({
    initialState,
    reducers: {
       addSelectedSeats(state, action) {
-         const { number, direction, coachId, price } = action.payload;
+         const { number, direction, coachId, price, priceCoefficient } =
+            action.payload;
          const ids = state.selectedSeats[direction].map((el) => el.coachId);
          const sameId = ids.indexOf(coachId);
 
          if (sameId !== -1) {
             state.selectedSeats[direction][sameId].seats = [
                ...state.selectedSeats[direction][sameId].seats,
-               { seat: number, price },
+               { seat: number, price, priceCoefficient },
             ];
          } else {
             state.selectedSeats[direction] = [
                ...state.selectedSeats[direction],
-               { coachId, seats: [{ seat: number, price }] },
+               { coachId, seats: [{ seat: number, price, priceCoefficient }] },
             ];
          }
       },

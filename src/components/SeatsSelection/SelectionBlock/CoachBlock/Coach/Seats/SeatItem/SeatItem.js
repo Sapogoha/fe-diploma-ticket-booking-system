@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
+
+import { Popover } from 'antd';
 
 import {
    addSelectedSeats,
    removeSelectedSeat,
 } from '../../../../../../../store/slices/seatsSlice';
+import {
+   selectNumberOfPassengers,
+   setNumOfPassengers,
+   selectMaxNumOfAdults,
+   selectMaxNumOfChildren,
+} from '../../../../../../../store/slices/passengersSlice';
 
 import classes from '../../../../../classes';
+import passengerTypes from '../../../../passengerTypes';
 
 import styles from './SeatItem.module.scss';
+import './Popover.scss';
 
 function SeatItem({
    number,
@@ -19,22 +29,25 @@ function SeatItem({
    direction,
    coachId,
    price,
-   clickedSeat,
+   chosenSeat,
+   adultSeats,
+   childrenSeats,
+   typeOfPassenger,
 }) {
    const dispatch = useDispatch();
-   const [clicked, setClicked] = useState(clickedSeat);
-   const clickHandler = () => {
-      setClicked(!clicked);
-      if (clicked) {
-         dispatch(removeSelectedSeat({ number, direction, coachId }));
-      } else {
-         dispatch(addSelectedSeats({ number, direction, coachId, price }));
-      }
-   };
+   const [chosen, setChosen] = useState(chosenSeat);
+   const [clicked, setClicked] = useState(false);
+   const [open, setOpen] = useState(false);
+
+   const numberOfPassengers = useSelector(selectNumberOfPassengers)[direction];
+   const numOfAdults = numberOfPassengers?.adults;
+   const numOfChildren = numberOfPassengers?.children;
+   const maxNumOfAdults = useSelector(selectMaxNumOfAdults);
+   const maxNumOfChildren = useSelector(selectMaxNumOfChildren);
 
    let className = `${styles[`seat-${coachClass}`]} ${styles.seat} ${
       taken && styles['seat-taken']
-   } ${clicked && styles['seat-clicked']} `;
+   } ${chosen && styles['seat-chosen']} ${clicked && styles['seat-clicked']}`;
 
    switch (coachClass) {
       case classes.first:
@@ -89,15 +102,127 @@ function SeatItem({
         `;
    }
 
+   const seatClickHandler = () => {
+      setOpen(false);
+      setClicked(!clicked);
+      if (!clicked) {
+         setOpen(true);
+      }
+      if (chosen) {
+         setChosen(false);
+         setOpen(false);
+         setClicked(false);
+         dispatch(removeSelectedSeat({ number, direction, coachId }));
+         if (numberOfPassengers[typeOfPassenger] >= 1) {
+            dispatch(
+               setNumOfPassengers({
+                  category: typeOfPassenger,
+                  direction,
+                  value: numberOfPassengers[typeOfPassenger] - 1,
+               })
+            );
+         }
+      }
+   };
+
+   const typeClickHandler = (evt) => {
+      if (
+         evt.target.id === passengerTypes.adults &&
+         numOfAdults <= adultSeats
+      ) {
+         dispatch(
+            setNumOfPassengers({
+               category: passengerTypes.adults,
+               direction,
+               value: adultSeats + 1,
+            })
+         );
+      }
+      if (
+         evt.target.id === passengerTypes.children &&
+         numOfChildren <= childrenSeats
+      ) {
+         dispatch(
+            setNumOfPassengers({
+               category: passengerTypes.children,
+               direction,
+               value: childrenSeats + 1,
+            })
+         );
+      }
+      dispatch(
+         addSelectedSeats({
+            number,
+            direction,
+            coachId,
+            price,
+            priceCoefficient: evt.target.id === passengerTypes.adults ? 1 : 0.5,
+         })
+      );
+      setChosen(true);
+      setClicked(false);
+      setOpen(false);
+   };
+
+   const popoverContent = (
+      <>
+         {maxNumOfAdults > adultSeats && (
+            <button
+               type="button"
+               id={passengerTypes.adults}
+               onClick={typeClickHandler}
+            >
+               взрослого
+            </button>
+         )}
+         {maxNumOfChildren + numOfChildren > childrenSeats && (
+            <button
+               type="button"
+               id={passengerTypes.children}
+               onClick={typeClickHandler}
+            >
+               ребенка
+            </button>
+         )}
+         {maxNumOfAdults <= adultSeats &&
+            maxNumOfChildren + numOfChildren <= childrenSeats && (
+               <span>вы выбрали максимальное количество мест</span>
+            )}
+      </>
+   );
+
    return (
-      <button
-         onClick={clickHandler}
-         type="button"
-         className={className}
-         disabled={taken}
-      >
-         {number}
-      </button>
+      <>
+         {!taken && (
+            <Popover
+               overlayClassName="abc"
+               placement="top"
+               title="место для"
+               trigger="click"
+               content={popoverContent}
+               open={open}
+            >
+               <button
+                  onClick={seatClickHandler}
+                  type="button"
+                  className={className}
+                  disabled={taken}
+               >
+                  {number}
+               </button>
+            </Popover>
+         )}
+         {taken && (
+            <button
+               onClick={seatClickHandler}
+               type="button"
+               className={className}
+               disabled={taken}
+            >
+               {number}
+            </button>
+         )}
+      </>
    );
 }
 
@@ -108,7 +233,10 @@ SeatItem.propTypes = {
    taken: PropTypes.bool.isRequired,
    coachId: PropTypes.string,
    direction: PropTypes.string.isRequired,
-   clickedSeat: PropTypes.bool.isRequired,
+   chosenSeat: PropTypes.bool.isRequired,
+   adultSeats: PropTypes.number.isRequired,
+   childrenSeats: PropTypes.number.isRequired,
+   typeOfPassenger: PropTypes.string.isRequired,
 };
 
 SeatItem.defaultProps = {

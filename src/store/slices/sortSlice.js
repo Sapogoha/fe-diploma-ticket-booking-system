@@ -24,20 +24,12 @@ const sortSlice = createSlice({
       setCurrentPage(state, action) {
          state.currentPage = action.payload;
       },
-      // changeCurrentPage(state) {
-      //    state.currentPage = state.offset / state.limit + 1;
-      // },
    },
    extraReducers: {},
 });
 
-export const {
-   changeLimit,
-   changeSort,
-   changeOffset,
-   // changeCurrentPage,
-   setCurrentPage,
-} = sortSlice.actions;
+export const { changeLimit, changeSort, changeOffset, setCurrentPage } =
+   sortSlice.actions;
 
 export const selectLimit = (state) => state.sort.limit;
 export const selectSort = (state) => state.sort.sort;

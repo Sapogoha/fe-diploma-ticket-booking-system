@@ -27,7 +27,11 @@ function RightPartItem({ type, seatsNum, priceDep, priceArr }) {
    );
 
    return (
-      <Popover content={popoverContent} placement="bottom">
+      <Popover
+         overlayClassName="right-part"
+         content={popoverContent}
+         placement="bottom"
+      >
          <div className={styles.card}>
             <span className={styles.type}>{type}</span>
             <span className={styles.seats}>{seatsNum}</span>
