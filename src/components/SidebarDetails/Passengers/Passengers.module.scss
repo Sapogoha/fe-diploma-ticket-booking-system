@@ -1,0 +1,36 @@
+@import '../../../scss/mixins';
+@import '../SidebarDetails.module.scss';
+@mixin row {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.wrapperTop {
+   @include row;
+   .header {
+      @include row;
+      &__text {
+         @include header;
+         text-transform: capitalize;
+         margin-left: 2rem;
+      }
+   }
+}
+
+.expandBlock {
+   padding-bottom: 3rem;
+   .direction {
+      @include font(700, 2.4rem, 2.8rem, var(--color-main-light));
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+   }
+   .passengers {
+      .row {
+         @include row;
+         &:first-child {
+            padding-bottom: 2rem;
+         }
+      }
+   }
+}

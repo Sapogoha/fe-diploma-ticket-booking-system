@@ -6,13 +6,21 @@ const formatter = (value) => {
 
 const datetimeToTime = (value) => {
    const date = new Date(value * 1000);
-   //  const year = date.getFullYear();
-   //  const month = date.getMonth();
-   //  const day = date.getDate();
+
    const hrs = date.getHours();
    const mins = date.getMinutes();
 
    return `${`0${hrs}`.slice(-2)}:${`0${mins}`.slice(-2)}`;
+};
+
+const datetimeToDate = (value) => {
+   const date = new Date(value * 1000);
+
+   const year = date.getFullYear();
+   const month = date.getMonth();
+   const day = date.getDate();
+
+   return `${`0${day}`.slice(-2)}.${`0${month}`.slice(-2)}.${year}`;
 };
 
 const secsToTime = (value) => {
@@ -57,4 +65,10 @@ const secsToTimeWithText = (value) => {
    return { hrs: `${hrs} ${hrsText}`, mins: `${mins} ${minsText}` };
 };
 
-export { formatter, datetimeToTime, secsToTime, secsToTimeWithText };
+export {
+   formatter,
+   datetimeToTime,
+   datetimeToDate,
+   secsToTime,
+   secsToTimeWithText,
+};

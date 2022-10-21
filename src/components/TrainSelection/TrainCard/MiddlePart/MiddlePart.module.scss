@@ -22,11 +22,8 @@
 
 .direction {
    display: flex;
-   //  flex-direction: row;
    align-items: baseline;
    justify-content: space-evenly;
-   //  padding-top: 5rem;
-   //  padding-bottom: 8rem;
    padding-bottom: 6.5rem;
 
    &__from {

@@ -3,6 +3,7 @@ import React from 'react';
 import Layout from '../../components/Layout/Layout';
 import MainSearchBlock from '../../components/MainSearchBlock/MainSearchBlock';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
+import SidebarDetails from '../../components/SidebarDetails/SidebarDetails';
 
 import widthOptions from '../../components/MainSearchBlock/widthOptions';
 import picsOptions from '../../components/Layout/picsOptions';
@@ -13,7 +14,12 @@ function PassengersPage() {
    const body = (
       <>
          <ProgressBar step={2} />
-         <div className={styles.test}>123</div>
+         <div className={styles.body}>
+            <div>
+               <SidebarDetails />
+            </div>
+            <div className={styles['wrapper-main']}>f</div>
+         </div>
       </>
    );
    return (
