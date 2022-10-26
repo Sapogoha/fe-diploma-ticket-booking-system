@@ -1,3 +1,4 @@
+@import '../../../scss/mixins.scss';
 @mixin flexCenter {
    display: flex;
    flex-direction: column;
@@ -31,26 +32,11 @@
          margin-right: 1rem;
       }
       > button {
-         @include font(700, 2.4rem, 2.8rem, var(--color-main-dark));
-         padding: 1.4rem 3.4rem;
-         border: 0.2rem solid var(--color-main-dark);
-         border-radius: 0.5rem;
+         @include transperrentBlackButton;
       }
 
       &-arrival {
          justify-content: flex-end;
-      }
-   }
-
-   .seats {
-      .title {
-         @include title;
-      }
-      .tickets {
-         height: 19.2rem;
-         background-color: rgb(198, 224, 233);
-         padding-bottom: 5rem;
-         border-bottom: 0.1rem dashed var(--color-bars-light);
       }
    }
 }

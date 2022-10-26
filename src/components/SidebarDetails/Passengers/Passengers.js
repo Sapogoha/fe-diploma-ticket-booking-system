@@ -33,7 +33,8 @@ function Passengers({
    const numOfPassengersArr = useSelector(selectNumberOfPassengers)[
       directions.arrival
    ];
-
+   const numOfAdultsDep = numOfPassengersDep[passengerTypes.adults];
+   const numOfAdultsArr = numOfPassengersArr[passengerTypes.adults];
    const numOfChildrenDep = numOfPassengersDep[passengerTypes.children];
    const numOfChildrenArr = numOfPassengersArr[passengerTypes.children];
 
@@ -61,23 +62,27 @@ function Passengers({
          <div className={styles.passengers}>
             <PassengersRow
                className={styles.row}
-               number={numOfPassengersDep[passengerTypes.adults]}
+               number={numOfAdultsDep}
                sum={sumDepAdults}
                type={passengerTypes.adults}
             />
             {numOfChildrenDep > 0 && childrenDep}
          </div>
 
-         <div className={styles.direction}>Обратно</div>
-         <div className={styles.passengers}>
-            <PassengersRow
-               className={styles.row}
-               number={numOfPassengersArr[passengerTypes.adults]}
-               sum={sumArrAdults}
-               type={passengerTypes.adults}
-            />
-            {numOfChildrenArr > 0 && childrenArr}
-         </div>
+         {numOfAdultsArr + numOfChildrenArr > 0 && (
+            <>
+               <div className={styles.direction}>Обратно</div>
+               <div className={styles.passengers}>
+                  <PassengersRow
+                     className={styles.row}
+                     number={numOfAdultsArr}
+                     sum={sumArrAdults}
+                     type={passengerTypes.adults}
+                  />
+                  {numOfChildrenArr > 0 && childrenArr}
+               </div>
+            </>
+         )}
       </div>
    );
 

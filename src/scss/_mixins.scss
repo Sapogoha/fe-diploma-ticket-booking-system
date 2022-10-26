@@ -39,6 +39,55 @@
    }
 }
 
+@mixin font($fw, $fs, $lh, $c) {
+   font-weight: $fw;
+   font-size: $fs;
+   line-height: $lh;
+   color: $c;
+}
+
+@mixin buttonForward {
+   display: flex;
+   justify-content: flex-end;
+   color: var(--color-main-light);
+   margin-top: 10rem;
+   margin-bottom: 12rem;
+   > button {
+      @include button-gold;
+      &:disabled {
+         background-color: var(--color-grey);
+         color: var(--color-main-light);
+      }
+   }
+}
+
+@mixin transperrentBlackButton {
+   @include font(700, 2.4rem, 2.8rem, var(--color-main-dark));
+   padding: 1.4rem 3.4rem;
+   border: 0.2rem solid var(--color-main-dark);
+   border-radius: 0.5rem;
+
+   &:hover,
+   &:focus {
+      color: #ffa800;
+      background-color: #ffffff;
+      border: 1px solid #292929;
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+   }
+
+   &:active {
+      color: #292929;
+      background-color: #ffa800;
+      border: 1px solid #ffa800;
+   }
+
+   &:disabled {
+      color: #ffffff;
+      background-color: #928f94;
+      border: #928f94;
+   }
+}
+
 @mixin img {
    > img {
       position: absolute;
@@ -123,13 +172,4 @@
    margin-bottom: 1.7rem;
    border: 0.1rem solid var(--color-bars-light);
    height: 16rem;
-}
-
-// font
-
-@mixin font($fw, $fs, $lh, $c) {
-   font-weight: $fw;
-   font-size: $fs;
-   line-height: $lh;
-   color: $c;
 }

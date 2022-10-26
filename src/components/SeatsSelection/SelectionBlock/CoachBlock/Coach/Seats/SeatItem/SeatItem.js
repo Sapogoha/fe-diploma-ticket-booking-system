@@ -28,6 +28,7 @@ function SeatItem({
    taken,
    direction,
    coachId,
+   coachName,
    price,
    chosenSeat,
    adultSeats,
@@ -43,7 +44,7 @@ function SeatItem({
    const numOfAdults = numberOfPassengers?.adults;
    const numOfChildren = numberOfPassengers?.children;
    const maxNumOfAdults = useSelector(selectMaxNumOfAdults);
-   const maxNumOfChildren = useSelector(selectMaxNumOfChildren);
+   const maxNumOfChildren = useSelector(selectMaxNumOfChildren)[direction];
 
    let className = `${styles[`seat-${coachClass}`]} ${styles.seat} ${
       taken && styles['seat-taken']
@@ -155,6 +156,7 @@ function SeatItem({
             number,
             direction,
             coachId,
+            coachName,
             price,
             priceCoefficient: evt.target.id === passengerTypes.adults ? 1 : 0.5,
          })
@@ -232,6 +234,7 @@ SeatItem.propTypes = {
    coachClass: PropTypes.string.isRequired,
    taken: PropTypes.bool.isRequired,
    coachId: PropTypes.string,
+   coachName: PropTypes.string.isRequired,
    direction: PropTypes.string.isRequired,
    chosenSeat: PropTypes.bool.isRequired,
    adultSeats: PropTypes.number.isRequired,

@@ -19,6 +19,7 @@ function Seats({
    prices,
    adultSeats,
    childrenSeats,
+   coachName,
 }) {
    const allSeats = useSelector(selectSelectedSeats)[direction];
    const selectedArr = allSeats
@@ -92,6 +93,7 @@ function Seats({
                            coachClass={classType}
                            direction={direction}
                            coachId={coachId}
+                           coachName={coachName}
                            price={prices.bottom}
                            typeOfPassenger={typeOfPassengerDetector(seat[0])}
                         />
@@ -116,6 +118,7 @@ function Seats({
                            coachClass={classType}
                            direction={direction}
                            coachId={coachId}
+                           coachName={coachName}
                            price={prices.bottom}
                            typeOfPassenger={typeOfPassengerDetector(seat[0])}
                         />
@@ -143,6 +146,7 @@ function Seats({
                            coachClass={classType}
                            direction={direction}
                            coachId={coachId}
+                           coachName={coachName}
                            price={prices.bottom}
                            typeOfPassenger={typeOfPassengerDetector(seat[0])}
                         />
@@ -167,6 +171,7 @@ function Seats({
                            coachClass={classType}
                            direction={direction}
                            coachId={coachId}
+                           coachName={coachName}
                            price={prices.bottom}
                            typeOfPassenger={typeOfPassengerDetector(seat[0])}
                         />
@@ -193,6 +198,7 @@ function Seats({
                         coachClass={classType}
                         direction={direction}
                         coachId={coachId}
+                        coachName={coachName}
                         price={prices.bottom}
                         typeOfPassenger={typeOfPassengerDetector(seat[0])}
                      />
@@ -214,6 +220,7 @@ function Seats({
                               coachClass={classType}
                               direction={direction}
                               coachId={coachId}
+                              coachName={coachName}
                               price={prices.top}
                               typeOfPassenger={typeOfPassengerDetector(seat[0])}
                            />
@@ -239,6 +246,7 @@ function Seats({
                               coachClass={classType}
                               direction={direction}
                               coachId={coachId}
+                              coachName={coachName}
                               price={prices.bottom}
                               typeOfPassenger={typeOfPassengerDetector(seat[0])}
                            />
@@ -265,6 +273,7 @@ function Seats({
                            coachClass={classType}
                            direction={direction}
                            coachId={coachId}
+                           coachName={coachName}
                            price={prices.side}
                            typeOfPassenger={typeOfPassengerDetector(seat[0])}
                         />
@@ -285,6 +294,7 @@ Seats.propTypes = {
    availableSeats: PropTypes.arrayOf(PropTypes.number),
    classType: PropTypes.string,
    coachId: PropTypes.string.isRequired,
+   coachName: PropTypes.string.isRequired,
    direction: PropTypes.string.isRequired,
    prices: PropTypes.objectOf(PropTypes.number).isRequired,
    adultSeats: PropTypes.number.isRequired,

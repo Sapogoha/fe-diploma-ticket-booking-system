@@ -10,6 +10,7 @@
       "@testing-library/user-event": "^14.4.3",
       "antd": "^4.23.2",
       "dayjs": "^1.11.5",
+      "nanoid": "^4.0.0",
       "prop-types": "^15.8.1",
       "push-dir": "^0.4.1",
       "rc-picker": "^2.6.10",

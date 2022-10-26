@@ -18,21 +18,54 @@ const seatsSlice = createSlice({
    initialState,
    reducers: {
       addSelectedSeats(state, action) {
-         const { number, direction, coachId, price, priceCoefficient } =
-            action.payload;
+         const {
+            number,
+            direction,
+            coachId,
+            coachName,
+            price,
+            priceCoefficient,
+         } = action.payload;
          const ids = state.selectedSeats[direction].map((el) => el.coachId);
          const sameId = ids.indexOf(coachId);
 
          if (sameId !== -1) {
             state.selectedSeats[direction][sameId].seats = [
                ...state.selectedSeats[direction][sameId].seats,
-               { seat: number, price, priceCoefficient },
+               { seat: number, price, priceCoefficient, passengerId: null },
             ];
          } else {
             state.selectedSeats[direction] = [
                ...state.selectedSeats[direction],
-               { coachId, seats: [{ seat: number, price, priceCoefficient }] },
+               {
+                  coachId,
+                  coachName,
+                  seats: [
+                     {
+                        seat: number,
+                        price,
+                        priceCoefficient,
+                        passengerId: null,
+                     },
+                  ],
+               },
             ];
+         }
+      },
+      addPassengerId(state, action) {
+         const { seat, direction, coachId, passengerId } = action.payload;
+
+         const ids = state.selectedSeats[direction].map((el) => el.coachId);
+         const sameId = ids.indexOf(coachId);
+
+         if (sameId !== -1) {
+            const allSeats = state.selectedSeats[direction][sameId].seats.map(
+               (el) => el.seat
+            );
+
+            state.selectedSeats[direction][sameId].seats[
+               allSeats.indexOf(seat)
+            ].passengerId = passengerId;
          }
       },
       removeSelectedSeat(state, action) {
@@ -77,6 +110,7 @@ export const {
    removeSelectedSeat,
    removeAllSelectedSeatsFromCoach,
    clearSeatsSlice,
+   addPassengerId,
 } = seatsSlice.actions;
 
 export const selectSeatsOptions = (state) => state.seats.seatsOptions;

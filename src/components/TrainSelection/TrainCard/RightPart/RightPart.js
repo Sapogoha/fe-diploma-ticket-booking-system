@@ -91,7 +91,7 @@ RightPart.propTypes = {
    availableSeats: PropTypes.objectOf(PropTypes.number).isRequired,
    priceDep: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
    priceArr: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
-   wifi: PropTypes.bool.isRequired,
+   wifi: PropTypes.bool,
    conditioner: PropTypes.bool.isRequired,
    onClick: PropTypes.func.isRequired,
    express: PropTypes.bool,
@@ -101,6 +101,7 @@ RightPart.defaultProps = {
    priceDep: null,
    priceArr: null,
    express: false,
+   wifi: false,
 };
 
 export default RightPart;

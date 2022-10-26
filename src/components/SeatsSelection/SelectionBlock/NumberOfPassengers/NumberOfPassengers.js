@@ -24,8 +24,12 @@ import styles from './NumberOfPassengers.module.scss';
 function NumberOfPassengers({ direction, adultSeats, childrenSeats }) {
    const dispatch = useDispatch();
    const maxAdultTicketsCount = useSelector(selectMaxNumOfAdults);
-   const maxChildrenTicketsCount = useSelector(selectMaxNumOfChildren);
-   const maxToddlersTicketsCount = useSelector(selectMaxNumOfToddlers);
+   const maxChildrenTicketsCount = useSelector(selectMaxNumOfChildren)[
+      direction
+   ];
+   const maxToddlersTicketsCount = useSelector(selectMaxNumOfToddlers)[
+      direction
+   ];
    const numberOfPassengers = useSelector(selectNumberOfPassengers)[direction];
    const adultCount = numberOfPassengers.adults;
    const childrenCount = numberOfPassengers.children;
@@ -54,8 +58,8 @@ function NumberOfPassengers({ direction, adultSeats, childrenSeats }) {
             })
          );
       }
-      dispatch(setMaxNumOfChildren(rest));
-      dispatch(setMaxNumOfToddlers(rest));
+      dispatch(setMaxNumOfChildren({ direction, value: rest }));
+      dispatch(setMaxNumOfToddlers({ direction, value: rest }));
    }, [adultCount, childrenCount, direction, dispatch, toddlerCount]);
 
    return (

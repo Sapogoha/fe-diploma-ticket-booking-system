@@ -1,0 +1,26 @@
+.img {
+   width: 8.6rem;
+   height: 8.6rem;
+   margin: 0 auto;
+}
+.train-name {
+   font-weight: 500;
+   font-size: 2.4rem;
+   line-height: 2.8rem;
+   text-transform: uppercase;
+   text-align: center;
+   color: var(--color-bars);
+   padding: 1.7rem 0;
+}
+.departure-city,
+.arrival-city {
+   text-align: left;
+   font-weight: 400;
+   font-size: 1.6rem;
+   line-height: 1.9rem;
+   color: var(--color-main-dark);
+   text-transform: capitalize;
+}
+.departure-arrow {
+   margin-left: 0.5rem;
+}

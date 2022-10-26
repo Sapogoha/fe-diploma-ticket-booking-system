@@ -14,11 +14,13 @@ import styles from './TotalPrice.module.scss';
 
 function TotalPrice({ direction, adultSeats, childrenSeats }) {
    const seats = useSelector(selectSelectedSeats)[direction];
-   const sum = seats.map((el) =>
-      el.seats
-         .map((item) => item.price * item.priceCoefficient)
-         .reduce((curNumber, item) => curNumber + item, 0)
-   );
+   const sum = seats
+      .map((el) =>
+         el.seats
+            .map((item) => item.price * item.priceCoefficient)
+            .reduce((curNumber, item) => curNumber + item, 0)
+      )
+      .reduce((curNumber, item) => curNumber + item, 0);
 
    const numberOfPassengers = useSelector(selectNumberOfPassengers)[direction];
    const numOfAdults = numberOfPassengers?.adults;

@@ -14,12 +14,14 @@ import styles from './SidebarDetails.module.scss';
 
 function SidebarDetails() {
    const calculateSum = (obj, coefficient) =>
-      obj.map((el) =>
-         el.seats
-            .filter((seat) => seat.priceCoefficient === coefficient)
-            .map((item) => item.price * item.priceCoefficient)
-            .reduce((curNumber, item) => curNumber + item, 0)
-      );
+      obj
+         .map((el) =>
+            el.seats
+               .filter((seat) => seat.priceCoefficient === coefficient)
+               .map((item) => item.price * item.priceCoefficient)
+               .reduce((curNumber, item) => curNumber + item, 0)
+         )
+         .reduce((curNumber, item) => curNumber + item, 0);
 
    const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
    const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
@@ -37,9 +39,11 @@ function SidebarDetails() {
          <div className={styles.section}>
             <Direction direction={directions.departure} />
          </div>
-         <div className={styles.section}>
-            <Direction direction={directions.arrival} />
-         </div>
+         {sumArrAdults + sumArrChildren > 0 && (
+            <div className={styles.section}>
+               <Direction direction={directions.arrival} />
+            </div>
+         )}
          <div className={styles.section}>
             <Passengers
                sumDepAdults={sumDepAdults}

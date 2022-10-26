@@ -7,8 +7,8 @@ const initialState = {
       arrival: { adults: 0, children: 0, toddlers: 0 },
    },
    maxNumOfAdults: 5,
-   maxNumOfChildren: null,
-   maxNumOfToddlers: null,
+   maxNumOfChildren: { departure: null, arrival: null },
+   maxNumOfToddlers: { departure: null, arrival: null },
 };
 
 const passengersSlice = createSlice({
@@ -27,10 +27,12 @@ const passengersSlice = createSlice({
          return initialState;
       },
       setMaxNumOfChildren(state, action) {
-         state.maxNumOfChildren = action.payload;
+         const { direction, value } = action.payload;
+         state.maxNumOfChildren[direction] = value;
       },
       setMaxNumOfToddlers(state, action) {
-         state.maxNumOfToddlers = action.payload;
+         const { direction, value } = action.payload;
+         state.maxNumOfToddlers[direction] = value;
       },
    },
    extraReducers: {},

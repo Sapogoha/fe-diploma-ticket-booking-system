@@ -4,6 +4,7 @@ import Layout from '../../components/Layout/Layout';
 import MainSearchBlock from '../../components/MainSearchBlock/MainSearchBlock';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import SidebarDetails from '../../components/SidebarDetails/SidebarDetails';
+import PassengersSelection from '../../components/PassengersSelection/PassengersSelection';
 
 import widthOptions from '../../components/MainSearchBlock/widthOptions';
 import picsOptions from '../../components/Layout/picsOptions';
@@ -18,7 +19,9 @@ function PassengersPage() {
             <div>
                <SidebarDetails />
             </div>
-            <div className={styles['wrapper-main']}>f</div>
+            <div className={styles['wrapper-main']}>
+               <PassengersSelection />
+            </div>
          </div>
       </>
    );

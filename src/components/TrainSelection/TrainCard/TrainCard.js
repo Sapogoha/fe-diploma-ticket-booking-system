@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import LeftPart from './LeftPart/LeftPart';
 import MiddlePart from './MiddlePart/MiddlePart';
 import RightPart from './RightPart/RightPart';
 
 import { setTrains } from '../../../store/slices/trainSlice';
 
-import train from './img/train.svg';
-import arrow from './img/arrow.svg';
 import arrowRight from './img/arrow-right.svg';
 import arrowLeft from './img/arrow-left.svg';
 
@@ -51,23 +50,13 @@ function TrainCard({ ticket }) {
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
       <div className={styles.card} role="button" tabIndex={0}>
          <div className={styles.card__left}>
-            <div className={styles.img}>
-               <img src={train} alt="иконка поезда" />
-            </div>
-            <span className={styles['train-name']}>
-               {ticket.departure.train.name}
-            </span>
-            <span className={styles['departure-city']}>
-               {ticket.departure.from.city.name}
-               <img
-                  className={styles['departure-arrow']}
-                  src={arrow}
-                  alt="иконка - стрелка"
-               />
-            </span>
-            <span className={styles['arrival-city']}>
-               {ticket.departure.to.city.name}
-            </span>
+            <LeftPart
+               depTrain={ticket.departure.train.name}
+               depFrom={ticket.departure.from.city.name}
+               depTo={ticket.departure.to.city.name}
+               arrTrain={ticket.arrival?.train?.name}
+               arrTo={ticket.arrival?.to?.city?.name}
+            />
          </div>
          <div className={styles.card__middle}>
             <MiddlePart
