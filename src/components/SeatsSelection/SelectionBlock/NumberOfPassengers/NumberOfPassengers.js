@@ -11,7 +11,7 @@ import {
    selectMaxNumOfToddlers,
    setMaxNumOfChildren,
    setMaxNumOfToddlers,
-} from '../../../../store/slices/passengersSlice';
+} from '../../../../store/slices/numOfpassengersSlice';
 
 import ticketWordFormatter from '../../../../utils/ticketWordFormatter';
 

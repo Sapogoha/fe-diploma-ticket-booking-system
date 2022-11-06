@@ -1,20 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { nanoid } from 'nanoid';
 
-import PassengerCardOpen from './PassengerCardOpen/PassengerCardOpen';
+import PassengerCard from './PassengerCard/PassengerCard';
 
-// import { selectNumberOfPassengers } from '../../store/slices/passengersSlice';
-import {
-   selectSelectedSeats,
-   // addPassengerId,
-} from '../../store/slices/seatsSlice';
-// import { selectSelectedCoaches } from '../../store/slices/trainSlice';
+import { selectSelectedSeats } from '../../store/slices/seatsSlice';
 
 import links from '../../data/links';
-// import passengerTypes from '../SeatsSelection/SelectionBlock/passengerTypes';
+import passengerTypes from '../SeatsSelection/SelectionBlock/passengerTypes';
 import directions from '../../data/directions';
 
 import plus from './img/plus.svg';
@@ -24,10 +19,10 @@ import styles from './PassengersSelection.module.scss';
 function PassengersSelection() {
    const title = useRef(document.createElement('div'));
    useEffect(() => {
-      title.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      title.current.scrollIntoView({ behavior: 'smooth' });
    }, []);
+
    const navigate = useNavigate();
-   const { pathname } = useLocation();
    const [passArray, setPassArray] = useState([{ id: nanoid() }]);
    const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
    const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
@@ -43,25 +38,7 @@ function PassengersSelection() {
          )
          .flat();
    const seatsDepModified = seatsModifier(seatsDep);
-   // seatsDep
-   //    .map((el) =>
-   //       el.seats.map((item) => ({
-   //          ...item,
-   //          coachId: el.coachId,
-   //          coachName: el.coachName,
-   //       }))
-   //    )
-   //    .flat();
    const seatsArrModified = seatsModifier(seatsArr);
-   // seatsArr
-   //    .map((el) =>
-   //       el.seats.map((item) => ({
-   //          ...item,
-   //          coachId: el.coachId,
-   //          coachName: el.coachName,
-   //       }))
-   //    )
-   //    .flat();
 
    const clickHandler = () => {
       navigate(links.paymentOptions);
@@ -101,27 +78,11 @@ function PassengersSelection() {
    const clickOnNextPassHandler = (id) => {
       const index = passArray.findIndex((el) => el.id === id);
 
-      // setTimeout(() => {
-      //    if (
-      //       form.getFieldsError().filter((item) => item.errors.length > 0)
-      //          .length === 0
-      //    ) {
-      //       setShowError(false);
-      //    }
-      // }, 10);
-      // console.log(unchosenSeats);
-      // console.log(unchosenSeats.length);
-      // console.log(passArray);
       if (index === passArray.length - 1 && unchosenSeats.length > 0) {
          setPassArray((prev) => [...prev, { id: nanoid() }]);
       } else {
-         // console.log(
-         //    <HashLink to={`${pathname}#${passArray[index + 1].id}`} />
-         // );
-         // console.log(`${pathname}#${passArray[index + 1].id}`);
-
-         // переделать
-         navigate(`${pathname}#${passArray[index + 1].id}`);
+         const element = document.getElementById(`${passArray[index + 1].id}`);
+         element.scrollIntoView({ behavior: 'smooth' });
       }
    };
 
@@ -143,17 +104,17 @@ function PassengersSelection() {
    return (
       <div ref={title}>
          {passArray.map((item, index) => (
-            <PassengerCardOpen
+            <PassengerCard
                key={item.id}
                passengerType={
-                  unchosenAdultSeats.length >= 1 ? 'adults' : 'children'
+                  unchosenAdultSeats.length >= 1
+                     ? passengerTypes.adults
+                     : passengerTypes.children
                }
                id={item.id}
                pasNumber={index + 1}
                clickOnRemovePassHandler={clickOnRemovePassHandler}
                clickOnNextPassHandler={clickOnNextPassHandler}
-               // seatsDep={seatsDepModified}
-               // seatsArr={seatsArrModified}
                unchosenSeatsDep={unchosenSeatsDep}
                unchosenSeatsArr={unchosenSeatsArr}
             />

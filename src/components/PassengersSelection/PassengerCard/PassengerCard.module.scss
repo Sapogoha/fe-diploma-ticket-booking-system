@@ -1,6 +1,14 @@
 @import '../../../scss/_mixins';
 @import '../PassengersSelection.module.scss';
 
+@mixin inputFieldShort {
+   width: 20.5rem;
+   height: 5rem;
+   border: 0.1rem solid var(--color-grey);
+   border-radius: 5px;
+   @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+}
+
 .closedPassengerCard {
    display: flex;
    align-items: center;
@@ -20,12 +28,7 @@
 
    .section {
       @include padding;
-      // &:not(:last-child) {
       border-bottom: 1px dashed var(--color-grey);
-      // }
-      // &-error {
-      //    background: rgba(255, 61, 0, 0.38);
-      // }
       .errorText {
          @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
       }
@@ -52,7 +55,7 @@
       justify-content: flex-end;
       @include padding;
       &-error {
-         background: rgba(255, 61, 0, 0.38);
+         background: var(--color-error);
       }
       > button {
          @include transperrentBlackButton;
@@ -81,37 +84,28 @@
       }
 
       .inputFieldPassport {
-         width: 20.5rem;
-         height: 5rem;
-         border: 0.1rem solid var(--color-grey);
-         border-radius: 5px;
-         @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+         @include inputFieldShort;
+      }
+      .inputFieldBirthSertif {
+         @include inputFieldShort;
+         &::placeholder {
+            font-size: 1.8rem;
+            line-height: 2.1rem;
+         }
       }
    }
    .rowShort {
       justify-content: flex-start;
-      // display: flex;
-      // align-items: center;
-
-      // .dateOfBirth {
-      //    margin-left: 3.5rem;
-      // }
 
       .genderRadioBtn,
       .documentType {
          margin-right: 3.5rem;
       }
-
-      // .departureOnly {
-      //    margin-right: 3.5rem;
-      // }
    }
    .rowSeats {
       justify-content: flex-start;
 
       .departureOnly {
-         // display: flex;
-         // justify-content: center;
          margin-right: 8rem;
          margin-left: 8rem;
       }

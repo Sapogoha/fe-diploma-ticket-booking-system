@@ -133,7 +133,7 @@ function Footer() {
    const bottom = (
       <div className={styles.bottomNav}>
          <Logo />
-         <HashLink to={`${pathname}#header-navigation`}>
+         <HashLink smooth to={`${pathname}#header-navigation`}>
             <img
                className={styles.bottomNav__up}
                src={goUp}

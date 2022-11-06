@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import PassengersRow from './PassengersRow/PassengersRow';
 
-import { selectNumberOfPassengers } from '../../../store/slices/passengersSlice';
+import { selectNumberOfPassengers } from '../../../store/slices/numOfpassengersSlice';
 
 import passenger from './img/passenger.svg';
 import plus from './img/plus.svg';

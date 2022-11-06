@@ -7,26 +7,28 @@
    height: 5rem;
    @include font(400, $s, $lh, var(--color-main-dark));
 
-   .ant-select-selector {
-      border: 0.1rem solid var(--color-grey);
-      border-radius: 5px;
-   }
-   .ant-select-selector,
-   .ant-select-selection-search-input,
-   .ant-select-selection-item {
-      min-width: $w;
-      max-width: $w;
-      height: 5rem;
-      display: flex;
-      align-items: center;
-   }
-   .ant-select-selection-item {
-      margin: auto;
-   }
-   .ant-select-arrow {
-      .anticon > svg {
-         width: 1rem;
-         height: 1rem;
+   .ant-select {
+      &-selector {
+         border: 0.1rem solid var(--color-grey);
+         border-radius: 5px;
+      }
+      &-selector,
+      &-selection-search-input,
+      &-selection-item {
+         min-width: $w;
+         max-width: $w;
+         height: 5rem;
+         display: flex;
+         align-items: center;
+      }
+      &-selection-item {
+         margin: auto;
+      }
+      &-arrow {
+         .anticon > svg {
+            width: 1rem;
+            height: 1rem;
+         }
       }
    }
 }
@@ -101,15 +103,6 @@
    color: var(--color-yellow-orange);
 }
 
-.ant-checkbox,
-.ant-checkbox-checked,
-.ant-checkbox-input,
-.ant-checkbox-inner {
-   width: 2.8rem;
-   height: 2.8rem;
-   border: 0.1rem solid var(--color-grey);
-   border-radius: 0.5rem;
-}
 .ant-checkbox {
    margin-right: 1rem;
    &-inner::after {
@@ -117,15 +110,24 @@
       height: 2.2rem;
       top: 1rem;
    }
-}
+   &,
+   &-checked,
+   &-input,
+   &-inner {
+      width: 2.8rem;
+      height: 2.8rem;
+      border: 0.1rem solid var(--color-grey);
+      border-radius: 0.5rem;
+   }
 
-.ant-checkbox-checked .ant-checkbox-inner {
-   background-color: var(--color-yellow-orange);
-   border: var(--color-yellow-orange);
-}
+   &-checked &-inner {
+      background-color: var(--color-yellow-orange);
+      border: var(--color-yellow-orange);
+   }
 
-.ant-checkbox-wrapper.ant-checkbox-wrapper-in-form-item.passengerCard-checkbox {
-   @include font(400, 1.8rem, 2.1rem, var(--color-main-dark));
+   &-wrapper.ant-checkbox-wrapper-in-form-item.passengerCard-checkbox {
+      @include font(400, 1.8rem, 2.1rem, var(--color-main-dark));
+   }
 }
 
 .passengerCard-doc-select-birth-sertificate.ant-select.ant-select-in-form-item {
@@ -182,4 +184,8 @@
 
 [ant-click-animating-without-extra-node='true']::after {
    display: none;
+}
+
+.ant-input-number-input {
+   height: 5rem;
 }

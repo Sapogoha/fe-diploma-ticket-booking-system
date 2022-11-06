@@ -15,22 +15,22 @@ function HeaderNavigation() {
          <Logo />
          <ul className={styles['nav-bar']}>
             <li className={styles['nav-bar__link']}>
-               <HashLink to={`${links.main}/#about`}>
+               <HashLink smooth to={`${links.main}/#about`}>
                   <div>О нас</div>
                </HashLink>
             </li>
             <li className={styles['nav-bar__link']}>
-               <HashLink to={`${links.main}/#how-it-works`}>
+               <HashLink smooth to={`${links.main}/#how-it-works`}>
                   <div>Как это работает</div>
                </HashLink>
             </li>
             <li className={styles['nav-bar__link']}>
-               <HashLink to={`${links.main}/#reviews`}>
+               <HashLink smooth to={`${links.main}/#reviews`}>
                   <div>Отзывы</div>
                </HashLink>
             </li>
             <li className={styles['nav-bar__link']}>
-               <HashLink to={`${pathname}/#contacts`}>
+               <HashLink smooth to={`${pathname}/#contacts`}>
                   <div>Контакты</div>
                </HashLink>
             </li>

@@ -14,7 +14,7 @@ import {
    setNumOfPassengers,
    selectMaxNumOfAdults,
    selectMaxNumOfChildren,
-} from '../../../../../../../store/slices/passengersSlice';
+} from '../../../../../../../store/slices/numOfpassengersSlice';
 
 import classes from '../../../../../classes';
 import passengerTypes from '../../../../passengerTypes';

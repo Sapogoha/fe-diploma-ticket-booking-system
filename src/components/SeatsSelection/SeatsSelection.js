@@ -10,7 +10,7 @@ import { selectSelectedSeats } from '../../store/slices/seatsSlice';
 import {
    selectNumberOfPassengers,
    removeNumOfPassengersDirection,
-} from '../../store/slices/passengersSlice';
+} from '../../store/slices/numOfpassengersSlice';
 
 import directions from '../../data/directions';
 import links from '../../data/links';

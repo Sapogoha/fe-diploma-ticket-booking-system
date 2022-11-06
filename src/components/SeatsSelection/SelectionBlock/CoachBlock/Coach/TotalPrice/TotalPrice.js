@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { selectSelectedSeats } from '../../../../../../store/slices/seatsSlice';
-import { selectNumberOfPassengers } from '../../../../../../store/slices/passengersSlice';
+import { selectNumberOfPassengers } from '../../../../../../store/slices/numOfpassengersSlice';
 
 import seatsWordFormatter from '../../../../../../utils/seatsWordFormatter';
 import coachesWordFormatter from '../../../../../../utils/coachesWordFormatter';
