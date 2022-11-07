@@ -17,11 +17,15 @@ const passengersSlice = createSlice({
             (item) => item.id !== action.payload
          );
       },
+      removeAllPassengers(state) {
+         state.passengers = initialState.passengers;
+      },
    },
    extraReducers: {},
 });
 
-export const { addNewPassenger, removePassenger } = passengersSlice.actions;
+export const { addNewPassenger, removePassenger, removeAllPassengers } =
+   passengersSlice.actions;
 
 export const selectPassengers = (state) => state.passengers.passengers;
 

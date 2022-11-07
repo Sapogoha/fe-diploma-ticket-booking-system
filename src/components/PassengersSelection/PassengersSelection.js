@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,11 +17,6 @@ import plus from './img/plus.svg';
 import styles from './PassengersSelection.module.scss';
 
 function PassengersSelection() {
-   const title = useRef(document.createElement('div'));
-   useEffect(() => {
-      title.current.scrollIntoView({ behavior: 'smooth' });
-   }, []);
-
    const navigate = useNavigate();
    const [passArray, setPassArray] = useState([{ id: nanoid() }]);
    const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
@@ -44,18 +39,34 @@ function PassengersSelection() {
       navigate(links.paymentOptions);
    };
 
-   const unchosenSeatsDep = [
-      ...seatsDepModified.filter((el) => el.passengerId === null),
-   ];
-   const unchosenSeatsArr = [
-      ...seatsArrModified.filter((el) => el.passengerId === null),
-   ];
+   const unchosenSeatsDep = useMemo(
+      () => [...seatsDepModified.filter((el) => el.passengerId === null)],
+      [seatsDepModified]
+   );
+   const unchosenSeatsArr = useMemo(
+      () => [...seatsArrModified.filter((el) => el.passengerId === null)],
+      [seatsArrModified]
+   );
 
-   const unchosenSeats = [...unchosenSeatsDep, ...unchosenSeatsArr];
+   const unchosenSeats = useMemo(
+      () => [...unchosenSeatsDep, ...unchosenSeatsArr],
+      [unchosenSeatsArr, unchosenSeatsDep]
+   );
+
+   const forwardBtn = useRef(document.createElement('button'));
+
+   useEffect(() => {
+      if (!unchosenSeats.length > 0)
+         forwardBtn.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+         });
+   }, [unchosenSeats]);
 
    const button = (
       <div className={styles.buttonWrapper}>
          <button
+            ref={forwardBtn}
             onClick={clickHandler}
             type="button"
             disabled={unchosenSeats.length > 0}
@@ -102,7 +113,7 @@ function PassengersSelection() {
    );
 
    return (
-      <div ref={title}>
+      <div>
          {passArray.map((item, index) => (
             <PassengerCard
                key={item.id}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import Direction from './Direction/Direction';
@@ -13,6 +13,10 @@ import directions from '../../data/directions';
 import styles from './SidebarDetails.module.scss';
 
 function SidebarDetails() {
+   const title = useRef(document.createElement('section'));
+   useEffect(() => {
+      title.current.scrollIntoView({ behavior: 'smooth' });
+   }, []);
    const calculateSum = (obj, coefficient) =>
       obj
          .map((el) =>
@@ -32,7 +36,7 @@ function SidebarDetails() {
    const sumArrChildren = calculateSum(seatsArr, 0.5);
 
    return (
-      <section className={styles.wrapper}>
+      <section className={styles.wrapper} ref={title}>
          <div className={styles.section}>
             <h3 className={styles['main-header']}> Детали поездки</h3>
          </div>

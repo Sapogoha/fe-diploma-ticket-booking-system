@@ -20,6 +20,7 @@ import {
    Radio,
    Button,
    InputNumber,
+   Alert,
 } from 'antd';
 
 import { addPassengerId } from '../../../store/slices/seatsSlice';
@@ -66,21 +67,28 @@ function PassengerCard({
          ? docTypes.passport
          : docTypes.birthCertif
    );
+
    const [unchosenSeatsDepSourse, setUnchosenSeatsDepSourse] = useState(
-      unchosenSeatsDep.filter(
-         (el) =>
-            el.priceCoefficient ===
-            (passengerType === passengerTypes.adults ? 1 : 0.5)
+      unchosenSeatsDep.filter((el) =>
+         (el.priceCoefficient ===
+            form.getFieldValue(fieldNames.passengerType)) ===
+         passengerTypes.adults
+            ? 1
+            : 0.5
       )
    );
    const [unchosenSeatsArrSourse, setUnchosenSeatsArrSourse] = useState(
       unchosenSeatsArr.length > 0 &&
-         unchosenSeatsArr.filter(
-            (el) =>
-               el.priceCoefficient ===
-               (passengerType === passengerTypes.adults ? 1 : 0.5)
+         unchosenSeatsArr.filter((el) =>
+            (el.priceCoefficient ===
+               form.getFieldValue(fieldNames.passengerType)) ===
+            passengerTypes.adults
+               ? 1
+               : 0.5
          )
    );
+   const [ageGroupError, setAgeGroupError] = useState(false);
+
    const bottomSectionStyles = showError
       ? `${styles.passengerCard__bottom} ${styles['passengerCard__bottom-error']}`
       : styles.passengerCard__bottom;
@@ -144,6 +152,7 @@ function PassengerCard({
    };
 
    const onFinish = (values) => {
+      setAgeGroupError(false);
       if (values.seatDep) {
          dispatchMaker(values.seatDep, directions.departure, id);
       }
@@ -176,20 +185,15 @@ function PassengerCard({
          form.setFieldValue('documentType', doc);
          setDocumentType(doc);
 
+         const curCoef =
+            Object.entries(value)[0][1] === passengerTypes.adults ? 1 : 0.5;
+
          setUnchosenSeatsDepSourse(
-            unchosenSeatsDep.filter(
-               (el) =>
-                  el.priceCoefficient ===
-                  (value.passengerType === passengerTypes.adults ? 1 : 0.5)
-            )
+            unchosenSeatsDep.filter((el) => el.priceCoefficient === curCoef)
          );
          if (unchosenSeatsArr.length > 0 && !departureOnly) {
             setUnchosenSeatsArrSourse(
-               unchosenSeatsArr.filter(
-                  (el) =>
-                     el.priceCoefficient ===
-                     (value.passengerType === passengerTypes.adults ? 1 : 0.5)
-               )
+               unchosenSeatsArr.filter((el) => el.priceCoefficient === curCoef)
             );
          }
       }
@@ -217,7 +221,41 @@ function PassengerCard({
             form.setFieldValue(fieldNames.seatArr, null);
          }
       }
+
+      if (value.passengerType || value.dateOfBirth) {
+         setAgeGroupError(false);
+         const age =
+            form.getFieldValue(fieldNames.passengerType) ===
+               passengerTypes.children &&
+            dayjs().diff(form.getFieldValue(fieldNames.dateOfBirth), 'years');
+
+         if (age >= 10) {
+            setAgeGroupError(true);
+            form.setFieldValue(fieldNames.passengerType, passengerTypes.adults);
+            if (age >= 14) {
+               form.setFieldValue(fieldNames.docType, docTypes.passport);
+               setDocumentType(docTypes.passport);
+            }
+
+            setUnchosenSeatsDepSourse(
+               unchosenSeatsDep.filter((el) => el.priceCoefficient === 1)
+            );
+            if (unchosenSeatsArr.length > 0 && !departureOnly) {
+               setUnchosenSeatsArrSourse(
+                  unchosenSeatsArr.filter((el) => el.priceCoefficient === 1)
+               );
+            }
+         }
+      }
    };
+
+   const ageAlert = (
+      <Alert
+         className={styles.row}
+         message="Детские билеты доступны только для пассажиров до 10 лет"
+         type="warning"
+      />
+   );
 
    const passengerCardClosed = (
       <button
@@ -446,6 +484,7 @@ function PassengerCard({
                            </Form.Item>
                         </ConfigProvider>
                      </div>
+                     {ageGroupError && ageAlert}
                      <div className={styles.row}>
                         <Form.Item valuePropName="checked" name="specialNeeds">
                            <Checkbox className="passengerCard-checkbox">

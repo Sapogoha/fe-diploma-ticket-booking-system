@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,10 @@ import consts from '../MainSearchBlock/consts';
 import styles from './SidebarSelection.module.scss';
 
 function SidebarSelection() {
+   const title = useRef(document.createElement('section'));
+   useEffect(() => {
+      title.current.scrollIntoView({ behavior: 'smooth' });
+   }, []);
    const { pathname } = useLocation();
    const navigate = useNavigate();
    const dispatch = useDispatch();
@@ -60,7 +64,7 @@ function SidebarSelection() {
    };
 
    return (
-      <section className={styles.wrapper}>
+      <section className={styles.wrapper} ref={title}>
          <div className={styles.section}>
             <h4 className={inpGrHeaderDateClasses}> Дата поездки</h4>
 

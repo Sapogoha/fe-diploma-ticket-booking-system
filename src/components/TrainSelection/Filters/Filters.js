@@ -37,7 +37,6 @@ function Filters() {
    return (
       <section className={styles.filters}>
          <div className={styles.found}>найдено {totalCount || 0}</div>
-         {/* <div className={styles['wrapper-right']}> */}
          <div className={styles.sort}>
             сортировать по:
             <div>
@@ -58,7 +57,6 @@ function Filters() {
                />
             ))}
          </div>
-         {/* </div> */}
       </section>
    );
 }

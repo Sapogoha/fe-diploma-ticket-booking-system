@@ -111,3 +111,15 @@
       }
    }
 }
+
+@media only screen and (max-width: 1300px) {
+   .passengerCard {
+      .row {
+         justify-content: flex-start;
+         .inputField {
+            width: 20.5rem;
+            margin-right: 3.5rem;
+         }
+      }
+   }
+}
