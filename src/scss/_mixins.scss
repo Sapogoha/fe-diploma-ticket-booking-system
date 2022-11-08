@@ -173,3 +173,57 @@
    border: 0.1rem solid var(--color-bars-light);
    height: 16rem;
 }
+
+// pages
+
+@mixin pageLayout {
+   .body {
+      margin: 9.5rem 0 19.5rem;
+      display: flex;
+      justify-content: space-between;
+
+      .wrapper-main {
+         width: 96rem;
+      }
+   }
+
+   // при ширине меньше 1150 прятать aside в бургер?
+
+   @media only screen and (min-width: 1150px) and (max-width: 1399px) {
+      .body {
+         .wrapper-main {
+            width: 90rem;
+            margin-left: 1rem;
+         }
+      }
+   }
+
+   @media only screen and (min-width: 1500px) and (max-width: 1599px) {
+      .body {
+         margin: 9.5rem 5rem 19.5rem;
+      }
+   }
+   @media only screen and (min-width: 1600px) and (max-width: 1699px) {
+      .body {
+         margin: 9.5rem 10rem 19.5rem;
+      }
+   }
+
+   @media only screen and (min-width: 1700px) and (max-width: 1799px) {
+      .body {
+         margin: 9.5rem 15rem 19.5rem 15rem;
+      }
+   }
+
+   @media only screen and (min-width: 1800px) and (max-width: 1899px) {
+      .body {
+         margin: 9.5rem 20rem 19.5rem;
+      }
+   }
+
+   @media only screen and (min-width: 1900px) {
+      .body {
+         margin: 9.5rem 25rem 19.5rem 26rem;
+      }
+   }
+}
