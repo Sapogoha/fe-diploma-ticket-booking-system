@@ -92,7 +92,7 @@ RightPart.propTypes = {
    priceDep: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
    priceArr: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
    wifi: PropTypes.bool,
-   conditioner: PropTypes.bool.isRequired,
+   conditioner: PropTypes.bool,
    onClick: PropTypes.func.isRequired,
    express: PropTypes.bool,
 };
@@ -102,6 +102,7 @@ RightPart.defaultProps = {
    priceArr: null,
    express: false,
    wifi: false,
+   conditioner: false,
 };
 
 export default RightPart;

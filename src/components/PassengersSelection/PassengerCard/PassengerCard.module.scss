@@ -60,6 +60,9 @@
       > button {
          @include transperrentBlackButton;
       }
+      .changeButton {
+         @include transperrentBlackButton;
+      }
    }
 
    .row {
@@ -92,6 +95,12 @@
             font-size: 1.8rem;
             line-height: 2.1rem;
          }
+      }
+      .seats {
+         padding-bottom: 2rem;
+      }
+      .seatDirection {
+         color: var(--color-yellow-orange);
       }
    }
    .rowShort {

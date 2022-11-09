@@ -19,6 +19,7 @@ import {
 import { selectTotalCount } from '../../store/slices/trainsSlice';
 import { removeTrainInfo } from '../../store/slices/trainSlice';
 import { clearSeatsSlice } from '../../store/slices/seatsSlice';
+import { removeAllPassengers } from '../../store/slices/passengersSlice';
 
 import widthOptions from '../../components/MainSearchBlock/widthOptions';
 import picsOptions from '../../components/Layout/picsOptions';
@@ -34,6 +35,7 @@ function TrainSelectionPage() {
    useEffect(() => {
       dispatch(removeTrainInfo());
       dispatch(clearSeatsSlice());
+      dispatch(removeAllPassengers());
    }, [dispatch]);
 
    const onChangePage = (value) => {

@@ -1,8 +1,15 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
-import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {
+   useState,
+   useRef,
+   useEffect,
+   useCallback,
+   useMemo,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
@@ -26,8 +33,11 @@ import {
 import { addPassengerId } from '../../../store/slices/seatsSlice';
 import {
    addNewPassenger,
+   editPassengerData,
    removePassenger,
+   selectPassengers,
 } from '../../../store/slices/passengersSlice';
+import { selectSelectedCoaches } from '../../../store/slices/trainSlice';
 
 import minusRound from '../img/minus-round.svg';
 import cross from '../img/cross.svg';
@@ -54,52 +64,170 @@ function PassengerCard({
    clickOnRemovePassHandler,
    clickOnNextPassHandler,
    id,
+   unchosenSeats,
    unchosenSeatsDep,
    unchosenSeatsArr,
 }) {
    const dispatch = useDispatch();
+   const thisPassenger = useSelector(selectPassengers).filter(
+      (pas) => pas.id === id
+   );
+   const coaches = useSelector(selectSelectedCoaches);
+
    const [expanded, setExpanded] = useState(true);
    const [showError, setShowError] = useState(false);
    const [departureOnly, setDepartureOnly] = useState(!unchosenSeatsArr);
    const [form] = Form.useForm();
    const [documentType, setDocumentType] = useState(
-      passengerType === passengerTypes.adults
+      thisPassenger[0]?.documentType || passengerType === passengerTypes.adults
          ? docTypes.passport
          : docTypes.birthCertif
    );
 
+   const unchosenSeatsAdults = unchosenSeats.filter(
+      (el) => el.priceCoefficient === 1
+   ).length;
+   const unchosenSeatsChildren = unchosenSeats.filter(
+      (el) => el.priceCoefficient === 0.5
+   ).length;
+
    const [unchosenSeatsDepSourse, setUnchosenSeatsDepSourse] = useState(
-      unchosenSeatsDep.filter((el) =>
-         (el.priceCoefficient ===
-            form.getFieldValue(fieldNames.passengerType)) ===
-         passengerTypes.adults
-            ? 1
-            : 0.5
+      unchosenSeatsDep.filter(
+         (el) =>
+            el.priceCoefficient ===
+            (passengerType === passengerTypes.adults ? 1 : 0.5)
       )
    );
+
    const [unchosenSeatsArrSourse, setUnchosenSeatsArrSourse] = useState(
       unchosenSeatsArr.length > 0 &&
-         unchosenSeatsArr.filter((el) =>
-            (el.priceCoefficient ===
-               form.getFieldValue(fieldNames.passengerType)) ===
-            passengerTypes.adults
-               ? 1
-               : 0.5
+         unchosenSeatsArr.filter(
+            (el) =>
+               el.priceCoefficient ===
+               (passengerType === passengerTypes.adults ? 1 : 0.5)
          )
    );
-   const [ageGroupError, setAgeGroupError] = useState(false);
+   const [highAgeError, setHighAgeError] = useState(false);
+   const [lowAgeError, setLowAgeError] = useState(false);
 
    const bottomSectionStyles = showError
       ? `${styles.passengerCard__bottom} ${styles['passengerCard__bottom-error']}`
       : styles.passengerCard__bottom;
 
-   const initialValues = {
-      passengerType,
-      documentType:
-         passengerType === passengerTypes.adults
-            ? docTypes.passport
-            : docTypes.birthCertif,
-   };
+   let initialValues = useMemo(
+      () => ({
+         passengerType,
+         documentType:
+            passengerType === passengerTypes.adults
+               ? docTypes.passport
+               : docTypes.birthCertif,
+      }),
+      [passengerType]
+   );
+
+   let seatInfo;
+
+   if (thisPassenger.length > 0) {
+      const allCoaches = [...coaches.departure, ...coaches.arrival];
+      const seatDepData = thisPassenger[0].seatDep?.split(':');
+      const seatArrData = thisPassenger[0].seatArr?.split(':');
+
+      const seatInfoMaker = (direction, seatData) => (
+         <div>
+            <span className={styles.seatDirection}>
+               {direction === directions.departure ? 'Туда' : 'Обратно'}
+            </span>
+            <span>
+               {` вагон: ${
+                  allCoaches?.filter((el) => el.coachId === seatData[0])[0]
+                     ?.name
+               }
+               , место: ${seatData[1]}`}
+            </span>
+         </div>
+      );
+
+      const oneWaySeatInfoMaker = (direction, seatData) => (
+         <div>
+            <div className={styles.seats}>Выбранное место</div>
+            {seatInfoMaker(direction, seatData)}
+         </div>
+      );
+
+      if (thisPassenger[0].seatDep && thisPassenger[0].seatArr) {
+         seatInfo = (
+            <div>
+               <div className={styles.seats}>Выбранные места</div>
+               {seatInfoMaker(directions.departure, seatDepData)}
+               {seatInfoMaker(directions.arrival, seatArrData)}
+            </div>
+         );
+      } else if (thisPassenger[0].seatDep) {
+         seatInfo = oneWaySeatInfoMaker(directions.departure, seatDepData);
+      } else if (thisPassenger[0].seatArr) {
+         seatInfo = oneWaySeatInfoMaker(directions.arrival, seatArrData);
+      }
+
+      initialValues = {
+         passengerType: thisPassenger[0].passengerType,
+         firstName: thisPassenger[0].firstName,
+         lastName: thisPassenger[0].lastName,
+         fathersName: thisPassenger[0].fathersName,
+         gender: thisPassenger[0].gender,
+         documentType: thisPassenger[0].documentType,
+      };
+
+      if (thisPassenger[0].specialNeeds) {
+         initialValues.specialNeeds = thisPassenger[0].specialNeeds;
+      }
+
+      if (thisPassenger[0].documentType === docTypes.passport) {
+         initialValues.documentSerialNumber =
+            thisPassenger[0].documentSerialNumber;
+         initialValues.documentNumber = thisPassenger[0].documentNumber;
+      }
+      if (thisPassenger[0].documentType === docTypes.birthCertif) {
+         initialValues.documentNumber = thisPassenger[0]?.documentNumber;
+      }
+
+      if (thisPassenger[0].departureOnly) {
+         initialValues.departureOnly = thisPassenger[0].departureOnly;
+      }
+
+      if (thisPassenger[0].dateOfBirth) {
+         const data = thisPassenger[0].dateOfBirth.split('.');
+         initialValues.dateOfBirth = dayjs(`${data[1]}.${data[0]}.${data[2]}`);
+      }
+   }
+
+   const seatsFilter = useCallback(
+      (coef) => {
+         setUnchosenSeatsDepSourse(
+            unchosenSeatsDep.filter((el) => el.priceCoefficient === coef)
+         );
+         if (unchosenSeatsArr.length > 0 && !departureOnly) {
+            setUnchosenSeatsArrSourse(
+               unchosenSeatsArr.filter((el) => el.priceCoefficient === coef)
+            );
+         }
+      },
+      [departureOnly, unchosenSeatsArr, unchosenSeatsDep]
+   );
+
+   useEffect(() => {
+      if (thisPassenger[0]?.documentType) {
+         if (thisPassenger[0]?.documentType === docTypes.birthCertif) {
+            setDocumentType(docTypes.birthCertif);
+
+            seatsFilter(0.5);
+         } else {
+            setDocumentType(docTypes.passport);
+
+            seatsFilter(1);
+         }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const docTypeselectClasses =
       documentType === docTypes.passport
@@ -142,8 +270,15 @@ function PassengerCard({
          );
       }
 
-      dispatch(removePassenger(id));
+      if (thisPassenger[0]?.seatArr) {
+         dispatchMaker(thisPassenger[0].seatArr, directions.arrival);
+      }
 
+      if (thisPassenger[0]?.seatDep) {
+         dispatchMaker(thisPassenger[0].seatDep, directions.departure);
+      }
+
+      dispatch(removePassenger(id));
       clickOnRemovePassHandler(id);
    };
 
@@ -152,27 +287,38 @@ function PassengerCard({
    };
 
    const onFinish = (values) => {
-      setAgeGroupError(false);
-      if (values.seatDep) {
-         dispatchMaker(values.seatDep, directions.departure, id);
-      }
-      if (values.seatArr) {
-         dispatchMaker(values.seatArr, directions.arrival, id);
-      }
+      if (!thisPassenger[0]) {
+         setHighAgeError(false);
+         setLowAgeError(false);
+         if (values.seatDep) {
+            dispatchMaker(values.seatDep, directions.departure, id);
+         }
+         if (values.seatArr) {
+            dispatchMaker(values.seatArr, directions.arrival, id);
+         }
 
-      dispatch(
-         addNewPassenger({
-            id,
-            ...values,
-            dateOfBirth: values.dateOfBirth.format('DD.MM.YYYY'),
-         })
-      );
+         dispatch(
+            addNewPassenger({
+               id,
+               ...values,
+               dateOfBirth: values.dateOfBirth.format('DD.MM.YYYY'),
+            })
+         );
 
-      if (
-         unchosenSeatsDep.length - (values.seatDep ? 1 : 0) > 0 ||
-         unchosenSeatsArr.length - (values.seatArr ? 1 : 0) > 0
-      ) {
-         clickOnNextPassHandler(id);
+         if (
+            unchosenSeatsDep.length - (values.seatDep ? 1 : 0) > 0 ||
+            unchosenSeatsArr.length - (values.seatArr ? 1 : 0) > 0
+         ) {
+            clickOnNextPassHandler(id);
+         }
+      } else {
+         dispatch(
+            editPassengerData({
+               id,
+               ...values,
+               dateOfBirth: values.dateOfBirth.format('DD.MM.YYYY'),
+            })
+         );
       }
    };
 
@@ -184,18 +330,9 @@ function PassengerCard({
                : docTypes.birthCertif;
          form.setFieldValue('documentType', doc);
          setDocumentType(doc);
-
-         const curCoef =
-            Object.entries(value)[0][1] === passengerTypes.adults ? 1 : 0.5;
-
-         setUnchosenSeatsDepSourse(
-            unchosenSeatsDep.filter((el) => el.priceCoefficient === curCoef)
+         seatsFilter(
+            Object.entries(value)[0][1] === passengerTypes.adults ? 1 : 0.5
          );
-         if (unchosenSeatsArr.length > 0 && !departureOnly) {
-            setUnchosenSeatsArrSourse(
-               unchosenSeatsArr.filter((el) => el.priceCoefficient === curCoef)
-            );
-         }
       }
       if (value.documentType) {
          setDocumentType(value.documentType);
@@ -222,37 +359,66 @@ function PassengerCard({
          }
       }
 
-      if (value.passengerType || value.dateOfBirth) {
-         setAgeGroupError(false);
-         const age =
-            form.getFieldValue(fieldNames.passengerType) ===
-               passengerTypes.children &&
-            dayjs().diff(form.getFieldValue(fieldNames.dateOfBirth), 'years');
+      if (
+         (value.passengerType || value.dateOfBirth) &&
+         thisPassenger.length <= 0
+      ) {
+         setHighAgeError(false);
+         setLowAgeError(false);
 
-         if (age >= 10) {
-            setAgeGroupError(true);
-            form.setFieldValue(fieldNames.passengerType, passengerTypes.adults);
-            if (age >= 14) {
-               form.setFieldValue(fieldNames.docType, docTypes.passport);
-               setDocumentType(docTypes.passport);
+         const ageYears = dayjs().diff(
+            form.getFieldValue(fieldNames.dateOfBirth),
+            'years'
+         );
+         const ageChosen =
+            dayjs().diff(form.getFieldValue(fieldNames.dateOfBirth), 'days') >=
+            1;
+
+         if (ageChosen) {
+            const pasType = form.getFieldValue(fieldNames.passengerType);
+            if (ageYears < 10 && pasType === passengerTypes.adults) {
+               setLowAgeError(true);
+               form.setFieldValue(
+                  fieldNames.passengerType,
+                  passengerTypes.children
+               );
+               seatsFilter(0.5);
             }
 
-            setUnchosenSeatsDepSourse(
-               unchosenSeatsDep.filter((el) => el.priceCoefficient === 1)
-            );
-            if (unchosenSeatsArr.length > 0 && !departureOnly) {
-               setUnchosenSeatsArrSourse(
-                  unchosenSeatsArr.filter((el) => el.priceCoefficient === 1)
+            if (ageYears >= 10 && pasType === passengerTypes.children) {
+               setHighAgeError(true);
+               form.setFieldValue(
+                  fieldNames.passengerType,
+                  passengerTypes.adults
                );
+               seatsFilter(1);
+            }
+
+            if (ageYears >= 14) {
+               form.setFieldValue(fieldNames.docType, docTypes.passport);
+               setDocumentType(docTypes.passport);
+               seatsFilter(1);
+            }
+
+            if (
+               ageYears < 14 &&
+               form.getFieldValue(fieldNames.docType) !== docTypes.birthCertif
+            ) {
+               form.setFieldValue(fieldNames.docType, docTypes.birthCertif);
+               setDocumentType(docTypes.birthCertif);
             }
          }
       }
    };
 
-   const ageAlert = (
+   const alertMaker = (age) => (
       <Alert
          className={styles.row}
-         message="Детские билеты доступны только для пассажиров до 10 лет"
+         message={
+            age === 'high'
+               ? 'Детские билеты доступны только для пассажиров до 10 лет'
+               : 'Для пассажиров до 10 лет действует детский тариф'
+         }
          type="warning"
       />
    );
@@ -266,6 +432,145 @@ function PassengerCard({
          <img src={plusRound} alt="иконка - плюс" />
          <span className={styles.text}>Пассажир {pasNumber}</span>
       </button>
+   );
+
+   const passType = (
+      <Form.Item
+         name={fieldNames.passengerType}
+         value={form.passengerType}
+         rules={rules.passengerType}
+      >
+         <Select
+            className="passengerCard-select"
+            popupClassName="passengerCard-select"
+         >
+            {unchosenSeatsAdults && (
+               <Select.Option value={passengerTypes.adults}>
+                  Взрослый
+               </Select.Option>
+            )}
+            {unchosenSeatsChildren && (
+               <Select.Option value={passengerTypes.children}>
+                  Детский
+               </Select.Option>
+            )}
+         </Select>
+      </Form.Item>
+   );
+
+   const pasTypeToDisplay = (
+      <div>
+         {thisPassenger[0]?.passengerType === passengerTypes.adults
+            ? 'Взрослый'
+            : thisPassenger[0]?.passengerType === passengerTypes.children
+            ? 'Детский'
+            : 'Тип неопределен'}
+      </div>
+   );
+
+   const fullNameInputFields = (
+      <>
+         <Form.Item
+            name={fieldNames.lastName}
+            label="Фамилия"
+            rules={rules.lastName}
+         >
+            <Input className={styles.inputField} />
+         </Form.Item>
+         <Form.Item
+            name={fieldNames.firstName}
+            label="Имя"
+            rules={rules.firstName}
+         >
+            <Input className={styles.inputField} />
+         </Form.Item>
+         <Form.Item
+            name={fieldNames.fathersName}
+            label="Отчество"
+            rules={rules.fathersName}
+         >
+            <Input className={styles.inputField} />
+         </Form.Item>
+      </>
+   );
+
+   const sexRadioGroup = (
+      <Form.Item
+         label="Пол"
+         name={fieldNames.gender}
+         className={styles.genderRadioBtn}
+         rules={rules.gender}
+      >
+         <Radio.Group
+            optionType="button"
+            buttonStyle="solid"
+            className="passengerCard-radio"
+         >
+            <Radio.Button value="true" defaultChecked>
+               М
+            </Radio.Button>
+            <Radio.Button value="false">Ж</Radio.Button>
+         </Radio.Group>
+      </Form.Item>
+   );
+
+   const dateOfBirthPicker = (
+      <ConfigProvider locale={ru_RU}>
+         <Form.Item
+            label="Дата рождения"
+            name={fieldNames.dateOfBirth}
+            rules={rules.dateOfBirth}
+            value={form.dateOfBirth}
+         >
+            <DatePicker
+               className="passengerCard-datepicker"
+               popupClassName="passengerCard-datepicker"
+               placeholder="дд/мм/гг"
+               disabledDate={disabledDate}
+               format="DD.MM.YYYY"
+               allowClear
+               showToday={false}
+            />
+         </Form.Item>
+      </ConfigProvider>
+   );
+
+   const specialNeedsCheckbox = (
+      <Form.Item valuePropName="checked" name="specialNeeds">
+         <Checkbox className="passengerCard-checkbox">
+            ограниченная подвижность
+         </Checkbox>
+      </Form.Item>
+   );
+
+   const docTypeSelect = (
+      <Form.Item
+         label="Тип документа"
+         name={fieldNames.docType}
+         className={styles.documentType}
+         rules={rules.docType}
+      >
+         <Select
+            className={docTypeselectClasses}
+            popupClassName="passengerCard-doc-select"
+            showArrow
+            allowClear={false}
+         >
+            {(dayjs().diff(
+               form.getFieldValue(fieldNames.dateOfBirth),
+               'years'
+            ) >= 14 ||
+               dayjs().diff(
+                  form.getFieldValue(fieldNames.dateOfBirth),
+                  'days'
+               ) <= 0) && (
+               <Select.Option value={docTypes.passport}>Паспорт</Select.Option>
+            )}
+            <Select.Option value={docTypes.birthCertif}>
+               Свидетельство о рождении
+            </Select.Option>
+         </Select>
+      </Form.Item>
    );
 
    const passSerNum = (
@@ -374,6 +679,62 @@ function PassengerCard({
       </Form.Item>
    );
 
+   const seatSelection = (
+      <>
+         {unchosenSeatsDepSourse.length > 0 && seatDep}
+
+         {unchosenSeatsArrSourse.length > 0 &&
+            unchosenSeatsDepSourse.length > 0 &&
+            depOnly}
+
+         {unchosenSeatsArrSourse.length > 0 && !departureOnly && seatArr}
+      </>
+   );
+
+   const needMoreSeatsText = (
+      <div>
+         Нужен еще один{' '}
+         {form.getFieldValue(fieldNames.passengerType) === passengerTypes.adults
+            ? 'взрослый'
+            : 'детский'}{' '}
+         билет? Пожалуйста, вернитесь назад и выберите дополнительное место на
+         схеме вагона
+      </div>
+   );
+
+   const seatSelBlock = (
+      <div className={`${styles.row} ${styles.rowSeats}`}>
+         {!thisPassenger.length > 0 &&
+            (unchosenSeatsDepSourse.length > 0 ||
+               unchosenSeatsArrSourse.length > 0) &&
+            seatSelection}
+         {!thisPassenger.length > 0 &&
+            !unchosenSeatsDepSourse.length > 0 &&
+            !unchosenSeatsArrSourse.length > 0 &&
+            needMoreSeatsText}
+         {thisPassenger.length > 0 && <div>{seatInfo}</div>}
+      </div>
+   );
+
+   const button = (
+      <Form.Item className={bottomSectionStyles}>
+         {!thisPassenger[0] && (
+            <Button
+               type="primary"
+               htmlType="submit"
+               className="passengerCard__button"
+            >
+               Следующий пассажир
+            </Button>
+         )}
+         {thisPassenger[0] && (
+            <button type="submit" className={styles.changeButton}>
+               Изменить
+            </button>
+         )}
+      </Form.Item>
+   );
+
    return (
       <div id={id} ref={title}>
          {!expanded && passengerCardClosed}
@@ -405,146 +766,28 @@ function PassengerCard({
                >
                   <div className={styles.section}>
                      <div className={styles.row}>
-                        <Form.Item
-                           name={fieldNames.passengerType}
-                           value={form.passengerType}
-                           rules={rules.passengerType}
-                        >
-                           <Select
-                              className="passengerCard-select"
-                              popupClassName="passengerCard-select"
-                           >
-                              <Select.Option value={passengerTypes.adults}>
-                                 Взрослый
-                              </Select.Option>
-                              <Select.Option value={passengerTypes.children}>
-                                 Детский
-                              </Select.Option>
-                           </Select>
-                        </Form.Item>
+                        {!thisPassenger[0] && passType}
+                        {thisPassenger[0] && pasTypeToDisplay}
                      </div>
-                     <div className={styles.row}>
-                        <Form.Item
-                           name={fieldNames.lastName}
-                           label="Фамилия"
-                           rules={rules.lastName}
-                        >
-                           <Input className={styles.inputField} />
-                        </Form.Item>
-                        <Form.Item
-                           name={fieldNames.firstName}
-                           label="Имя"
-                           rules={rules.firstName}
-                        >
-                           <Input className={styles.inputField} />
-                        </Form.Item>
-                        <Form.Item
-                           name={fieldNames.fathersName}
-                           label="Отчество"
-                           rules={rules.fathersName}
-                        >
-                           <Input className={styles.inputField} />
-                        </Form.Item>
-                     </div>
+                     <div className={styles.row}>{fullNameInputFields}</div>
                      <div className={`${styles.row} ${styles.rowShort}`}>
-                        <Form.Item
-                           label="Пол"
-                           name={fieldNames.gender}
-                           className={styles.genderRadioBtn}
-                           rules={rules.gender}
-                        >
-                           <Radio.Group
-                              optionType="button"
-                              buttonStyle="solid"
-                              className="passengerCard-radio"
-                           >
-                              <Radio.Button value="true" defaultChecked>
-                                 М
-                              </Radio.Button>
-                              <Radio.Button value="false">Ж</Radio.Button>
-                           </Radio.Group>
-                        </Form.Item>
-
-                        <ConfigProvider locale={ru_RU}>
-                           <Form.Item
-                              label="Дата рождения"
-                              name={fieldNames.dateOfBirth}
-                              rules={rules.dateOfBirth}
-                              value={form.dateOfBirth}
-                           >
-                              <DatePicker
-                                 className="passengerCard-datepicker"
-                                 popupClassName="passengerCard-datepicker"
-                                 placeholder="дд/мм/гг"
-                                 disabledDate={disabledDate}
-                                 format="DD.MM.YYYY"
-                                 allowClear
-                                 showToday={false}
-                              />
-                           </Form.Item>
-                        </ConfigProvider>
+                        {sexRadioGroup}
+                        {dateOfBirthPicker}
                      </div>
-                     {ageGroupError && ageAlert}
-                     <div className={styles.row}>
-                        <Form.Item valuePropName="checked" name="specialNeeds">
-                           <Checkbox className="passengerCard-checkbox">
-                              ограниченная подвижность
-                           </Checkbox>
-                        </Form.Item>
-                     </div>
+                     {highAgeError && alertMaker('high')}
+                     {lowAgeError && alertMaker('low')}
+                     <div className={styles.row}>{specialNeedsCheckbox}</div>
                   </div>
                   <div className={styles.section}>
                      <div className={`${styles.row} ${styles.rowShort}`}>
-                        <Form.Item
-                           label="Тип документа"
-                           name={fieldNames.docType}
-                           className={styles.documentType}
-                           rules={rules.docType}
-                        >
-                           <Select
-                              className={docTypeselectClasses}
-                              popupClassName="passengerCard-doc-select"
-                              showArrow
-                              allowClear={false}
-                           >
-                              <Select.Option value={docTypes.passport}>
-                                 Паспорт
-                              </Select.Option>
-                              <Select.Option value={docTypes.birthCertif}>
-                                 Свидетельство о рождении
-                              </Select.Option>
-                           </Select>
-                        </Form.Item>
+                        {docTypeSelect}
                         {documentType === docTypes.passport && passSerNum}
                         {documentType === docTypes.passport && passNum}
                         {documentType === docTypes.birthCertif && birthCertif}
                      </div>
                   </div>
-                  {(unchosenSeatsDepSourse.length > 0 ||
-                     unchosenSeatsArrSourse.length > 0) && (
-                     <div className={styles.section}>
-                        <div className={`${styles.row} ${styles.rowSeats}`}>
-                           {unchosenSeatsDepSourse.length > 0 && seatDep}
-
-                           {unchosenSeatsArrSourse.length > 0 &&
-                              unchosenSeatsDepSourse.length > 0 &&
-                              depOnly}
-
-                           {unchosenSeatsArrSourse.length > 0 &&
-                              !departureOnly &&
-                              seatArr}
-                        </div>
-                     </div>
-                  )}
-                  <Form.Item className={bottomSectionStyles}>
-                     <Button
-                        type="primary"
-                        htmlType="submit"
-                        className={`${styles.btn} passengerCard__button`}
-                     >
-                        Следующий пассажир
-                     </Button>
-                  </Form.Item>
+                  <div className={styles.section}>{seatSelBlock}</div>
+                  {button}
                </Form>
             </div>
          )}
@@ -567,6 +810,7 @@ PassengerCard.propTypes = {
    clickOnRemovePassHandler: PropTypes.func.isRequired,
    clickOnNextPassHandler: PropTypes.func.isRequired,
    id: PropTypes.string.isRequired,
+   unchosenSeats: PropTypes.arrayOf(PropTypes.shape(shapedObj)).isRequired,
    unchosenSeatsDep: PropTypes.arrayOf(PropTypes.shape(shapedObj)).isRequired,
    unchosenSeatsArr: PropTypes.arrayOf(PropTypes.shape(shapedObj)),
 };

@@ -10,7 +10,24 @@ const passengersSlice = createSlice({
    initialState,
    reducers: {
       addNewPassenger(state, action) {
-         state.passengers = [...state.passengers, action.payload];
+         state.passengers = [
+            ...state.passengers.filter((pas) => pas.id !== action.payload.id),
+            action.payload,
+         ];
+      },
+      editPassengerData(state, action) {
+         const ids = state.passengers.map((el) => el.id);
+         const sameId = ids.indexOf(action.payload.id);
+
+         if (sameId !== -1) {
+            Object.keys(action.payload).forEach(
+               // eslint-disable-next-line no-return-assign
+               (key, ind) =>
+                  (state.passengers[sameId][key] = Object.values(
+                     action.payload
+                  )[ind])
+            );
+         }
       },
       removePassenger(state, action) {
          state.passengers = state.passengers.filter(
@@ -24,8 +41,12 @@ const passengersSlice = createSlice({
    extraReducers: {},
 });
 
-export const { addNewPassenger, removePassenger, removeAllPassengers } =
-   passengersSlice.actions;
+export const {
+   addNewPassenger,
+   editPassengerData,
+   removePassenger,
+   removeAllPassengers,
+} = passengersSlice.actions;
 
 export const selectPassengers = (state) => state.passengers.passengers;
 

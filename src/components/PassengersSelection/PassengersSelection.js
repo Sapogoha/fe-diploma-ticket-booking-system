@@ -7,6 +7,7 @@ import { nanoid } from 'nanoid';
 import PassengerCard from './PassengerCard/PassengerCard';
 
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
+import { selectPassengers } from '../../store/slices/passengersSlice';
 
 import links from '../../data/links';
 import passengerTypes from '../SeatsSelection/SelectionBlock/passengerTypes';
@@ -18,9 +19,17 @@ import styles from './PassengersSelection.module.scss';
 
 function PassengersSelection() {
    const navigate = useNavigate();
-   const [passArray, setPassArray] = useState([{ id: nanoid() }]);
+   const [passArray, setPassArray] = useState([]);
    const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
    const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
+   const passengers = useSelector(selectPassengers);
+
+   useEffect(() => {
+      passengers.forEach((pas) =>
+         setPassArray((prev) => [...prev, { id: pas.id }])
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const seatsModifier = (obj) =>
       obj
@@ -56,12 +65,20 @@ function PassengersSelection() {
    const forwardBtn = useRef(document.createElement('button'));
 
    useEffect(() => {
-      if (!unchosenSeats.length > 0)
+      if (!unchosenSeats.length > 0) {
          forwardBtn.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
          });
+      }
    }, [unchosenSeats]);
+
+   useEffect(() => {
+      if (unchosenSeats.length > 0) {
+         setPassArray((prev) => [...prev, { id: nanoid() }]);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const button = (
       <div className={styles.buttonWrapper}>
@@ -126,6 +143,7 @@ function PassengersSelection() {
                pasNumber={index + 1}
                clickOnRemovePassHandler={clickOnRemovePassHandler}
                clickOnNextPassHandler={clickOnNextPassHandler}
+               unchosenSeats={unchosenSeats}
                unchosenSeatsDep={unchosenSeatsDep}
                unchosenSeatsArr={unchosenSeatsArr}
             />
