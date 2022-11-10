@@ -166,10 +166,7 @@
    box-shadow: none;
 
    > span {
-      @include font(700, 2.4rem, 2.8rem, var(--color-main-dark));
-      padding: 1.4rem 3.4rem;
-      border: 0.2rem solid var(--color-main-dark);
-      border-radius: 0.5rem;
+      @include transperrentBlackButton;
    }
    margin-bottom: 3rem;
 }

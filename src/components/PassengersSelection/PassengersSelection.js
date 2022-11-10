@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -5,8 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import PassengerCard from './PassengerCard/PassengerCard';
+import Redirect from '../Redirect/Redirect';
 
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
+import { selectTrains } from '../../store/slices/trainSlice';
 import { selectPassengers } from '../../store/slices/passengersSlice';
 
 import links from '../../data/links';
@@ -20,6 +23,8 @@ import styles from './PassengersSelection.module.scss';
 function PassengersSelection() {
    const navigate = useNavigate();
    const [passArray, setPassArray] = useState([]);
+   const arrival = useSelector(selectTrains)[directions.arrival]?._id;
+   const departure = useSelector(selectTrains)[directions.departure]?._id;
    const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
    const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
    const passengers = useSelector(selectPassengers);
@@ -66,7 +71,7 @@ function PassengersSelection() {
 
    useEffect(() => {
       if (!unchosenSeats.length > 0) {
-         forwardBtn.current.scrollIntoView({
+         forwardBtn?.current?.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
          });
@@ -79,19 +84,6 @@ function PassengersSelection() {
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
-
-   const button = (
-      <div className={styles.buttonWrapper}>
-         <button
-            ref={forwardBtn}
-            onClick={clickHandler}
-            type="button"
-            disabled={unchosenSeats.length > 0}
-         >
-            далее
-         </button>
-      </div>
-   );
 
    const unchosenAdultSeats = unchosenSeats.filter(
       (el) => el.priceCoefficient === 1
@@ -129,6 +121,19 @@ function PassengersSelection() {
       </button>
    );
 
+   const button = (
+      <div className={styles.buttonWrapper}>
+         <button
+            ref={forwardBtn}
+            onClick={clickHandler}
+            type="button"
+            disabled={unchosenSeats.length > 0}
+         >
+            далее
+         </button>
+      </div>
+   );
+
    return (
       <div>
          {passArray.map((item, index) => (
@@ -149,8 +154,23 @@ function PassengersSelection() {
             />
          ))}
          {unchosenSeats.length > 0 && addPassenger}
-
-         {button}
+         {(seatsDep.length > 0 || seatsArr.length > 0) && button}
+         {seatsDep.length <= 0 &&
+            seatsArr.length <= 0 &&
+            (departure || arrival) && (
+               <Redirect
+                  mainText="Для ввода данных пассажиров сначала нужно выбрать места"
+                  btnText="Выбрать места"
+                  link={links.seats}
+               />
+            )}
+         {!departure && !arrival && (
+            <Redirect
+               mainText=" Пожалуйста, выберете поезд. Без этого нельзя вносить данные о пассажирах"
+               btnText="На главную"
+               link={links.main}
+            />
+         )}
       </div>
    );
 }

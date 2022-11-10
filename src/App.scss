@@ -32,4 +32,6 @@
    --border-shadow-trains-card: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.3);
    --box-shadow-popover: 0px 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
    --box-shadow-selection-block: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+
+   --filter: drop-shadow(var(--box-shadow-popover));
 }

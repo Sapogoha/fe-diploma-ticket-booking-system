@@ -185,14 +185,6 @@
          margin-left: auto;
 
          @include button-gold;
-         &-invalid {
-            background-color: var(--color-grey);
-            color: var(--color-main-light);
-            &:hover {
-               background-color: var(--color-grey);
-               color: var(--color-main-light);
-            }
-         }
       }
    }
 }

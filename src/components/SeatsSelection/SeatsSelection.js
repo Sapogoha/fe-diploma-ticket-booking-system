@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import SelectionBlock from './SelectionBlock/SelectionBlock';
+import Redirect from '../Redirect/Redirect';
 
 import { selectTrains } from '../../store/slices/trainSlice';
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
@@ -73,30 +74,19 @@ function SeatsSelection() {
       </div>
    );
 
-   const clickHandlerToMain = () => {
-      navigate(links.main);
-   };
-
-   const redirectToMain = (
-      <>
-         <div className={styles['seats-selection__no-trains']}>
-            Выберите поезд. После этого можно будет выбрать места
-         </div>
-         <div className={styles['seats-selection__button-wrapper']}>
-            <button onClick={clickHandlerToMain} type="button">
-               Выбрать поезда
-            </button>
-         </div>
-      </>
-   );
-
    return (
       <section className={styles['seats-selection']}>
          <h3 className={styles['seats-selection__header']}>выбор мест</h3>
          {departure && <SelectionBlock direction={directions.departure} />}
          {arrival && <SelectionBlock direction={directions.arrival} />}
          {departure && button}
-         {!departure && !arrival && redirectToMain}
+         {!departure && !arrival && (
+            <Redirect
+               mainText=" Выберите поезд. После этого можно будет выбрать места"
+               btnText=" Выбрать поезд"
+               link={links.main}
+            />
+         )}
       </section>
    );
 }

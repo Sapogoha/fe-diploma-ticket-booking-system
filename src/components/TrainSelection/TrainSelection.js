@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 
 import TrainCard from './TrainCard/TrainCard';
+import Redirect from '../Redirect/Redirect';
 
 import {
    selectDepartureCity,
@@ -17,7 +18,7 @@ import {
    selectTime,
 } from '../../store/slices/sidebarSelectSlice';
 import {
-   // selectLoading,
+   selectLoading,
    selectError,
    selectTrainsOptions,
 } from '../../store/slices/trainsSlice';
@@ -27,6 +28,8 @@ import {
    selectOffset,
 } from '../../store/slices/sortSlice';
 import { fetchTrainsOptions } from '../../store/thunks/asyncThunks';
+
+import links from '../../data/links';
 
 import styles from './TrainSelection.module.scss';
 
@@ -42,7 +45,7 @@ function TrainSelection() {
    const prices = useSelector(selectPrices);
    const time = useSelector(selectTime);
 
-   // const loading = useSelector( selectLoading);
+   const loading = useSelector(selectLoading);
    const error = useSelector(selectError);
    const trainsOptions = useSelector(selectTrainsOptions);
 
@@ -105,11 +108,18 @@ function TrainSelection() {
    }, [dispatch, url]);
 
    return (
-      <section className={styles['train-selection']}>
+      <section className={styles.trainSelection}>
          {error && <div>{error}</div>}
          {trainsOptions?.map((item) => (
             <TrainCard key={item.id} ticket={item.ticket} />
          ))}
+         {(!trainsOptions || trainsOptions?.length < 1) && !loading && (
+            <Redirect
+               mainText="Поезда не найдены. Выберите другую дату или маршрут"
+               btnText="На главную"
+               link={links.main}
+            />
+         )}
       </section>
    );
 }

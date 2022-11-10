@@ -1,0 +1,9 @@
+@import '../../scss/mixins';
+
+.text {
+   @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+}
+
+.buttonWrapper {
+   @include buttonForward;
+}

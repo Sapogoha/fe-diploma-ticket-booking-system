@@ -29,7 +29,7 @@ const personalDataSlice = createSlice({
          state.fathersName = fathersName;
          state.phone = phone;
          state.email = email;
-         state.payment_method = paymentMethod;
+         state.paymentMethod = paymentMethod;
       },
       removePersonalData() {
          return initialState;
