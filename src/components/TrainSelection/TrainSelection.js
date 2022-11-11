@@ -111,7 +111,7 @@ function TrainSelection() {
       <section className={styles.trainSelection}>
          {error && <div>{error}</div>}
          {trainsOptions?.map((item) => (
-            <TrainCard key={item.id} ticket={item.ticket} />
+            <TrainCard key={item.id} ticket={item.ticket} id={item.id} />
          ))}
          {(!trainsOptions || trainsOptions?.length < 1) && !loading && (
             <Redirect

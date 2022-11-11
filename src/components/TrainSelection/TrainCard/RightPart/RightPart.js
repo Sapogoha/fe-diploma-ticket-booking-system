@@ -18,6 +18,8 @@ function RightPart({
    conditioner,
    express,
    onClick,
+   id,
+   editBtn,
 }) {
    const wifiImg = (
       <div className={styles.icons__content}>
@@ -34,10 +36,11 @@ function RightPart({
          <img src={expressIcon} alt="иконкa экспресс" />
       </div>
    );
+
    return (
       <>
          <div>
-            {availableSeats.fourth && (
+            {availableSeats?.fourth && (
                <RightPartItem
                   type="Сидячий"
                   seatsNum={availableSeats?.fourth}
@@ -45,7 +48,7 @@ function RightPart({
                   priceArr={priceArr?.fourth}
                />
             )}
-            {availableSeats.third && (
+            {availableSeats?.third && (
                <RightPartItem
                   type="Плацкарт"
                   seatsNum={availableSeats?.third}
@@ -53,18 +56,18 @@ function RightPart({
                   priceArr={priceArr?.third}
                />
             )}
-            {availableSeats.second && (
+            {availableSeats?.second && (
                <RightPartItem
                   type="Купе"
-                  seatsNum={availableSeats.second}
+                  seatsNum={availableSeats?.second}
                   priceDep={priceDep?.second}
                   priceArr={priceArr?.second}
                />
             )}
-            {availableSeats.first && (
+            {availableSeats?.first && (
                <RightPartItem
                   type="Люкс"
-                  seatsNum={availableSeats.first}
+                  seatsNum={availableSeats?.first}
                   priceDep={priceDep?.first}
                   priceArr={priceArr?.first}
                />
@@ -80,29 +83,38 @@ function RightPart({
                <img src={food} alt="иконкa еда" />
             </div>
          </div>
-         <button type="button" onClick={onClick} className={styles.button}>
-            Выбрать места
-         </button>
+         {id !== null && (
+            <button type="button" onClick={onClick} className={styles.button}>
+               Выбрать места
+            </button>
+         )}
+
+         {id === null && editBtn}
       </>
    );
 }
 
 RightPart.propTypes = {
-   availableSeats: PropTypes.objectOf(PropTypes.number).isRequired,
+   availableSeats: PropTypes.objectOf(PropTypes.number),
    priceDep: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
    priceArr: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
    wifi: PropTypes.bool,
    conditioner: PropTypes.bool,
    onClick: PropTypes.func.isRequired,
    express: PropTypes.bool,
+   id: PropTypes.number,
+   editBtn: PropTypes.node,
 };
 
 RightPart.defaultProps = {
+   availableSeats: null,
    priceDep: null,
    priceArr: null,
    express: false,
    wifi: false,
    conditioner: false,
+   id: null,
+   editBtn: null,
 };
 
 export default RightPart;

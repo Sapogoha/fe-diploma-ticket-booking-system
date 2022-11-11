@@ -1,14 +1,15 @@
 .card {
-   width: 96rem;
    display: flex;
    background: var(--color-main-light);
    border: 0.1rem solid var(--color-bars-light);
    box-shadow: var(--border-shadow-trains-card);
-   margin-bottom: 5rem;
+   &:not(:last-child) {
+      margin-bottom: 5rem;
+   }
 
    &__left {
       width: 19.7rem;
-      padding: 3rem 2.5rem;
+      padding: 3rem 2.3rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -30,7 +31,6 @@
 
 @media only screen and (min-width: 1150px) and (max-width: 1250px) {
    .card {
-      width: 78rem;
       &__left {
          width: 14.7rem;
          padding: 3rem 0;
@@ -48,13 +48,12 @@
 }
 @media only screen and (min-width: 1251px) and (max-width: 1399px) {
    .card {
-      width: 91rem;
       &__left {
          width: 16.7rem;
-         padding: 3rem 1rem;
+         padding: 3rem 0.8rem;
       }
       &__middle {
-         width: 46rem;
+         width: 45rem;
          border-right: 0.1rem dashed var(--color-secondary-light);
          padding: 5rem 2.5rem 2.5rem 2rem;
       }

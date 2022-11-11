@@ -9,6 +9,7 @@ import { selectSelectedSeats } from '../../store/slices/seatsSlice';
 import rub from './rub.svg';
 
 import directions from '../../data/directions';
+import calculateSum from '../../utils/calculateSum';
 
 import styles from './SidebarDetails.module.scss';
 
@@ -17,15 +18,6 @@ function SidebarDetails() {
    useEffect(() => {
       title.current.scrollIntoView({ behavior: 'smooth' });
    }, []);
-   const calculateSum = (obj, coefficient) =>
-      obj
-         .map((el) =>
-            el.seats
-               .filter((seat) => seat.priceCoefficient === coefficient)
-               .map((item) => item.price * item.priceCoefficient)
-               .reduce((curNumber, item) => curNumber + item, 0)
-         )
-         .reduce((curNumber, item) => curNumber + item, 0);
 
    const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
    const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
@@ -60,10 +52,10 @@ function SidebarDetails() {
             <h4 className={styles['header-total']}>Итог</h4>
             <div className={styles.sum}>
                <span>
-                  {+sumDepAdults +
-                     +sumDepChildren +
-                     +sumArrAdults +
-                     +sumArrChildren}
+                  {sumDepAdults +
+                     sumDepChildren +
+                     sumArrAdults +
+                     sumArrChildren}
                </span>
                <img
                   className={styles.currency}

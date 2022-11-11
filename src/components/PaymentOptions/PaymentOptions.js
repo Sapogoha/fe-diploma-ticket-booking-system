@@ -11,13 +11,12 @@ import {
    selectPersonalData,
 } from '../../store/slices/personalDataSlice';
 import { selectTrains } from '../../store/slices/trainSlice';
-import { selectSelectedSeats } from '../../store/slices/seatsSlice';
-import { selectPassengers } from '../../store/slices/passengersSlice';
 
 import links from '../../data/links';
 import fieldNames from './fieldNames';
 import rules from './rules';
 import directions from '../../data/directions';
+import paymentTypes from './paymentTypes';
 
 import styles from './PaymentOptions.module.scss';
 import './PaymentOptions.scss';
@@ -28,9 +27,6 @@ function PaymentOptions() {
    const [form] = Form.useForm();
 
    const trains = useSelector(selectTrains);
-   const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
-   const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
-   const passengers = useSelector(selectPassengers);
    const personalData = useSelector(selectPersonalData);
    const initialValues = personalData;
 
@@ -125,26 +121,28 @@ function PaymentOptions() {
                   <div className={styles.section}>
                      <Radio
                         className={` ${styles.radioRow} radioRow`}
-                        value="online"
+                        value={paymentTypes.onlineEng}
                      >
-                        Онлайн
+                        {paymentTypes.online}
                         <div className={styles.onlinePayments}>
                            <div className={styles.paymentMethod}>
-                              Банковской картой
+                              {paymentTypes.card}
                            </div>
-                           <div className={styles.paymentMethod}>PayPal</div>
                            <div className={styles.paymentMethod}>
-                              Visa QIWI Wallet
+                              {paymentTypes.payPal}
+                           </div>
+                           <div className={styles.paymentMethod}>
+                              {paymentTypes.visa}
                            </div>
                         </div>
                      </Radio>
                   </div>
                   <div className={styles.section}>
                      <Radio
-                        value="cash"
+                        value={paymentTypes.cashEng}
                         className={` ${styles.radioRow} radioRow`}
                      >
-                        Наличными
+                        {paymentTypes.cash}
                      </Radio>
                   </div>
                </Radio.Group>
@@ -161,30 +159,6 @@ function PaymentOptions() {
       </div>
    );
 
-   const redirecttoMain = (
-      <Redirect
-         mainText="Пожалуйста, выберете поезд. Без этого нельзя выбирать способ оплаты"
-         btnText="На главную"
-         link={links.main}
-      />
-   );
-
-   const redirectToSeatsSelection = (
-      <Redirect
-         mainText="Для ввода данных пассажиров сначала нужно выбрать места"
-         btnText="Выбрать места"
-         link={links.seats}
-      />
-   );
-
-   const redirectToPassengersSelection = (
-      <Redirect
-         mainText="Для выбора способа оплаты сначала нужно ввести данные всех пассажиров"
-         btnText="Выбрать пассажиров"
-         link={links.passengers}
-      />
-   );
-
    return (
       <>
          {(trains[directions.departure] || trains[directions.arrival]) && (
@@ -193,18 +167,7 @@ function PaymentOptions() {
                {button}
             </>
          )}
-
-         {!trains[directions.departure] &&
-            !trains[directions.arrival] &&
-            redirecttoMain}
-         {seatsDep.length <= 0 &&
-            seatsArr.length <= 0 &&
-            (trains[directions.departure] || trains[directions.arrival]) &&
-            redirectToSeatsSelection}
-         {(seatsDep.length > 0 || seatsArr.length > 0) &&
-            (trains[directions.departure] || trains[directions.arrival]) &&
-            passengers.length <= 0 &&
-            redirectToPassengersSelection}
+         <Redirect />
       </>
    );
 }

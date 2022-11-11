@@ -44,6 +44,7 @@ import cross from '../img/cross.svg';
 import plusRound from '../img/plus-round.svg';
 
 import passengerTypes from '../../SeatsSelection/SelectionBlock/passengerTypes';
+import pasTypesRus from '../../SeatsSelection/SelectionBlock/pasTypesRus';
 import docTypes from './docTypes';
 import directions from '../../../data/directions';
 import fieldNames from './fieldNames';
@@ -446,12 +447,12 @@ function PassengerCard({
          >
             {unchosenSeatsAdults && (
                <Select.Option value={passengerTypes.adults}>
-                  Взрослый
+                  {pasTypesRus[passengerTypes.adults]}
                </Select.Option>
             )}
             {unchosenSeatsChildren && (
                <Select.Option value={passengerTypes.children}>
-                  Детский
+                  {pasTypesRus[passengerTypes.children]}
                </Select.Option>
             )}
          </Select>
@@ -461,9 +462,9 @@ function PassengerCard({
    const pasTypeToDisplay = (
       <div>
          {thisPassenger[0]?.passengerType === passengerTypes.adults
-            ? 'Взрослый'
+            ? pasTypesRus[passengerTypes.adults]
             : thisPassenger[0]?.passengerType === passengerTypes.children
-            ? 'Детский'
+            ? pasTypesRus[passengerTypes.children]
             : 'Тип неопределен'}
       </div>
    );
@@ -693,12 +694,14 @@ function PassengerCard({
 
    const needMoreSeatsText = (
       <div>
-         Нужен еще один{' '}
-         {form.getFieldValue(fieldNames.passengerType) === passengerTypes.adults
-            ? 'взрослый'
-            : 'детский'}{' '}
-         билет? Пожалуйста, вернитесь назад и выберите дополнительное место на
-         схеме вагона
+         {`Нужен еще один
+         ${
+            form.getFieldValue(fieldNames.passengerType) ===
+            passengerTypes.adults
+               ? pasTypesRus[passengerTypes.adults].toLowerCase()
+               : pasTypesRus[passengerTypes.children].toLowerCase()
+         } билет? Пожалуйста, вернитесь назад и выберите дополнительное место на
+         схеме вагона`}
       </div>
    );
 

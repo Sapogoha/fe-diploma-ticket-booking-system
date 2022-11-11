@@ -80,13 +80,7 @@ function SeatsSelection() {
          {departure && <SelectionBlock direction={directions.departure} />}
          {arrival && <SelectionBlock direction={directions.arrival} />}
          {departure && button}
-         {!departure && !arrival && (
-            <Redirect
-               mainText=" Выберите поезд. После этого можно будет выбрать места"
-               btnText=" Выбрать поезд"
-               link={links.main}
-            />
-         )}
+         <Redirect />
       </section>
    );
 }

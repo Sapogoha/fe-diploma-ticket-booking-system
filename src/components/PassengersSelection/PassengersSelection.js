@@ -9,7 +9,6 @@ import PassengerCard from './PassengerCard/PassengerCard';
 import Redirect from '../Redirect/Redirect';
 
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
-import { selectTrains } from '../../store/slices/trainSlice';
 import { selectPassengers } from '../../store/slices/passengersSlice';
 
 import links from '../../data/links';
@@ -23,8 +22,6 @@ import styles from './PassengersSelection.module.scss';
 function PassengersSelection() {
    const navigate = useNavigate();
    const [passArray, setPassArray] = useState([]);
-   const arrival = useSelector(selectTrains)[directions.arrival]?._id;
-   const departure = useSelector(selectTrains)[directions.departure]?._id;
    const seatsDep = useSelector(selectSelectedSeats)[directions.departure];
    const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
    const passengers = useSelector(selectPassengers);
@@ -155,22 +152,7 @@ function PassengersSelection() {
          ))}
          {unchosenSeats.length > 0 && addPassenger}
          {(seatsDep.length > 0 || seatsArr.length > 0) && button}
-         {seatsDep.length <= 0 &&
-            seatsArr.length <= 0 &&
-            (departure || arrival) && (
-               <Redirect
-                  mainText="Для ввода данных пассажиров сначала нужно выбрать места"
-                  btnText="Выбрать места"
-                  link={links.seats}
-               />
-            )}
-         {!departure && !arrival && (
-            <Redirect
-               mainText=" Пожалуйста, выберете поезд. Без этого нельзя вносить данные о пассажирах"
-               btnText="На главную"
-               link={links.main}
-            />
-         )}
+         <Redirect />
       </div>
    );
 }

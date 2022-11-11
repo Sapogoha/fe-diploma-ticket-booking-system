@@ -2,6 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+   selectedIndex: null,
    trains: {
       departure: null,
       arrival: null,
@@ -30,6 +31,9 @@ const trainSlice = createSlice({
    name: 'trainSlice',
    initialState,
    reducers: {
+      setIndex(state, action) {
+         state.selectedIndex = action.payload;
+      },
       setTrains(state, action) {
          const { value, direction } = action.payload;
          state.trains[direction] = value;
@@ -66,6 +70,7 @@ const trainSlice = createSlice({
 });
 
 export const {
+   setIndex,
    setTrains,
    removeTrainInfo,
    setSelectedClass,
@@ -75,6 +80,7 @@ export const {
    removeAllSelectedCoaches,
 } = trainSlice.actions;
 
+export const selectIndex = (state) => state.train.selectedIndex;
 export const selectTrains = (state) => state.train.trains;
 export const selectSelectedClasses = (state) => state.train.selectedClasses;
 export const selectSelectedCoaches = (state) => state.train.selectedCoaches;

@@ -71,9 +71,9 @@
    }
 }
 
-@mixin transperrentBlackButton {
+@mixin transperrentBlackButton($h: 1.4rem, $w: 3.4rem) {
    @include font(700, 2.4rem, 2.8rem, var(--color-main-dark));
-   padding: 1.4rem 3.4rem;
+   padding: $h $w;
    border: 0.2rem solid var(--color-main-dark);
    border-radius: 0.5rem;
 
