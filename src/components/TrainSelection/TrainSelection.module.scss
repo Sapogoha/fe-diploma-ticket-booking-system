@@ -3,3 +3,7 @@
 .trainSelection {
    margin-bottom: 14rem;
 }
+
+.text {
+   @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+}
