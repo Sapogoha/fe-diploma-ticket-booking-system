@@ -5,6 +5,12 @@ const fieldNames = {
    email: 'email',
    phone: 'phone',
    paymentMethod: 'paymentMethod',
+   lastNameLabel: ' Фамилия',
+   firstNameLabel: 'Имя',
+   fathersNameLabel: 'Отчество',
+   emailLabel: 'E-mail',
+   phoneLabel: 'Контактный телефон',
+   paymentMethodLabel: 'Способ оплаты',
 };
 
 export default fieldNames;

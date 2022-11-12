@@ -6,8 +6,6 @@ function LastTickets() {
    const [error, setError] = useState(null);
    const [tickets, setTickets] = useState(null);
 
-   // последних билета должно быть 3 или сколько приходит по запросу? если все - уберу slice на 51 строчке
-
    const fetchData = async () => {
       setError(null);
       try {

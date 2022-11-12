@@ -19,6 +19,17 @@ import plus from './img/plus.svg';
 
 import styles from './PassengersSelection.module.scss';
 
+const seatsModifier = (obj) =>
+   obj
+      .map((el) =>
+         el.seats.map((item) => ({
+            ...item,
+            coachId: el.coachId,
+            coachName: el.coachName,
+         }))
+      )
+      .flat();
+
 function PassengersSelection() {
    const navigate = useNavigate();
    const [passArray, setPassArray] = useState([]);
@@ -33,16 +44,6 @@ function PassengersSelection() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   const seatsModifier = (obj) =>
-      obj
-         .map((el) =>
-            el.seats.map((item) => ({
-               ...item,
-               coachId: el.coachId,
-               coachName: el.coachName,
-            }))
-         )
-         .flat();
    const seatsDepModified = seatsModifier(seatsDep);
    const seatsArrModified = seatsModifier(seatsArr);
 

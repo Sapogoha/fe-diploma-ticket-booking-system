@@ -1,0 +1,14 @@
+@import '../../scss/mixins';
+
+.text {
+   margin-top: 10rem;
+   @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+}
+
+.buttonWrapper {
+   > button {
+      margin: 10rem 0;
+      color: var(--color-main-light);
+      @include button-gold;
+   }
+}

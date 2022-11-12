@@ -13,6 +13,4 @@ function AboutUs() {
    );
 }
 
-// AboutUs.propTypes = {};
-
 export default AboutUs;

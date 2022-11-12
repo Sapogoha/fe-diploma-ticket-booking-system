@@ -10,6 +10,7 @@ import React, {
    useMemo,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
@@ -52,6 +53,7 @@ import rules from './rules';
 
 import styles from './PassengerCard.module.scss';
 import './PassengerCard.scss';
+import links from '../../../data/links';
 
 require('dayjs/locale/ru');
 
@@ -78,6 +80,7 @@ function PassengerCard({
    const [expanded, setExpanded] = useState(true);
    const [showError, setShowError] = useState(false);
    const [departureOnly, setDepartureOnly] = useState(!unchosenSeatsArr);
+   const [disabledForwardBtn, setDisabledForwardBtn] = useState(false);
    const [form] = Form.useForm();
    const [documentType, setDocumentType] = useState(
       thisPassenger[0]?.documentType || passengerType === passengerTypes.adults
@@ -129,7 +132,10 @@ function PassengerCard({
    let seatInfo;
 
    if (thisPassenger.length > 0) {
-      const allCoaches = [...coaches.departure, ...coaches.arrival];
+      const allCoaches = [
+         ...coaches[directions.departure],
+         ...coaches[directions.arrival],
+      ];
       const seatDepData = thisPassenger[0].seatDep?.split(':');
       const seatArrData = thisPassenger[0].seatArr?.split(':');
 
@@ -288,7 +294,7 @@ function PassengerCard({
    };
 
    const onFinish = (values) => {
-      if (!thisPassenger[0]) {
+      if (!thisPassenger[0] && !disabledForwardBtn) {
          setHighAgeError(false);
          setLowAgeError(false);
          if (values.seatDep) {
@@ -324,7 +330,7 @@ function PassengerCard({
    };
 
    const fieldChangeHandler = (value) => {
-      if (value.passengerType) {
+      if (value[fieldNames.passengerType]) {
          const doc =
             value.passengerType === passengerTypes.adults
                ? docTypes.passport
@@ -335,8 +341,8 @@ function PassengerCard({
             Object.entries(value)[0][1] === passengerTypes.adults ? 1 : 0.5
          );
       }
-      if (value.documentType) {
-         setDocumentType(value.documentType);
+      if (value[fieldNames.docType]) {
+         setDocumentType(value[fieldNames.docType]);
       }
 
       setTimeout(() => {
@@ -366,6 +372,7 @@ function PassengerCard({
       ) {
          setHighAgeError(false);
          setLowAgeError(false);
+         setDisabledForwardBtn(false);
 
          const ageYears = dayjs().diff(
             form.getFieldValue(fieldNames.dateOfBirth),
@@ -473,21 +480,21 @@ function PassengerCard({
       <>
          <Form.Item
             name={fieldNames.lastName}
-            label="Фамилия"
+            label={fieldNames.lastNameLabel}
             rules={rules.lastName}
          >
             <Input className={styles.inputField} />
          </Form.Item>
          <Form.Item
             name={fieldNames.firstName}
-            label="Имя"
+            label={fieldNames.firstNameLabel}
             rules={rules.firstName}
          >
             <Input className={styles.inputField} />
          </Form.Item>
          <Form.Item
             name={fieldNames.fathersName}
-            label="Отчество"
+            label={fieldNames.fathersNameLabel}
             rules={rules.fathersName}
          >
             <Input className={styles.inputField} />
@@ -497,7 +504,7 @@ function PassengerCard({
 
    const sexRadioGroup = (
       <Form.Item
-         label="Пол"
+         label={fieldNames.genderLabel}
          name={fieldNames.gender}
          className={styles.genderRadioBtn}
          rules={rules.gender}
@@ -518,7 +525,7 @@ function PassengerCard({
    const dateOfBirthPicker = (
       <ConfigProvider locale={ru_RU}>
          <Form.Item
-            label="Дата рождения"
+            label={fieldNames.dateOfBirthLabel}
             name={fieldNames.dateOfBirth}
             rules={rules.dateOfBirth}
             value={form.dateOfBirth}
@@ -537,16 +544,16 @@ function PassengerCard({
    );
 
    const specialNeedsCheckbox = (
-      <Form.Item valuePropName="checked" name="specialNeeds">
+      <Form.Item valuePropName="checked" name={fieldNames.specialNeeds}>
          <Checkbox className="passengerCard-checkbox">
-            ограниченная подвижность
+            {fieldNames.specialNeedsLabel}
          </Checkbox>
       </Form.Item>
    );
 
    const docTypeSelect = (
       <Form.Item
-         label="Тип документа"
+         label={fieldNames.docTypeLabel}
          name={fieldNames.docType}
          className={styles.documentType}
          rules={rules.docType}
@@ -565,10 +572,12 @@ function PassengerCard({
                   form.getFieldValue(fieldNames.dateOfBirth),
                   'days'
                ) <= 0) && (
-               <Select.Option value={docTypes.passport}>Паспорт</Select.Option>
+               <Select.Option value={docTypes.passport}>
+                  {docTypes.passportRus}
+               </Select.Option>
             )}
             <Select.Option value={docTypes.birthCertif}>
-               Свидетельство о рождении
+               {docTypes.birthCertifRus}
             </Select.Option>
          </Select>
       </Form.Item>
@@ -576,7 +585,7 @@ function PassengerCard({
 
    const passSerNum = (
       <Form.Item
-         label="Серия"
+         label={fieldNames.docSerialNumberLabel}
          name={fieldNames.docSerialNumber}
          className={styles.documentType}
          rules={rules.docSerialNumber}
@@ -591,7 +600,7 @@ function PassengerCard({
 
    const passNum = (
       <Form.Item
-         label="Номер"
+         label={fieldNames.docNumberPassLabel}
          name={fieldNames.docNumberPass}
          className={styles.documentType}
          rules={rules.docNumberPass}
@@ -606,7 +615,7 @@ function PassengerCard({
 
    const birthCertif = (
       <Form.Item
-         label="Номер"
+         label={fieldNames.docNumberSertifLabel}
          name={fieldNames.docNumberSertif}
          className={styles.documentType}
          rules={rules.docNumberSertif}
@@ -620,7 +629,7 @@ function PassengerCard({
 
    const seatDep = (
       <Form.Item
-         label="Место туда"
+         label={fieldNames.seatDepLabel}
          name={fieldNames.seatDep}
          className={styles.documentType}
          rules={rules.seatDep}
@@ -647,7 +656,7 @@ function PassengerCard({
          className={`${styles.departureOnly} passengerCard-checkbox-departureOnly`}
          valuePropName="checked"
          name={fieldNames.depOnly}
-         label="Только туда"
+         label={fieldNames.depOnlyLabel}
       >
          <Checkbox className="passengerCard-checkbox-departureOnly" />
       </Form.Item>
@@ -655,7 +664,7 @@ function PassengerCard({
 
    const seatArr = (
       <Form.Item
-         label="Место обратно"
+         label={fieldNames.seatArrLabel}
          name={fieldNames.seatArr}
          className={styles.documentType}
          rules={rules.seatArr}
@@ -692,18 +701,39 @@ function PassengerCard({
       </>
    );
 
+   const linkToSeatsPage = (
+      <Link to={links.seats}>
+         <span className={styles.link}>страницу выбора мест</span>
+      </Link>
+   );
+
    const needMoreSeatsText = (
       <div>
-         {`Нужен еще один
+         <span>{`Нужен еще один
          ${
             form.getFieldValue(fieldNames.passengerType) ===
             passengerTypes.adults
                ? pasTypesRus[passengerTypes.adults].toLowerCase()
                : pasTypesRus[passengerTypes.children].toLowerCase()
-         } билет? Пожалуйста, вернитесь назад и выберите дополнительное место на
-         схеме вагона`}
+         } билет? Пожалуйста, вернитесь на `}</span>
+         <span> {linkToSeatsPage}</span>
+         <span> и выберите дополнительное место на схеме вагона</span>
       </div>
    );
+
+   useEffect(() => {
+      if (
+         !thisPassenger.length > 0 &&
+         !unchosenSeatsDepSourse.length > 0 &&
+         !unchosenSeatsArrSourse.length > 0
+      ) {
+         setDisabledForwardBtn(true);
+      }
+   }, [
+      thisPassenger.length,
+      unchosenSeatsArrSourse.length,
+      unchosenSeatsDepSourse.length,
+   ]);
 
    const seatSelBlock = (
       <div className={`${styles.row} ${styles.rowSeats}`}>
@@ -721,11 +751,12 @@ function PassengerCard({
 
    const button = (
       <Form.Item className={bottomSectionStyles}>
-         {!thisPassenger[0] && (
+         {!thisPassenger[0] && !disabledForwardBtn && (
             <Button
                type="primary"
                htmlType="submit"
                className="passengerCard__button"
+               disabled={disabledForwardBtn}
             >
                Следующий пассажир
             </Button>
@@ -790,7 +821,9 @@ function PassengerCard({
                      </div>
                   </div>
                   <div className={styles.section}>{seatSelBlock}</div>
-                  {button}
+                  {((!thisPassenger[0] && !disabledForwardBtn) ||
+                     thisPassenger[0]) &&
+                     button}
                </Form>
             </div>
          )}

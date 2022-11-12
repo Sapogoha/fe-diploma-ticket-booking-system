@@ -53,6 +53,12 @@
    @include transperrentBlackButton(0.5rem, 6rem);
 }
 
+.alert {
+   @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+   margin-top: 2rem;
+   text-align: center;
+}
+
 @media only screen and (min-width: 1150px) and (max-width: 1250px) {
    .card {
       .info {

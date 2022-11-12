@@ -8,6 +8,7 @@ import seatsSlice from './slices/seatsSlice';
 import numOfpassengersSlice from './slices/numOfpassengersSlice';
 import passengersSlice from './slices/passengersSlice';
 import personalDataSlice from './slices/personalDataSlice';
+import orderConfirmationSlice from './slices/orderConfirmationSlice';
 
 const reducer = combineReducers({
    search: searchSlice.reducer,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
    numOfPassengers: numOfpassengersSlice.reducer,
    passengers: passengersSlice.reducer,
    personalData: personalDataSlice.reducer,
+   orderConfirmation: orderConfirmationSlice.reducer,
 });
 
 const store = configureStore({

@@ -56,7 +56,7 @@ function PaymentOptions() {
                   <Form.Item
                      className="paymentOption"
                      name={fieldNames.lastName}
-                     label="Фамилия"
+                     label={fieldNames.lastNameLabel}
                      rules={rules.lastName}
                   >
                      <Input className={styles.inputField} />
@@ -64,7 +64,7 @@ function PaymentOptions() {
                   <Form.Item
                      className="paymentOption"
                      name={fieldNames.firstName}
-                     label="Имя"
+                     label={fieldNames.firstNameLabel}
                      rules={rules.firstName}
                   >
                      <Input className={styles.inputField} />
@@ -72,7 +72,7 @@ function PaymentOptions() {
                   <Form.Item
                      className="paymentOption"
                      name={fieldNames.fathersName}
-                     label="Отчество"
+                     label={fieldNames.fathersNameLabel}
                      rules={rules.fathersName}
                   >
                      <Input className={styles.inputField} />
@@ -83,7 +83,7 @@ function PaymentOptions() {
                   <Form.Item
                      className="paymentOption"
                      name={fieldNames.phone}
-                     label="Контактный телефон"
+                     label={fieldNames.phoneLabel}
                      rules={rules.phone}
                   >
                      <InputNumber
@@ -99,7 +99,7 @@ function PaymentOptions() {
                   <Form.Item
                      className="paymentOption"
                      name={fieldNames.email}
-                     label="E-mail"
+                     label={fieldNames.emailLabel}
                      rules={rules.email}
                   >
                      <Input
@@ -111,7 +111,9 @@ function PaymentOptions() {
             </div>
 
             <div className={`${styles.header} ${styles.section}`}>
-               <span className={styles.text}>Способ оплаты</span>
+               <span className={styles.text}>
+                  {fieldNames.paymentMethodLabel}
+               </span>
             </div>
             <Form.Item
                name={fieldNames.paymentMethod}

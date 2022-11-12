@@ -31,7 +31,6 @@ function MainSearchBlock({ width }) {
    const departureCity = useSelector(selectDepartureCity);
    const arrivalCity = useSelector(selectArrivalCity);
    const departureDate = useSelector(selectDepartureDate);
-   // const returnDate = useSelector(selectReturnDate);
    const formCN =
       width === widthOptions.wide
          ? `${styles.form} ${styles['form-wide']}`

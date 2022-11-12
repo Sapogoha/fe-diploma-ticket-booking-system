@@ -33,3 +33,25 @@ export const fetchSeats = createAsyncThunk(
       }
    }
 );
+
+export const postOrder = createAsyncThunk(
+   'orderConfirmation/postOrder',
+   async ({ url, request }, { rejectWithValue }) => {
+      try {
+         const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(request),
+         });
+
+         if (!response.ok) {
+            throw new Error();
+         }
+         const data = await response.json();
+         return data;
+      } catch (err) {
+         return rejectWithValue(
+            'При отправке заказа возникла проблема. Пожалуйста, повторите попытку или вернитесь на главную страницу'
+         );
+      }
+   }
+);
