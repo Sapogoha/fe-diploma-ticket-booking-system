@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
+import fieldNames from '../../components/PassengersSelection/PassengerCard/fieldNames';
+
 const initialState = {
    passengers: [],
 };
@@ -29,6 +31,15 @@ const passengersSlice = createSlice({
             );
          }
       },
+      removeSeatInfo(state) {
+         const deleteSeatInfo = (pas) => {
+            delete pas[fieldNames.seatDep];
+            delete pas[fieldNames.seatArr];
+            delete pas[fieldNames.depOnly];
+         };
+
+         state.passengers.map((pas) => deleteSeatInfo(pas));
+      },
       removePassenger(state, action) {
          state.passengers = state.passengers.filter(
             (item) => item.id !== action.payload
@@ -46,6 +57,7 @@ export const {
    editPassengerData,
    removePassenger,
    removeAllPassengers,
+   removeSeatInfo,
 } = passengersSlice.actions;
 
 export const selectPassengers = (state) => state.passengers.passengers;

@@ -77,7 +77,10 @@ function PassengersSelection() {
    }, [unchosenSeats]);
 
    useEffect(() => {
-      if (unchosenSeats.length > 0) {
+      if (
+         unchosenSeats.length > 0 &&
+         passengers.filter((pas) => !pas.seatArr && !pas.seatDep).length <= 0
+      ) {
          setPassArray((prev) => [...prev, { id: nanoid() }]);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -44,7 +44,7 @@ import {
 import { selectLoading as selectLoadingLastTickets } from '../../store/slices/lastTicketsSlice';
 import { removeTrainInfo } from '../../store/slices/trainSlice';
 import { clearSeatsSlice } from '../../store/slices/seatsSlice';
-import { removeAllPassengers } from '../../store/slices/passengersSlice';
+import { removeSeatInfo } from '../../store/slices/passengersSlice';
 
 import widthOptions from '../../components/MainSearchBlock/widthOptions';
 import picsOptions from '../../components/Layout/picsOptions';
@@ -140,7 +140,7 @@ function TrainSelectionPage() {
    useEffect(() => {
       dispatch(removeTrainInfo());
       dispatch(clearSeatsSlice());
-      dispatch(removeAllPassengers());
+      dispatch(removeSeatInfo());
       dispatch(fetchLastTickets(process.env.REACT_APP_LAST_TICKETS));
    }, [dispatch]);
 

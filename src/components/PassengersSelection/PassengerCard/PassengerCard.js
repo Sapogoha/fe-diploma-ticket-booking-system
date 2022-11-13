@@ -132,47 +132,49 @@ function PassengerCard({
    let seatInfo;
 
    if (thisPassenger.length > 0) {
-      const allCoaches = [
-         ...coaches[directions.departure],
-         ...coaches[directions.arrival],
-      ];
-      const seatDepData = thisPassenger[0].seatDep?.split(':');
-      const seatArrData = thisPassenger[0].seatArr?.split(':');
+      if (thisPassenger[0].seatDep || thisPassenger[0].seatArr) {
+         const allCoaches = [
+            ...coaches[directions.departure],
+            ...coaches[directions.arrival],
+         ];
+         const seatDepData = thisPassenger[0].seatDep?.split(':');
+         const seatArrData = thisPassenger[0].seatArr?.split(':');
 
-      const seatInfoMaker = (direction, seatData) => (
-         <div>
-            <span className={styles.seatDirection}>
-               {direction === directions.departure ? 'Туда' : 'Обратно'}
-            </span>
-            <span>
-               {` вагон: ${
-                  allCoaches?.filter((el) => el.coachId === seatData[0])[0]
-                     ?.name
-               }
-               , место: ${seatData[1]}`}
-            </span>
-         </div>
-      );
-
-      const oneWaySeatInfoMaker = (direction, seatData) => (
-         <div>
-            <div className={styles.seats}>Выбранное место</div>
-            {seatInfoMaker(direction, seatData)}
-         </div>
-      );
-
-      if (thisPassenger[0].seatDep && thisPassenger[0].seatArr) {
-         seatInfo = (
+         const seatInfoMaker = (direction, seatData) => (
             <div>
-               <div className={styles.seats}>Выбранные места</div>
-               {seatInfoMaker(directions.departure, seatDepData)}
-               {seatInfoMaker(directions.arrival, seatArrData)}
+               <span className={styles.seatDirection}>
+                  {direction === directions.departure ? 'Туда' : 'Обратно'}
+               </span>
+               <span>
+                  {` вагон: ${
+                     allCoaches?.filter((el) => el.coachId === seatData[0])[0]
+                        ?.name
+                  }
+                  , место: ${seatData[1]}`}
+               </span>
             </div>
          );
-      } else if (thisPassenger[0].seatDep) {
-         seatInfo = oneWaySeatInfoMaker(directions.departure, seatDepData);
-      } else if (thisPassenger[0].seatArr) {
-         seatInfo = oneWaySeatInfoMaker(directions.arrival, seatArrData);
+
+         const oneWaySeatInfoMaker = (direction, seatData) => (
+            <div>
+               <div className={styles.seats}>Выбранное место</div>
+               {seatInfoMaker(direction, seatData)}
+            </div>
+         );
+
+         if (thisPassenger[0].seatDep && thisPassenger[0].seatArr) {
+            seatInfo = (
+               <div>
+                  <div className={styles.seats}>Выбранные места</div>
+                  {seatInfoMaker(directions.departure, seatDepData)}
+                  {seatInfoMaker(directions.arrival, seatArrData)}
+               </div>
+            );
+         } else if (thisPassenger[0].seatDep) {
+            seatInfo = oneWaySeatInfoMaker(directions.departure, seatDepData);
+         } else if (thisPassenger[0].seatArr) {
+            seatInfo = oneWaySeatInfoMaker(directions.arrival, seatArrData);
+         }
       }
 
       initialValues = {
@@ -312,6 +314,31 @@ function PassengerCard({
             })
          );
 
+         if (
+            unchosenSeatsDep.length - (values.seatDep ? 1 : 0) > 0 ||
+            unchosenSeatsArr.length - (values.seatArr ? 1 : 0) > 0
+         ) {
+            clickOnNextPassHandler(id);
+         }
+      } else if (
+         thisPassenger.length > 0 &&
+         !thisPassenger[0]?.seatDep &&
+         !thisPassenger[0]?.seatArr &&
+         !disabledForwardBtn
+      ) {
+         if (values.seatDep) {
+            dispatchMaker(values.seatDep, directions.departure, id);
+         }
+         if (values.seatArr) {
+            dispatchMaker(values.seatArr, directions.arrival, id);
+         }
+         dispatch(
+            editPassengerData({
+               id,
+               ...values,
+               dateOfBirth: values.dateOfBirth.format('DD.MM.YYYY'),
+            })
+         );
          if (
             unchosenSeatsDep.length - (values.seatDep ? 1 : 0) > 0 ||
             unchosenSeatsArr.length - (values.seatArr ? 1 : 0) > 0
@@ -737,15 +764,24 @@ function PassengerCard({
 
    const seatSelBlock = (
       <div className={`${styles.row} ${styles.rowSeats}`}>
-         {!thisPassenger.length > 0 &&
+         {((!thisPassenger.length > 0 &&
             (unchosenSeatsDepSourse.length > 0 ||
-               unchosenSeatsArrSourse.length > 0) &&
+               unchosenSeatsArrSourse.length > 0)) ||
+            (thisPassenger.length > 0 &&
+               !thisPassenger[0].seatDep &&
+               !thisPassenger[0].seatArr)) &&
             seatSelection}
          {!thisPassenger.length > 0 &&
             !unchosenSeatsDepSourse.length > 0 &&
             !unchosenSeatsArrSourse.length > 0 &&
             needMoreSeatsText}
-         {thisPassenger.length > 0 && <div>{seatInfo}</div>}
+         {thisPassenger.length > 0 &&
+            (thisPassenger[0].seatDep || thisPassenger[0].seatArr) && (
+               <div>{seatInfo}</div>
+            )}
+         {/* {thisPassenger.length > 0 &&
+            !thisPassenger[0].seatDep &&
+            !thisPassenger[0].seatArr && <div>12343</div>} */}
       </div>
    );
 

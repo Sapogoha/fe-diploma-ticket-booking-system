@@ -15,7 +15,10 @@ import { selectTrainsOptions } from '../../store/slices/trainsSlice';
 import { selectIndex, selectTrains } from '../../store/slices/trainSlice';
 import { selectPersonalData } from '../../store/slices/personalDataSlice';
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
-import { selectPassengers } from '../../store/slices/passengersSlice';
+import {
+   selectPassengers,
+   removePassenger,
+} from '../../store/slices/passengersSlice';
 import {
    selectResponse,
    selectLoading,
@@ -60,8 +63,16 @@ function OrderConfirmation() {
    const requestResponse = useSelector(selectResponse);
    const requestLoading = useSelector(selectLoading);
    const requestError = useSelector(selectError);
-
    const trainsOptions = useSelector(selectTrainsOptions);
+
+   useEffect(() => {
+      const pasWithoutSeats = passengers.filter(
+         (pas) => !pas[pasFieldNames.seatDep] && !pas[pasFieldNames.seatArr]
+      );
+      if (pasWithoutSeats.length >= 1) {
+         pasWithoutSeats.forEach((pas) => dispatch(removePassenger(pas.id)));
+      }
+   }, [dispatch, passengers]);
 
    const onEditBtnClick = (link) => {
       navigate(link);
