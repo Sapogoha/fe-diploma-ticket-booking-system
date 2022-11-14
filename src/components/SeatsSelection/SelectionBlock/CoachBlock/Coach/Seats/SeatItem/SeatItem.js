@@ -15,6 +15,7 @@ import {
    selectMaxNumOfAdults,
    selectMaxNumOfChildren,
 } from '../../../../../../../store/slices/numOfpassengersSlice';
+import { removeSeatInfoAfterUnchoosingSeat } from '../../../../../../../store/slices/passengersSlice';
 
 import classes from '../../../../../classes';
 import passengerTypes from '../../../../passengerTypes';
@@ -114,6 +115,9 @@ function SeatItem({
          setOpen(false);
          setClicked(false);
          dispatch(removeSelectedSeat({ number, direction, coachId }));
+         dispatch(
+            removeSeatInfoAfterUnchoosingSeat({ coachId, seatNumber: number })
+         );
          if (numberOfPassengers[typeOfPassenger] >= 1) {
             dispatch(
                setNumOfPassengers({

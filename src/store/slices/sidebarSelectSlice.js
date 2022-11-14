@@ -2,7 +2,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const savedData = localStorage.getItem('sidebarSelect');
+const empty = {
    options: {
       firstClass: '',
       secondClass: '',
@@ -23,6 +24,7 @@ const initialState = {
       },
    },
 };
+const initialState = savedData ? JSON.parse(savedData) : empty;
 
 const sidebarSelectSlice = createSlice({
    name: 'sidebarSelectSlice',
@@ -40,12 +42,19 @@ const sidebarSelectSlice = createSlice({
          const { name, direction, value } = action.payload;
          state.time[name][direction] = { min: value[0], max: value[1] };
       },
+      removeSidebarSelectionData() {
+         return empty;
+      },
    },
    extraReducers: {},
 });
 
-export const { changeOptionsFields, changePriceFields, changeTimeFields } =
-   sidebarSelectSlice.actions;
+export const {
+   changeOptionsFields,
+   changePriceFields,
+   changeTimeFields,
+   removeSidebarSelectionData,
+} = sidebarSelectSlice.actions;
 
 export const selectOptions = (state) => state.sidebarSelect.options;
 export const selectPrices = (state) => state.sidebarSelect.prices;

@@ -12,7 +12,11 @@ const initialState = {
 const orderConfirmationSlice = createSlice({
    name: 'orderConfirmationSlice',
    initialState,
-   reducers: {},
+   reducers: {
+      removeOrderConfirmationData() {
+         return initialState;
+      },
+   },
    extraReducers: {
       [postOrder.pending]: (state) => {
          state.loading = true;
@@ -29,6 +33,8 @@ const orderConfirmationSlice = createSlice({
       },
    },
 });
+
+export const { removeOrderConfirmationData } = orderConfirmationSlice.actions;
 
 export const selectResponse = (state) => state.orderConfirmation.response;
 export const selectLoading = (state) => state.orderConfirmation.loading;

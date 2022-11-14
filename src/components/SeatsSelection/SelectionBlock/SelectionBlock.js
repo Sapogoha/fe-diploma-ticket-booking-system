@@ -18,6 +18,7 @@ import arrivalArrow from './img/arrow-arrival.svg';
 
 import directions from '../../../data/directions';
 import links from '../../../data/links';
+import getRandomInt from '../../../utils/getRandomInt';
 
 import styles from './SelectionBlock.module.scss';
 
@@ -34,12 +35,6 @@ function SelectionBlock({ direction }) {
    const clickHandler = () => {
       navigate(links.trains);
    };
-
-   function getRandomInt(min, max) {
-      const minInt = Math.ceil(min);
-      const maxInt = Math.floor(max);
-      return Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt;
-   }
 
    const NumOfPplView = useMemo(() => getRandomInt(2, 25), []);
 

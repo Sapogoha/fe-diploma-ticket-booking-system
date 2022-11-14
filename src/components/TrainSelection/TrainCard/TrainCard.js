@@ -115,12 +115,13 @@ function TrainCard({ ticket, id, editBtn }) {
 
 TrainCard.propTypes = {
    // eslint-disable-next-line react/forbid-prop-types
-   ticket: PropTypes.object.isRequired,
+   ticket: PropTypes.object,
    id: PropTypes.number,
    editBtn: PropTypes.node,
 };
 
 TrainCard.defaultProps = {
+   ticket: null,
    id: null,
    editBtn: null,
 };

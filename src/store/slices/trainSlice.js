@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const savedData = localStorage.getItem('train');
+const empty = {
    selectedIndex: null,
    trains: {
       departure: null,
@@ -26,6 +27,7 @@ const initialState = {
       arrival: [],
    },
 };
+const initialState = savedData ? JSON.parse(savedData) : empty;
 
 const trainSlice = createSlice({
    name: 'trainSlice',
@@ -39,15 +41,15 @@ const trainSlice = createSlice({
          state.trains[direction] = value;
       },
 
-      removeTrainInfo() {
-         return initialState;
+      removeTrainData() {
+         return empty;
       },
       setSelectedClass(state, action) {
          const { name, value, direction } = action.payload;
          state.selectedClasses[direction][name] = value;
       },
       removeSelectedClasses(state) {
-         state.selectedClasses = initialState.selectedClasses;
+         state.selectedClasses = empty.selectedClasses;
       },
       setSelectedCoach(state, action) {
          const { name, direction, coachId } = action.payload;
@@ -72,7 +74,7 @@ const trainSlice = createSlice({
 export const {
    setIndex,
    setTrains,
-   removeTrainInfo,
+   removeTrainData,
    setSelectedClass,
    removeSelectedClasses,
    setSelectedCoach,

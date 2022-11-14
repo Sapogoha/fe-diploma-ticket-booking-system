@@ -1,8 +1,8 @@
 const docTypes = {
    passport: 'passport',
    birthCertif: 'birth certificate',
-   passportRus: 'пасспорт',
-   birthCertifRus: 'свидетельство о рождении',
+   passportRus: 'Пасспорт',
+   birthCertifRus: 'Свидетельство о рождении',
 };
 
 export default docTypes;

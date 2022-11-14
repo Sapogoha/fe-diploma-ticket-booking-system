@@ -24,6 +24,7 @@ import {
    selectLoading,
    selectError,
 } from '../../store/slices/orderConfirmationSlice';
+import { addOrderData } from '../../store/slices/orderSlice';
 
 import links from '../../data/links';
 import directions from '../../data/directions';
@@ -32,6 +33,7 @@ import fieldNames from '../PaymentOptions/fieldNames';
 import { default as pasFieldNames } from '../PassengersSelection/PassengerCard/fieldNames';
 import calculateSum from '../../utils/calculateSum';
 import paymentTypes from '../PaymentOptions/paymentTypes';
+import getRandomInt from '../../utils/getRandomInt';
 
 import rub from './rub.svg';
 
@@ -64,6 +66,12 @@ function OrderConfirmation() {
    const requestLoading = useSelector(selectLoading);
    const requestError = useSelector(selectError);
    const trainsOptions = useSelector(selectTrainsOptions);
+
+   const sum =
+      calculateSum(seatsDep, 1) +
+      calculateSum(seatsDep, 0.5) +
+      calculateSum(seatsArr, 1) +
+      calculateSum(seatsArr, 0.5);
 
    useEffect(() => {
       const pasWithoutSeats = passengers.filter(
@@ -106,8 +114,8 @@ function OrderConfirmation() {
                birthday: `${date[2]}-${date[1]}-${date[0]}`,
                document_type:
                   pas[pasFieldNames?.docType] === docTypes?.passport
-                     ? docTypes?.passportRus
-                     : docTypes?.birthCertifRus,
+                     ? docTypes?.passportRus.toLowerCase()
+                     : docTypes?.birthCertifRus.toLowerCase(),
                document_data:
                   pas[pasFieldNames?.docType] === docTypes?.passport
                      ? `${pas[pasFieldNames?.docSerialNumber]} ${
@@ -168,9 +176,32 @@ function OrderConfirmation() {
 
    useEffect(() => {
       if (!requestLoading && !requestError && requestResponse) {
+         dispatch(
+            addOrderData({
+               orderNumber: `${getRandomInt(10, 548)}${personalData[
+                  fieldNames?.firstName
+               ]?.slice(0, 1)}${personalData[fieldNames?.fathersName]?.slice(
+                  0,
+                  1
+               )}`,
+               sum,
+               name: `${personalData[fieldNames?.firstName]} ${
+                  personalData[fieldNames?.fathersName]
+               }
+         `,
+            })
+         );
          navigate(links.success);
       }
-   }, [navigate, requestError, requestLoading, requestResponse]);
+   }, [
+      dispatch,
+      navigate,
+      personalData,
+      requestError,
+      requestLoading,
+      requestResponse,
+      sum,
+   ]);
 
    const trainCard = (
       <div className={styles.card}>
@@ -195,12 +226,7 @@ function OrderConfirmation() {
                <div className={styles.sum}>
                   <span>Всего</span>
                   <span>
-                     <span className={styles.amount}>
-                        {calculateSum(seatsDep, 1) +
-                           calculateSum(seatsDep, 0.5) +
-                           calculateSum(seatsArr, 1) +
-                           calculateSum(seatsArr, 0.5)}
-                     </span>
+                     <span className={styles.amount}>{sum}</span>
                      <img
                         className={styles.currency}
                         src={rub}

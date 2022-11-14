@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import Layout from '../../components/Layout/Layout';
 import AboutUs from '../../components/AboutUs/AboutUs';
 import Reviews from '../../components/Reviews/Reviews';
 import HowItWorks from '../../components/HowItWorks/HowItWorks';
 import MainSearchBlock from '../../components/MainSearchBlock/MainSearchBlock';
+
+import { removeOrderData } from '../../store/slices/orderSlice';
 
 import widthOptions from '../../components/MainSearchBlock/widthOptions';
 import picsOptions from '../../components/Layout/picsOptions';
@@ -11,6 +15,12 @@ import picsOptions from '../../components/Layout/picsOptions';
 import styles from './MainPage.module.scss';
 
 function MainPage() {
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      dispatch(removeOrderData());
+   }, [dispatch]);
+
    const body = (
       <>
          <div id="about">

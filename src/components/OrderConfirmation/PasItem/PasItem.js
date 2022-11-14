@@ -35,15 +35,15 @@ function PasItem({ pas }) {
             <div className={styles.data}>
                <span>
                   {pas[fieldNames.docType] === docTypes.passport
-                     ? 'Пасспорт РФ '
-                     : 'Свидетельство о рождении '}
+                     ? `${docTypes.passportRus} РФ`
+                     : docTypes.birthCertifRus}
                </span>
                <span>
                   {pas[fieldNames.docType] === docTypes.passport
-                     ? `${pas[fieldNames.docSerialNumber]} ${
+                     ? ` ${pas[fieldNames.docSerialNumber]} ${
                           pas[fieldNames.docNumberPass]
                        }`
-                     : pas[fieldNames.docNumberSertif]}
+                     : ` ${pas[fieldNames.docNumberSertif]}`}
                </span>
             </div>
          </div>

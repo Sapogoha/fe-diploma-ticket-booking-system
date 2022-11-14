@@ -3,17 +3,23 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchTrainsOptions } from '../thunks/asyncThunks';
 
-const initialState = {
+const savedData = localStorage.getItem('trains');
+const empty = {
    totalCount: 0,
    trainsOptions: [],
    loading: false,
    error: null,
 };
+const initialState = savedData ? JSON.parse(savedData) : empty;
 
 const trainsSlice = createSlice({
    name: 'trainsSlice',
    initialState,
-   reducers: {},
+   reducers: {
+      removeTrainsData() {
+         return empty;
+      },
+   },
    extraReducers: {
       [fetchTrainsOptions.pending]: (state) => {
          state.loading = true;
@@ -34,6 +40,8 @@ const trainsSlice = createSlice({
       },
    },
 });
+
+export const { removeTrainsData } = trainsSlice.actions;
 
 export const selectTotalCount = (state) => state.trains.totalCount;
 export const selectTrainsOptions = (state) => state.trains.trainsOptions;

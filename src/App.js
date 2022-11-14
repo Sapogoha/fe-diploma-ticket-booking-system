@@ -8,7 +8,7 @@ import SeatSelectionPage from './pages/SeatsSelectionPage/SeatSelectionPage';
 import PassengersPage from './pages/PassengersPage/PassengersPage';
 import PaymentOptionsPage from './pages/PaymentOptionsPage/PaymentOptionsPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage/OrderConfirmationPage';
-import SuccessfullOrderPage from './pages/SuccessfullOrderPage/SuccessfullOrderPage';
+import SuccessfulOrderPage from './pages/SuccessfulOrderPage/SuccessfulOrderPage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 import links from './data/links';
@@ -29,7 +29,7 @@ function App() {
                path={links.confirmOrder}
                element={<OrderConfirmationPage />}
             />
-            <Route path={links.success} element={<SuccessfullOrderPage />} />
+            <Route path={links.success} element={<SuccessfulOrderPage />} />
             <Route path="*" element={<ErrorPage />} />
          </Routes>
       </BrowserRouter>

@@ -14,7 +14,7 @@ import {
    selectArrivalCity,
 } from '../../../store/slices/searchSlice';
 import { changeOffset, setCurrentPage } from '../../../store/slices/sortSlice';
-import { removeTrainInfo } from '../../../store/slices/trainSlice';
+import { removeTrainData } from '../../../store/slices/trainSlice';
 
 import consts from '../consts';
 
@@ -23,7 +23,6 @@ import './Direction.scss';
 
 function Direction({ name, placeholder, className }) {
    const dispatch = useDispatch();
-   //  const [loading, setLoading] = useState(false);
    const [error, setError] = useState(null);
    const departureCity = useSelector(selectDepartureCity);
    const arrivalCity = useSelector(selectArrivalCity);
@@ -42,7 +41,6 @@ function Direction({ name, placeholder, className }) {
    }, [arrivalCity, departureCity, name]);
 
    const fetchCities = async (value) => {
-      //  setLoading(true);
       setError(null);
       try {
          const response = await fetch(
@@ -59,7 +57,6 @@ function Direction({ name, placeholder, className }) {
       } catch (err) {
          setError('Что-то пошло не так. Перезагрузите страницу');
       }
-      //  setLoading(false);
    };
 
    useEffect(() => {
@@ -89,7 +86,7 @@ function Direction({ name, placeholder, className }) {
       );
       dispatch(changeOffset(0));
       dispatch(setCurrentPage(1));
-      dispatch(removeTrainInfo());
+      dispatch(removeTrainData());
    };
 
    return (

@@ -132,6 +132,14 @@ function PassengerCard({
    let seatInfo;
 
    if (thisPassenger.length > 0) {
+      if (
+         unchosenSeats.length === 0 &&
+         !thisPassenger[0].seatArr &&
+         !thisPassenger[0].seatDep
+      ) {
+         clickOnRemovePassHandler(id);
+         dispatch(removePassenger(id));
+      }
       if (thisPassenger[0].seatDep || thisPassenger[0].seatArr) {
          const allCoaches = [
             ...coaches[directions.departure],
@@ -368,6 +376,13 @@ function PassengerCard({
             Object.entries(value)[0][1] === passengerTypes.adults ? 1 : 0.5
          );
       }
+      // if (
+      //    value[fieldNames.firstName] ||
+      //    value[fieldNames.lastName] ||
+      //    value[fieldNames.fathersName]
+      // ) {
+      //    Object.entries(value)[0][1].toLowerCase();
+      // }
       if (value[fieldNames.docType]) {
          setDocumentType(value[fieldNames.docType]);
       }

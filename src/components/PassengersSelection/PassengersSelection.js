@@ -37,19 +37,8 @@ function PassengersSelection() {
    const seatsArr = useSelector(selectSelectedSeats)[directions.arrival];
    const passengers = useSelector(selectPassengers);
 
-   useEffect(() => {
-      passengers.forEach((pas) =>
-         setPassArray((prev) => [...prev, { id: pas.id }])
-      );
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
-
    const seatsDepModified = seatsModifier(seatsDep);
    const seatsArrModified = seatsModifier(seatsArr);
-
-   const clickHandler = () => {
-      navigate(links.paymentOptions);
-   };
 
    const unchosenSeatsDep = useMemo(
       () => [...seatsDepModified.filter((el) => el.passengerId === null)],
@@ -77,6 +66,13 @@ function PassengersSelection() {
    }, [unchosenSeats]);
 
    useEffect(() => {
+      const addToArray = (pas) => {
+         const sameId = passArray.find((item) => item.id === pas.id);
+         if (sameId !== -1) {
+            setPassArray((prev) => [...prev, { id: pas.id }]);
+         }
+      };
+      passengers.forEach((pas) => addToArray(pas));
       if (
          unchosenSeats.length > 0 &&
          passengers.filter((pas) => !pas.seatArr && !pas.seatDep).length <= 0
@@ -109,6 +105,10 @@ function PassengersSelection() {
 
    const clickOnRemovePassHandler = (id) => {
       setPassArray((prev) => prev.filter((el) => el.id !== id));
+   };
+
+   const clickHandler = () => {
+      navigate(links.paymentOptions);
    };
 
    const addPassenger = (

@@ -6,6 +6,11 @@ import { selectIndex } from '../../store/slices/trainSlice';
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
 import { selectPassengers } from '../../store/slices/passengersSlice';
 import { selectPersonalData } from '../../store/slices/personalDataSlice';
+import {
+   selectOrderNumber,
+   selectName,
+   selectSum,
+} from '../../store/slices/orderSlice';
 
 import fieldNames from '../PaymentOptions/fieldNames';
 import directions from '../../data/directions';
@@ -26,6 +31,9 @@ function Redirect() {
    const passengers = useSelector(selectPassengers);
    const paymentOption =
       useSelector(selectPersonalData)[fieldNames.paymentMethod];
+   const orderNumber = useSelector(selectOrderNumber);
+   const sum = useSelector(selectSum);
+   const name = useSelector(selectName);
 
    const redirectMaker = (mainText, btnText, link) => (
       <>
@@ -64,7 +72,9 @@ function Redirect() {
 
    return (
       <>
-         {selectedTrainIndex === null && redirecttoMain}
+         {((selectedTrainIndex === null && pathname !== links.success) ||
+            (pathname === links.success && !orderNumber && !name && !sum)) &&
+            redirecttoMain}
          {seatsDep.length <= 0 &&
             seatsArr.length <= 0 &&
             (pathname === links.confirmOrder ||

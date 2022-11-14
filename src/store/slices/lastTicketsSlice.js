@@ -12,7 +12,11 @@ const initialState = {
 const lastTicketsSlice = createSlice({
    name: 'lastTicketsSlice',
    initialState,
-   reducers: {},
+   reducers: {
+      removeLastTicketsData() {
+         return initialState;
+      },
+   },
    extraReducers: {
       [fetchLastTickets.pending]: (state) => {
          state.loading = true;
@@ -45,6 +49,8 @@ const lastTicketsSlice = createSlice({
       },
    },
 });
+
+export const { removeLastTicketsData } = lastTicketsSlice.actions;
 
 export const selectLastTickets = (state) => state.lastTickets.lastTickets;
 export const selectLoading = (state) => state.lastTickets.loading;

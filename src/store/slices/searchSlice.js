@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const savedData = localStorage.getItem('search');
+const empty = {
    departureCity: '',
    arrivalCity: '',
    departureDate: '',
    returnDate: '',
 };
+const initialState = savedData ? JSON.parse(savedData) : empty;
 
 const searchSlice = createSlice({
    name: 'searchSlice',
@@ -21,11 +23,15 @@ const searchSlice = createSlice({
          state.departureCity = state.arrivalCity;
          state.arrivalCity = departure;
       },
+      removeSearchData() {
+         return empty;
+      },
    },
    extraReducers: {},
 });
 
-export const { changeSearchFields, swapValues } = searchSlice.actions;
+export const { changeSearchFields, swapValues, removeSearchData } =
+   searchSlice.actions;
 
 export const selectDepartureCity = (state) => state.search.departureCity;
 export const selectArrivalCity = (state) => state.search.arrivalCity;

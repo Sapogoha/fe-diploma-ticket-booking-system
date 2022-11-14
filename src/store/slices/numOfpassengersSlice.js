@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const savedData = localStorage.getItem('numOfPassengers');
+const empty = {
    numberOfPassengers: {
       departure: { adults: 0, children: 0, toddlers: 0 },
       arrival: { adults: 0, children: 0, toddlers: 0 },
@@ -10,6 +11,7 @@ const initialState = {
    maxNumOfChildren: { departure: null, arrival: null },
    maxNumOfToddlers: { departure: null, arrival: null },
 };
+const initialState = savedData ? JSON.parse(savedData) : empty;
 
 const numOfpassengersSlice = createSlice({
    name: 'numOfpassengersSlice',
@@ -21,10 +23,10 @@ const numOfpassengersSlice = createSlice({
       },
       removeNumOfPassengersDirection(state, action) {
          state.numberOfPassengers[action.payload] =
-            initialState.numberOfPassengers[action.payload];
+            empty.numberOfPassengers[action.payload];
       },
       removeNumOfAllPassengers() {
-         return initialState;
+         return empty;
       },
       setMaxNumOfChildren(state, action) {
          const { direction, value } = action.payload;

@@ -3,9 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import fieldNames from '../../components/PassengersSelection/PassengerCard/fieldNames';
 
-const initialState = {
+const savedData = localStorage.getItem('passengers');
+const empty = {
    passengers: [],
 };
+const initialState = savedData ? JSON.parse(savedData) : empty;
 
 const passengersSlice = createSlice({
    name: 'passengersSlice',
@@ -40,13 +42,30 @@ const passengersSlice = createSlice({
 
          state.passengers.map((pas) => deleteSeatInfo(pas));
       },
+      removeSeatInfoAfterUnchoosingSeat(state, action) {
+         const { coachId, seatNumber } = action.payload;
+         const seat = `${coachId}:${seatNumber}`;
+         const deleteSeatInfo = (pas) => {
+            if (pas[fieldNames.seatDep] === seat) {
+               delete pas[fieldNames.seatDep];
+               if (pas[fieldNames.depOnly]) {
+                  delete pas[fieldNames.depOnly];
+               }
+            }
+            if (pas[fieldNames.seatArr] === seat) {
+               delete pas[fieldNames.seatArr];
+            }
+         };
+
+         state.passengers.map((pas) => deleteSeatInfo(pas));
+      },
       removePassenger(state, action) {
          state.passengers = state.passengers.filter(
             (item) => item.id !== action.payload
          );
       },
-      removeAllPassengers(state) {
-         state.passengers = initialState.passengers;
+      removeAllPassengers() {
+         return empty;
       },
    },
    extraReducers: {},
@@ -56,8 +75,9 @@ export const {
    addNewPassenger,
    editPassengerData,
    removePassenger,
-   removeAllPassengers,
    removeSeatInfo,
+   removeSeatInfoAfterUnchoosingSeat,
+   removeAllPassengers,
 } = passengersSlice.actions;
 
 export const selectPassengers = (state) => state.passengers.passengers;

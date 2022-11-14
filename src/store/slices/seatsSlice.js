@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchSeats } from '../thunks/asyncThunks';
 
-const initialState = {
+const savedData = localStorage.getItem('seats');
+const empty = {
    seatsOptions: { departure: [], arrival: [] },
    loading: false,
    error: null,
@@ -12,6 +13,7 @@ const initialState = {
       arrival: [],
    },
 };
+const initialState = savedData ? JSON.parse(savedData) : empty;
 
 const seatsSlice = createSlice({
    name: 'seatsSlice',
@@ -83,8 +85,8 @@ const seatsSlice = createSlice({
          );
       },
 
-      clearSeatsSlice() {
-         return initialState;
+      removeSeatsData() {
+         return empty;
       },
    },
    extraReducers: {
@@ -109,7 +111,7 @@ export const {
    addSelectedSeats,
    removeSelectedSeat,
    removeAllSelectedSeatsFromCoach,
-   clearSeatsSlice,
+   removeSeatsData,
    addPassengerId,
 } = seatsSlice.actions;
 

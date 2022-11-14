@@ -23,7 +23,7 @@ import {
    selectReturnDate,
 } from '../../../store/slices/searchSlice';
 import { changeOffset, setCurrentPage } from '../../../store/slices/sortSlice';
-import { removeTrainInfo } from '../../../store/slices/trainSlice';
+import { removeTrainData } from '../../../store/slices/trainSlice';
 
 require('dayjs/locale/ru');
 
@@ -67,7 +67,7 @@ function Calendar({ name, className }) {
       dispatch(changeSearchFields({ name, value: dayjs(date).toJSON() }));
       dispatch(changeOffset(0));
       dispatch(setCurrentPage(1));
-      dispatch(removeTrainInfo());
+      dispatch(removeTrainData());
       if (pathname === links.seats) {
          navigate(links.trains);
       }
