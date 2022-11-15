@@ -4,18 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Form, Input, InputNumber, Radio } from 'antd';
 
-import Redirect from '../Redirect/Redirect';
-
 import {
    addPersonalData,
    selectPersonalData,
 } from '../../store/slices/personalDataSlice';
-import { selectTrains } from '../../store/slices/trainSlice';
 
 import links from '../../data/links';
 import fieldNames from './fieldNames';
 import rules from './rules';
-import directions from '../../data/directions';
 import paymentTypes from './paymentTypes';
 
 import styles from './PaymentOptions.module.scss';
@@ -26,9 +22,12 @@ function PaymentOptions() {
    const dispatch = useDispatch();
    const [form] = Form.useForm();
 
-   const trains = useSelector(selectTrains);
    const personalData = useSelector(selectPersonalData);
    const initialValues = personalData;
+
+   const onChangeFullName = (evt) => {
+      form.setFieldValue(evt.target.id, evt.target.value.toLowerCase());
+   };
 
    const clickHandler = () => {
       form.validateFields().then((values) => {
@@ -58,24 +57,36 @@ function PaymentOptions() {
                      name={fieldNames.lastName}
                      label={fieldNames.lastNameLabel}
                      rules={rules.lastName}
+                     onChange={onChangeFullName}
                   >
-                     <Input className={styles.inputField} />
+                     <Input
+                        className={`${styles.inputField} ${styles.fullName} passengerCard-input`}
+                        allowClear
+                     />
                   </Form.Item>
                   <Form.Item
                      className="paymentOption"
                      name={fieldNames.firstName}
                      label={fieldNames.firstNameLabel}
                      rules={rules.firstName}
+                     onChange={onChangeFullName}
                   >
-                     <Input className={styles.inputField} />
+                     <Input
+                        className={`${styles.inputField} ${styles.fullName} passengerCard-input`}
+                        allowClear
+                     />
                   </Form.Item>
                   <Form.Item
                      className="paymentOption"
                      name={fieldNames.fathersName}
                      label={fieldNames.fathersNameLabel}
                      rules={rules.fathersName}
+                     onChange={onChangeFullName}
                   >
-                     <Input className={styles.inputField} />
+                     <Input
+                        className={`${styles.inputField} ${styles.fullName} passengerCard-input`}
+                        allowClear
+                     />
                   </Form.Item>
                </div>
 
@@ -101,6 +112,7 @@ function PaymentOptions() {
                      name={fieldNames.email}
                      label={fieldNames.emailLabel}
                      rules={rules.email}
+                     onChange={onChangeFullName}
                   >
                      <Input
                         placeholder="inbox@gmail.com"
@@ -163,13 +175,8 @@ function PaymentOptions() {
 
    return (
       <>
-         {(trains[directions.departure] || trains[directions.arrival]) && (
-            <>
-               {fullForm}
-               {button}
-            </>
-         )}
-         <Redirect />
+         {fullForm}
+         {button}
       </>
    );
 }

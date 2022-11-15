@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { Alert } from 'antd';
 
 import TrainCard from '../TrainSelection/TrainCard/TrainCard';
-import Redirect from '../Redirect/Redirect';
 import PasItem from './PasItem/PasItem';
 
 import { postOrder } from '../../store/thunks/asyncThunks';
@@ -180,15 +179,15 @@ function OrderConfirmation() {
             addOrderData({
                orderNumber: `${getRandomInt(10, 548)}${personalData[
                   fieldNames?.firstName
-               ]?.slice(0, 1)}${personalData[fieldNames?.fathersName]?.slice(
-                  0,
-                  1
-               )}`,
+               ]
+                  ?.slice(0, 1)
+                  .toUpperCase()}${personalData[fieldNames?.fathersName]
+                  ?.slice(0, 1)
+                  .toUpperCase()}`,
                sum,
                name: `${personalData[fieldNames?.firstName]} ${
                   personalData[fieldNames?.fathersName]
-               }
-         `,
+               }`,
             })
          );
          navigate(links.success);
@@ -277,17 +276,10 @@ function OrderConfirmation() {
 
    return (
       <>
-         {selectedTrainIndex !== null &&
-            passengers.length > 0 &&
-            paymentOption && (
-               <>
-                  {trainCard}
-                  {allPassengers}
-                  {payment}
-                  {btnForward}
-               </>
-            )}
-         <Redirect />
+         {trainCard}
+         {allPassengers}
+         {payment}
+         {btnForward}
       </>
    );
 }

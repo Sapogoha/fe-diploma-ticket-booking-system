@@ -21,8 +21,11 @@ function Layout({ pic, children, body }) {
 
 Layout.propTypes = {
    pic: PropTypes.string.isRequired,
-   children: PropTypes.node.isRequired,
+   children: PropTypes.node,
    body: PropTypes.element.isRequired,
+};
+Layout.defaultProps = {
+   children: null,
 };
 
 export default Layout;

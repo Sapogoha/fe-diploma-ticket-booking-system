@@ -57,6 +57,13 @@
    }
 }
 
+.ant-input-affix-wrapper.passengerCard-input {
+   .ant-input {
+      @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+      text-transform: capitalize;
+   }
+}
+
 .passengerCard-datepicker.ant-picker {
    @include input(28rem, 5rem);
    .ant-picker-input {

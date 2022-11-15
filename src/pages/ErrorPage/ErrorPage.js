@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '../../components/Layout/Layout';
 import MainSearchBlock from '../../components/MainSearchBlock/MainSearchBlock';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import Error from '../../components/Error/Error';
+import Redirect from '../../components/Redirect/Redirect';
 
 import widthOptions from '../../components/MainSearchBlock/widthOptions';
 import picsOptions from '../../components/Layout/picsOptions';
@@ -15,7 +15,7 @@ function ErrorPage() {
       <>
          <ProgressBar step={0} />
          <div className={styles.body}>
-            <Error />
+            <Redirect reason="error" />
          </div>
       </>
    );

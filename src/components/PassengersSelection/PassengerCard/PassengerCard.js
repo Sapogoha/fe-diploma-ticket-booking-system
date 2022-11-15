@@ -318,7 +318,8 @@ function PassengerCard({
             addNewPassenger({
                id,
                ...values,
-               dateOfBirth: values.dateOfBirth.format('DD.MM.YYYY'),
+               [fieldNames.dateOfBirth]:
+                  values[fieldNames.dateOfBirth].format('DD.MM.YYYY'),
             })
          );
 
@@ -344,7 +345,8 @@ function PassengerCard({
             editPassengerData({
                id,
                ...values,
-               dateOfBirth: values.dateOfBirth.format('DD.MM.YYYY'),
+               [fieldNames.dateOfBirth]:
+                  values[fieldNames.dateOfBirth].format('DD.MM.YYYY'),
             })
          );
          if (
@@ -358,7 +360,8 @@ function PassengerCard({
             editPassengerData({
                id,
                ...values,
-               dateOfBirth: values.dateOfBirth.format('DD.MM.YYYY'),
+               [fieldNames.dateOfBirth]:
+                  values[fieldNames.dateOfBirth].format('DD.MM.YYYY'),
             })
          );
       }
@@ -376,13 +379,6 @@ function PassengerCard({
             Object.entries(value)[0][1] === passengerTypes.adults ? 1 : 0.5
          );
       }
-      // if (
-      //    value[fieldNames.firstName] ||
-      //    value[fieldNames.lastName] ||
-      //    value[fieldNames.fathersName]
-      // ) {
-      //    Object.entries(value)[0][1].toLowerCase();
-      // }
       if (value[fieldNames.docType]) {
          setDocumentType(value[fieldNames.docType]);
       }
@@ -518,28 +514,44 @@ function PassengerCard({
       </div>
    );
 
+   const onChangeFullName = (evt) => {
+      form.setFieldValue(evt.target.id, evt.target.value.toLowerCase());
+   };
+
    const fullNameInputFields = (
       <>
          <Form.Item
             name={fieldNames.lastName}
             label={fieldNames.lastNameLabel}
             rules={rules.lastName}
+            onChange={onChangeFullName}
          >
-            <Input className={styles.inputField} />
+            <Input
+               className={`${styles.inputField} passengerCard-input`}
+               allowClear
+            />
          </Form.Item>
          <Form.Item
             name={fieldNames.firstName}
             label={fieldNames.firstNameLabel}
             rules={rules.firstName}
+            onChange={onChangeFullName}
          >
-            <Input className={styles.inputField} />
+            <Input
+               className={`${styles.inputField} passengerCard-input`}
+               allowClear
+            />
          </Form.Item>
          <Form.Item
             name={fieldNames.fathersName}
             label={fieldNames.fathersNameLabel}
             rules={rules.fathersName}
+            onChange={onChangeFullName}
          >
-            <Input className={styles.inputField} />
+            <Input
+               className={`${styles.inputField} passengerCard-input`}
+               allowClear
+            />
          </Form.Item>
       </>
    );

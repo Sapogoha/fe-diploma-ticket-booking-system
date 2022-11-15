@@ -197,11 +197,24 @@ function SeatItem({
       </>
    );
 
+   let visibleSeatNum;
+
+   switch (typeOfPassenger) {
+      case passengerTypes.adults:
+         visibleSeatNum = 'B';
+         break;
+      case passengerTypes.children:
+         visibleSeatNum = 'P';
+         break;
+      default:
+         visibleSeatNum = number;
+   }
+
    return (
       <>
          {!taken && (
             <Popover
-               overlayClassName="abc"
+               overlayClassName="seatItem"
                placement="top"
                title="место для"
                trigger="click"
@@ -214,7 +227,7 @@ function SeatItem({
                   className={className}
                   disabled={taken}
                >
-                  {number}
+                  {visibleSeatNum}
                </button>
             </Popover>
          )}

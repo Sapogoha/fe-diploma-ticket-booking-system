@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import PassengerCard from './PassengerCard/PassengerCard';
-import Redirect from '../Redirect/Redirect';
 
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
 import { selectPassengers } from '../../store/slices/passengersSlice';
@@ -156,7 +155,6 @@ function PassengersSelection() {
          ))}
          {unchosenSeats.length > 0 && addPassenger}
          {(seatsDep.length > 0 || seatsArr.length > 0) && button}
-         <Redirect />
       </div>
    );
 }

@@ -44,6 +44,9 @@
       .inputField {
          @include inputField(28rem);
       }
+      .fullName {
+         text-transform: capitalize;
+      }
    }
 
    .rowShort {

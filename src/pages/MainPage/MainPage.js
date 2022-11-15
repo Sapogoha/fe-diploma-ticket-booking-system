@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Layout from '../../components/Layout/Layout';
@@ -21,6 +21,11 @@ function MainPage() {
       dispatch(removeOrderData());
    }, [dispatch]);
 
+   const title = useRef(document.createElement('div'));
+   useEffect(() => {
+      title.current.scrollIntoView({ behavior: 'smooth' });
+   }, []);
+
    const body = (
       <>
          <div id="about">
@@ -36,7 +41,7 @@ function MainPage() {
    );
    return (
       <Layout pic={picsOptions.main} body={body}>
-         <div className={styles.wrapper}>
+         <div ref={title} className={styles.wrapper}>
             <h1 className={styles.title}>
                Вся жизнь -{' '}
                <span className={styles['title-bold']}>путешествие!</span>

@@ -83,7 +83,8 @@
          height: 5rem;
          border: 0.1rem solid var(--color-grey);
          border-radius: 5px;
-         @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+         // @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+         // text-transform: capitalize;
       }
 
       .inputFieldPassport {

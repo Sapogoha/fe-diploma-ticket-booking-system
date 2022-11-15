@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { selectIndex } from '../../store/slices/trainSlice';
 import { selectSelectedSeats } from '../../store/slices/seatsSlice';
@@ -18,10 +19,7 @@ import links from '../../data/links';
 
 import styles from './Redirect.module.scss';
 
-// стоит ли делать проверку на pathname или убрать это и оставить редирект на главную?
-// будет актуальнее как только буду сохранять данные в localStorage
-
-function Redirect() {
+function Redirect({ reason }) {
    const navigate = useNavigate();
    const { pathname } = useLocation();
 
@@ -34,16 +32,25 @@ function Redirect() {
    const orderNumber = useSelector(selectOrderNumber);
    const sum = useSelector(selectSum);
    const name = useSelector(selectName);
+   const unchosenSeats = [...seatsDep, ...seatsArr]
+      .map((el) => el.seats)
+      .flat()
+      .filter((item) => !item.passengerId);
+
+   const title = useRef(document.createElement('section'));
+   useEffect(() => {
+      title.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }, []);
 
    const redirectMaker = (mainText, btnText, link) => (
-      <>
-         <div className={styles.text}>{mainText}</div>
+      <section ref={title} className={styles.redirect}>
+         <h2 className={styles.text}>{mainText}</h2>
          <div className={styles.buttonWrapper}>
             <button onClick={() => navigate(link)} type="button">
                {btnText}
             </button>
          </div>
-      </>
+      </section>
    );
 
    const redirecttoMain = redirectMaker(
@@ -53,13 +60,13 @@ function Redirect() {
    );
 
    const redirectToSeatsSelection = redirectMaker(
-      'Для ввода данных пассажиров сначала нужно выбрать места',
+      'Для последующих действий нужно выбрать места',
       'Выбрать места',
       links.seats
    );
 
    const redirectToPassengersSelection = redirectMaker(
-      'Для выбора способа оплаты сначала нужно ввести данные всех пассажиров',
+      'Для последующих действий нужно ввести данные всех пассажиров',
       'Выбрать пассажиров',
       links.passengers
    );
@@ -70,32 +77,82 @@ function Redirect() {
       links.paymentOptions
    );
 
+   const redirectToConfirmationPage = redirectMaker(
+      'Вы не подтвердили заказ. Пожалуйста, вернитесь на предыдущую страницу и внесите изменения или подтвердите заказ',
+      'На страницу подтверждения заказа',
+      links.confirmOrder
+   );
+
+   const redirectToMainFromSuccess = redirectMaker(
+      'Пожалуйста, для последующих действий перейдите на главную',
+      'На главную',
+      links.main
+   );
+
+   const redirectError = redirectMaker(
+      'Извините, такая страница не найдена',
+      'На главную',
+      links.main
+   );
+
    return (
       <>
-         {((selectedTrainIndex === null && pathname !== links.success) ||
-            (pathname === links.success && !orderNumber && !name && !sum)) &&
+         {selectedTrainIndex === null &&
+            !reason &&
+            pathname !== links.success &&
             redirecttoMain}
          {seatsDep.length <= 0 &&
+            !reason &&
             seatsArr.length <= 0 &&
+            selectedTrainIndex !== null &&
             (pathname === links.confirmOrder ||
                pathname === links.paymentOptions ||
-               pathname === links.passengers) &&
-            selectedTrainIndex &&
+               pathname === links.passengers ||
+               pathname === links.success) &&
             redirectToSeatsSelection}
          {(seatsDep.length > 0 || seatsArr.length > 0) &&
+            !reason &&
             selectedTrainIndex !== null &&
-            passengers.length <= 0 &&
+            unchosenSeats.length > 0 &&
             (pathname === links.confirmOrder ||
-               pathname === links.paymentOptions) &&
+               pathname === links.paymentOptions ||
+               pathname === links.success) &&
             redirectToPassengersSelection}
          {(seatsDep.length > 0 || seatsArr.length > 0) &&
+            !reason &&
             selectedTrainIndex !== null &&
             passengers.length > 0 &&
             !paymentOption &&
-            pathname === links.confirmOrder &&
+            (pathname === links.confirmOrder || pathname === links.success) &&
             redirectToPaymentOptions}
+         {(seatsDep.length > 0 || seatsArr.length > 0) &&
+            !reason &&
+            selectedTrainIndex !== null &&
+            passengers.length > 0 &&
+            paymentOption &&
+            pathname === links.success &&
+            redirectToConfirmationPage}
+         {seatsDep.length <= 0 &&
+            !reason &&
+            seatsArr.length <= 0 &&
+            selectedTrainIndex === null &&
+            passengers.length <= 0 &&
+            !paymentOption &&
+            pathname === links.success &&
+            !orderNumber &&
+            !sum &&
+            !name &&
+            redirectToMainFromSuccess}
+         {reason === 'error' && redirectError}
       </>
    );
 }
+
+Redirect.propTypes = {
+   reason: PropTypes.string,
+};
+Redirect.defaultProps = {
+   reason: null,
+};
 
 export default Redirect;
