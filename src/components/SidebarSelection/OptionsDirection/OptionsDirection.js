@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import TimeSlider from './TimeSlider/TimeSlider';
+
+import {
+   selectTime,
+   setExpanded,
+} from '../../../store/slices/sidebarSelectSlice';
 
 import styles from './OptionsDirection.module.scss';
 
@@ -9,12 +15,13 @@ import plus from '../img/plus.svg';
 import minus from '../img/minus.svg';
 
 function OptionsDirection({ img, direction, name, onChangeOption }) {
-   const [expanded, setExpanded] = useState(false);
+   const dispatch = useDispatch();
+   const { expanded } = useSelector(selectTime)[name];
 
    const expandIcon = expanded ? minus : plus;
 
    const clickHandler = () => {
-      setExpanded(!expanded);
+      dispatch(setExpanded({ name }));
    };
 
    const exp = (

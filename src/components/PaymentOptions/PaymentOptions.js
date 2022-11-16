@@ -8,6 +8,7 @@ import {
    addPersonalData,
    selectPersonalData,
 } from '../../store/slices/personalDataSlice';
+import { selectPassengers } from '../../store/slices/passengersSlice';
 
 import links from '../../data/links';
 import fieldNames from './fieldNames';
@@ -16,6 +17,7 @@ import paymentTypes from './paymentTypes';
 
 import styles from './PaymentOptions.module.scss';
 import './PaymentOptions.scss';
+import passengerTypes from '../SeatsSelection/SelectionBlock/passengerTypes';
 
 function PaymentOptions() {
    const navigate = useNavigate();
@@ -23,7 +25,26 @@ function PaymentOptions() {
    const [form] = Form.useForm();
 
    const personalData = useSelector(selectPersonalData);
-   const initialValues = personalData;
+   const passengers = useSelector(selectPassengers);
+   const firstAdult = passengers?.find(
+      (pas) => pas.passengerType === passengerTypes.adults
+   );
+   let initialValues;
+
+   if (personalData[fieldNames.firstName]) {
+      initialValues = personalData;
+   }
+
+   if (
+      !personalData[fieldNames.firstName] &&
+      firstAdult[fieldNames.firstName]
+   ) {
+      initialValues = {
+         [fieldNames.lastName]: firstAdult[fieldNames.lastName],
+         [fieldNames.firstName]: firstAdult[fieldNames.firstName],
+         [fieldNames.fathersName]: firstAdult[fieldNames.fathersName],
+      };
+   }
 
    const onChangeFullName = (evt) => {
       form.setFieldValue(evt.target.id, evt.target.value.toLowerCase());

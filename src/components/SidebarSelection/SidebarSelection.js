@@ -7,7 +7,10 @@ import Options from './Options/Options';
 import PriceSlider from './PriceSlider/PriceSlider';
 import OptionsDirection from './OptionsDirection/OptionsDirection';
 
-import { selectDepartureDate } from '../../store/slices/searchSlice';
+import {
+   selectDepartureDate,
+   selectReturnDate,
+} from '../../store/slices/searchSlice';
 import { changeOffset, setCurrentPage } from '../../store/slices/sortSlice';
 import { removeTrainData } from '../../store/slices/trainSlice';
 
@@ -30,6 +33,7 @@ function SidebarSelection() {
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const departureDate = useSelector(selectDepartureDate);
+   const returnDate = useSelector(selectReturnDate);
    const inpGrHeaderStyle = styles.section__header;
    const dateStyle = styles.date__input;
    const headerInvalidCl = `${inpGrHeaderStyle} ${styles['section__header-invalid']}`;
@@ -98,15 +102,17 @@ function SidebarSelection() {
                img={to}
             />
          </div>
-         <div className={styles.section}>
-            <OptionsDirection
-               onChangeOption={onChangeOption}
-               className={styles.section__header}
-               direction="обратно"
-               name="back"
-               img={back}
-            />
-         </div>
+         {returnDate && (
+            <div className={styles.section}>
+               <OptionsDirection
+                  onChangeOption={onChangeOption}
+                  className={styles.section__header}
+                  direction="обратно"
+                  name="back"
+                  img={back}
+               />
+            </div>
+         )}
       </section>
    );
 }

@@ -1,14 +1,15 @@
 # API сервиса
 
-### Базовый URL АПИ:
-*https://netology-trainbooking.netoservices.ru/*. 
+### Базовый URL API:
+
+*https://netology-trainbooking.netoservices.ru/*.
 
 Пример запроса:
 
 ```js
-fetch( 'https://netology-trainbooking.netoservices.ru/routes/last' )
-    .then( response => response.json() )
-    .then( data => console.log(data) );
+fetch('https://netology-trainbooking.netoservices.ru/routes/last')
+   .then((response) => response.json())
+   .then((data) => console.log(data));
 ```
 
 Ответы API в формате JSON.
@@ -25,13 +26,13 @@ fetch( 'https://netology-trainbooking.netoservices.ru/routes/last' )
 Не забывайте обрабатывать ошибки АПИ.
 
 ## Swagger-документация
+
 https://fe-swagger-test.herokuapp.com/
 
-Вы увидите интерактивную страницу, на которой сможете протестировать 
+Вы увидите интерактивную страницу, на которой сможете протестировать
 работу сервиса.
 
 ![Первый экран работы с сервисом Swagger](./images/swagger.png)
-
 
 ### Сведения о запросе и ответе
 
@@ -52,7 +53,7 @@ https://fe-swagger-test.herokuapp.com/
 
 ### Разбор результатов
 
-Для того чтобы понять, что означает каждое поле результата, нажмите на пункт 
+Для того чтобы понять, что означает каждое поле результата, нажмите на пункт
 «Model» колонки «Description». Для того чтобы развернуть описание, нажмите
 на стрелочку «>»:
 

@@ -17,10 +17,12 @@ const empty = {
       to: {
          departure: { min: 0, max: 24 * 60 },
          arrival: { min: 0, max: 24 * 60 },
+         expanded: false,
       },
       back: {
          departure: { min: 0, max: 24 * 60 },
          arrival: { min: 0, max: 24 * 60 },
+         expanded: false,
       },
    },
 };
@@ -42,6 +44,10 @@ const sidebarSelectSlice = createSlice({
          const { name, direction, value } = action.payload;
          state.time[name][direction] = { min: value[0], max: value[1] };
       },
+      setExpanded(state, action) {
+         const { name } = action.payload;
+         state.time[name].expanded = !state.time[name].expanded;
+      },
       removeSidebarSelectionData() {
          return empty;
       },
@@ -54,6 +60,7 @@ export const {
    changePriceFields,
    changeTimeFields,
    removeSidebarSelectionData,
+   setExpanded,
 } = sidebarSelectSlice.actions;
 
 export const selectOptions = (state) => state.sidebarSelect.options;
