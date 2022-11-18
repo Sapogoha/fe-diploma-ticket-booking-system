@@ -1,18 +1,16 @@
+@import '../../../../../scss/mixins';
 .card {
    display: flex;
    align-items: baseline;
    justify-content: space-around;
-   font-weight: 400;
-   font-size: 1.6rem;
-   line-height: 1.9rem;
+   @include font-no-color(var(--fw-4), var(--fs-16), var(--fh-19));
    margin-bottom: 3.3rem;
    .type {
       color: var(--color-bars);
       width: 8.6rem;
    }
    .seats {
-      font-weight: 500;
-
+      font-weight: var(--fw-5);
       color: var(--color-yellow-orange);
    }
    .price {
@@ -29,10 +27,12 @@
                margin-right: 0.5rem;
             }
             &__number {
-               font-weight: 700;
-               font-size: 2.4rem;
-               line-height: 2.8rem;
-               color: var(--color-secondary-dark);
+               @include font(
+                  var(--fw-7),
+                  var(--fs-24),
+                  var(--fh-28),
+                  var(--color-secondary-dark)
+               );
                margin-right: 0.5rem;
             }
             &__currency {

@@ -1,3 +1,15 @@
+@import '../../../scss/mixins';
+
+@mixin name {
+   @include font(
+      var(--fw-7),
+      var(--fs-30),
+      var(--fh-35),
+      var(--color-main-light)
+   );
+   margin-left: 2.8rem;
+}
+
 .step {
    height: 9.8rem;
    display: flex;
@@ -10,11 +22,7 @@
    }
    &__name {
       text-transform: capitalize;
-      color: var(--color-main-light);
-      font-weight: 700;
-      font-size: 3rem;
-      line-height: 3.5rem;
-      margin-left: 2.8rem;
+      @include name;
    }
 
    &-first {
@@ -34,11 +42,7 @@
    }
 
    &__name {
-      color: var(--color-main-light);
-      font-weight: 700;
-      font-size: 3rem;
-      line-height: 3.5rem;
-      margin-left: 2.8rem;
+      @include name;
    }
 }
 .breaker {
@@ -65,8 +69,7 @@
          height: 4.5rem;
       }
       &__name {
-         font-size: 2.4rem;
-         line-height: 2.8rem;
+         @include font-no-color(var(--fw-7), var(--fs-24), var(--fh-28));
          margin-left: 2rem;
       }
    }

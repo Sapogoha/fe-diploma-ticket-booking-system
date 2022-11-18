@@ -3,13 +3,14 @@
 .last-tickets {
    margin-top: 9.5rem;
    &__header {
-      font-weight: 500;
-      font-size: 3rem;
-      line-height: 3.5rem;
+      @include font(
+         var(--fw-5),
+         var(--fs-30),
+         var(--fh-35),
+         var(--color-black)
+      );
       text-transform: uppercase;
       margin-bottom: 2.6rem;
-
-      color: var(--color-black);
    }
 
    &__error {

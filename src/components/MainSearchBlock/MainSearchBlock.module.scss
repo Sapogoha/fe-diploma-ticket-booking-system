@@ -2,8 +2,7 @@
 
 @mixin input-group {
    display: flex;
-   font-weight: 400;
-   font-size: 1.8rem;
+   @include font-no-color(var(--fw-4), var(--fs-18), var(--fh-21));
    justify-content: space-between;
    align-items: baseline;
 }
@@ -81,7 +80,7 @@
 
    .inputGroup-dates,
    .inputGroup-directions {
-      font-weight: 400;
+      font-weight: var(--fw-4);
    }
 
    .inputGroup-directions {
@@ -129,10 +128,13 @@
             margin-bottom: 6rem;
          }
          &__header {
-            font-weight: 300;
-            font-size: 3rem;
+            @include font(
+               var(--fw-3),
+               var(--fs-30),
+               var(--fh-35),
+               var(--color-main-light)
+            );
             margin-bottom: 2rem;
-            color: var(--color-main-light);
             text-transform: capitalize;
             &-invalid {
                color: var(--color-error-light);

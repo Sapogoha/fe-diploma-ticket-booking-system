@@ -9,7 +9,12 @@
    .form {
       display: grid;
       min-height: 19rem;
-      @include font(400, 1.6rem, 1.9rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-16),
+         var(--fh-19),
+         var(--color-main-dark)
+      );
       grid-template-columns: repeat(3, 1fr);
 
       .formItem {

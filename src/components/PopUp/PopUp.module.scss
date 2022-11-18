@@ -1,3 +1,5 @@
+@import '../../scss/mixins';
+
 .wrapper {
    content: '';
    position: fixed;
@@ -35,16 +37,22 @@
       &__message {
          width: 59.5rem;
          margin: 3.5rem auto;
-         font-weight: 400;
-         font-size: 1.8rem;
+         @include font(
+            var(--fw-4),
+            var(--fs-18),
+            var(--fh-21),
+            var(--color-black)
+         );
          padding: 0.5rem;
-         color: #000000;
       }
       &__button {
-         font-size: 2.4rem;
-         font-weight: 700;
+         @include font(
+            var(--fw-7),
+            var(--fs-24),
+            var(--fh-28),
+            var(--color-main-dark)
+         );
          text-transform: capitalize;
-         color: var(--color-main-dark);
          padding: 1.1rem 6.7rem;
          border: 0.1rem solid var(--color-main-dark);
          border-radius: 0.5rem;

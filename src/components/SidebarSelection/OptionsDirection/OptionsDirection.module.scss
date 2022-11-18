@@ -1,4 +1,5 @@
 @import '../SidebarSelection.module.scss';
+@import '../../../scss/mixins';
 .header {
    @include header;
    display: flex;
@@ -8,7 +9,7 @@
    .direction {
       &__text {
          color: var(--color-main-light);
-         font-weight: 700;
+         font-weight: var(--fw-7);
          margin-left: 1.2rem;
          text-transform: capitalize;
       }
@@ -17,11 +18,12 @@
 
 .expanded {
    &__header {
-      font-weight: 400;
-      font-size: 2.4rem;
-      line-height: 2.8rem;
-
-      color: var(--color-secondary-light);
+      @include font(
+         var(--fw-4),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-secondary-light)
+      );
    }
    &__ret {
       margin-top: 2rem;

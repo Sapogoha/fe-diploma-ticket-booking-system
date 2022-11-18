@@ -1,7 +1,8 @@
+@import '../../../scss/mixins';
+
 .nav-bar {
    display: flex;
-   font-size: 3rem;
-   font-weight: 300;
+   @include font-no-color(var(--fw-3), var(--fs-30), var(--fh-35));
    padding-top: 2.5rem;
    padding-bottom: 2.5rem;
    background-color: var(--color-main-dark);

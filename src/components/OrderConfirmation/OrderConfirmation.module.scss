@@ -8,7 +8,12 @@
    box-shadow: var(--border-shadow-trains-card);
 
    .header {
-      @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-30),
+         var(--fh-35),
+         var(--color-main-dark)
+      );
 
       width: 100%;
       @include padding;
@@ -21,7 +26,12 @@
          width: 67.7rem;
          border-right: 0.1rem dashed var(--color-secondary-light);
          .payment {
-            @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+            @include font(
+               var(--fw-4),
+               var(--fs-24),
+               var(--fh-28),
+               var(--color-main-dark)
+            );
             padding: 4.5rem 3.5rem 7.5rem;
          }
       }
@@ -31,9 +41,14 @@
          .sum {
             display: flex;
             justify-content: space-between;
-            @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+            @include font(
+               var(--fw-4),
+               var(--fs-30),
+               var(--fh-35),
+               var(--color-main-dark)
+            );
             .amount {
-               font-weight: 700;
+               font-weight: var(--fw-7);
             }
             .currency {
                margin-left: 1rem;
@@ -54,7 +69,12 @@
 }
 
 .alert {
-   @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+   @include font(
+      var(--fw-4),
+      var(--fs-24),
+      var(--fh-28),
+      var(--color-main-dark)
+   );
    margin-top: 2rem;
    text-align: center;
 }

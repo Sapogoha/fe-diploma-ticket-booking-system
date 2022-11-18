@@ -1,11 +1,12 @@
+@import '../../../scss/mixins';
+
 .ant-select {
-   font-weight: 400;
-   font-size: 1.8rem;
+   @include font-no-color(var(--fw-4), var(--fs-18), var(--fh-21));
    &-selection-search-input {
       text-transform: uppercase;
    }
    &-item-option-content {
-      font-size: 1.8rem;
+      @include font-no-color(var(--fw-4), var(--fs-18), var(--fh-21));
       text-transform: uppercase;
    }
    &-clear {

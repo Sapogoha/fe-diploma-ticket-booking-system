@@ -1,11 +1,21 @@
 @import '../../../../scss/mixins';
 
 .passengerType {
-   @include font(400, 1.8rem, 2.1rem, var(--color-secondary-light));
+   @include font(
+      var(--fw-4),
+      var(--fs-18),
+      var(--fh-21),
+      var(--color-secondary-light)
+   );
    text-transform: capitalize;
 }
 .sum {
-   @include font(700, 2.4rem, 2.8rem, var(--color-main-light));
+   @include font(
+      var(--fw-7),
+      var(--fs-24),
+      var(--fh-28),
+      var(--color-main-light)
+   );
    display: flex;
    .currency {
       margin-left: 0.5rem;

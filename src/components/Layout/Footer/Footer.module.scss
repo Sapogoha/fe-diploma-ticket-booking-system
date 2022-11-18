@@ -8,10 +8,13 @@
 
 //ниже 822px нужно переставлять блоки
 .footer {
-   color: var(--color-main-light);
+   @include font(
+      var(--fw-4),
+      var(--fs-24),
+      var(--fh-28),
+      var(--color-main-light)
+   );
    background-color: var(--color-main-dark);
-   font-size: 2.4rem;
-   font-weight: 400;
 }
 .wrapper {
    padding-top: 5rem;
@@ -28,8 +31,12 @@
    @include h3;
 
    &__subheader {
-      color: var(--color-main-light);
-      font-size: 2.4rem;
+      @include font(
+         var(--fw-4),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-main-light)
+      );
       margin-bottom: 2rem;
    }
 
@@ -76,8 +83,7 @@
    }
 
    &__year {
-      font-size: 2.4rem;
-      font-weight: 300;
+      @include font-no-color(var(--fw-3), var(--fs-24), var(--fh-28));
       text-transform: uppercase;
    }
 }

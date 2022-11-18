@@ -41,7 +41,12 @@
 }
 .passengerCard-select {
    .ant-select-item-option-content {
-      @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-main-dark)
+      );
       text-transform: capitalize;
    }
 }
@@ -49,7 +54,12 @@
 .ant-row.ant-form-item-row {
    .ant-form-item-label {
       > label {
-         @include font(400, 1.6rem, 1.9rem, var(--color-grey));
+         @include font(
+            var(--fw-4),
+            var(--fs-16),
+            var(--fh-19),
+            var(--color-grey)
+         );
          &::before {
             content: '';
          }
@@ -59,7 +69,12 @@
 
 .ant-input-affix-wrapper.passengerCard-input {
    .ant-input {
-      @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-main-dark)
+      );
       text-transform: capitalize;
    }
 }
@@ -68,16 +83,25 @@
    @include input(28rem, 5rem);
    .ant-picker-input {
       > input {
-         @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+         @include font(
+            var(--fw-4),
+            var(--fs-24),
+            var(--fh-28),
+            var(--color-main-dark)
+         );
          &::placeholder {
-            font-size: 1.8rem;
-            line-height: 2.1rem;
+            @include font-no-color(var(--fw-4), var(--fs-18), var(--fh-21));
          }
       }
    }
 
    &-dropdown {
-      @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-main-dark)
+      );
       width: 28rem;
    }
 
@@ -94,7 +118,7 @@
    height: 5rem;
    width: 10rem;
    padding: 0.5rem 3.5rem;
-   @include font(900, 3rem, 3.5rem, var(--color-black));
+   @include font(var(--fw-9), var(--fs-30), var(--fh-35), var(--color-black));
    text-transform: uppercase;
    &:focus {
       background-color: var(--color-yellow-orange);
@@ -133,7 +157,12 @@
    }
 
    &-wrapper.ant-checkbox-wrapper-in-form-item.passengerCard-checkbox {
-      @include font(400, 1.8rem, 2.1rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-18),
+         var(--fh-21),
+         var(--color-main-dark)
+      );
    }
 }
 
@@ -146,7 +175,12 @@
 
 .passengerCard-doc-select {
    .ant-select-item-option-content {
-      @include font(400, 1.8rem, 2.1rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-18),
+         var(--fh-21),
+         var(--color-main-dark)
+      );
       text-transform: none;
    }
 }

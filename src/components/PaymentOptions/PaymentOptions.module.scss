@@ -6,7 +6,12 @@
    height: 5rem;
    border: 0.1rem solid var(--color-grey);
    border-radius: 5px;
-   @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+   @include font(
+      var(--fw-4),
+      var(--fs-24),
+      var(--fh-28),
+      var(--color-main-dark)
+   );
 }
 
 .card {
@@ -18,7 +23,12 @@
          border-bottom: 1px dashed var(--color-grey);
       }
       .errorText {
-         @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+         @include font(
+            var(--fw-4),
+            var(--fs-24),
+            var(--fh-28),
+            var(--color-main-dark)
+         );
       }
    }
 
@@ -28,14 +38,24 @@
    }
 
    .text {
-      @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-30),
+         var(--fh-35),
+         var(--color-main-dark)
+      );
       margin-left: 2rem;
    }
 
    .row {
       display: flex;
       justify-content: space-between;
-      @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-main-dark)
+      );
 
       &:not(:last-child) {
          margin-bottom: 5rem;
@@ -69,7 +89,12 @@
 .onlinePayments {
    padding-top: 30px;
    display: flex;
-   @include font(700, 2.4rem, 2.8rem, var(--color-main-dark));
+   @include font(
+      var(--fw-7),
+      var(--fs-24),
+      var(--fh-28),
+      var(--color-main-dark)
+   );
    padding-bottom: 3rem;
 
    .paymentMethod {

@@ -5,15 +5,13 @@
    justify-content: center;
 }
 
-@mixin font($fw, $fs, $lh, $c) {
-   font-weight: $fw;
-   font-size: $fs;
-   line-height: $lh;
-   color: $c;
-}
-
 @mixin title {
-   @include font(700, 3rem, 3.5rem, var(--color-main-dark));
+   @include font(
+      var(--fw-7),
+      var(--fs-30),
+      var(--fh-35),
+      var(--color-main-dark)
+   );
    padding: 2.7rem 0 2.5rem 2rem;
 }
 

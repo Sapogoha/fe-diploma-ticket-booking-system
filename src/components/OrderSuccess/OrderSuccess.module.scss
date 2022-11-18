@@ -4,7 +4,12 @@
    margin-top: -32rem;
    margin-bottom: 17.5rem;
    .thankYouText {
-      @include font(700, 7.2rem, 8.4rem, var(--color-main-light));
+      @include font(
+         var(--fw-7),
+         var(--fs-72),
+         var(--fh-84),
+         var(--color-main-light)
+      );
       padding-bottom: 3.5rem;
       margin-right: auto;
       margin-left: auto;
@@ -20,11 +25,16 @@
 
       .orderData {
          padding: 6rem 8rem 4rem;
-         @include font(700, 3.6rem, 4.2rem, var(--color-bars));
+         @include font(
+            var(--fw-7),
+            var(--fs-36),
+            var(--fh-42),
+            var(--color-bars)
+         );
          display: flex;
          justify-content: space-between;
          .priceWord {
-            font-weight: 400;
+            font-weight: var(--fw-4);
             color: var(--color-grey);
             margin-right: 3rem;
          }
@@ -51,10 +61,15 @@
                margin-bottom: 1rem;
             }
             .stepText {
-               @include font(400, 1.8rem, 2.1rem, var(--color-main-dark));
+               @include font(
+                  var(--fw-4),
+                  var(--fs-18),
+                  var(--fh-21),
+                  var(--color-main-dark)
+               );
                text-align: center;
                &-bold {
-                  font-weight: 500;
+                  font-weight: var(--fw-5);
                }
             }
          }
@@ -62,16 +77,31 @@
       .thankYouLetter {
          padding: 9.5rem 11rem 13rem 20.5rem;
          .top {
-            @include font(700, 3.6rem, 4.2rem, var(--color-main-dark));
+            @include font(
+               var(--fw-7),
+               var(--fs-36),
+               var(--fh-42),
+               var(--color-main-dark)
+            );
             margin-bottom: 5rem;
             text-transform: capitalize;
          }
          .middle {
-            @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+            @include font(
+               var(--fw-4),
+               var(--fs-24),
+               var(--fh-28),
+               var(--color-main-dark)
+            );
             margin-bottom: 9rem;
          }
          .bottom {
-            @include font(700, 2.4rem, 2.8rem, var(--color-main-dark));
+            @include font(
+               var(--fw-7),
+               var(--fs-24),
+               var(--fh-28),
+               var(--color-main-dark)
+            );
          }
       }
       .review {
@@ -83,7 +113,12 @@
             display: flex;
             align-items: center;
             .reviewText {
-               @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+               @include font(
+                  var(--fw-4),
+                  var(--fs-24),
+                  var(--fh-28),
+                  var(--color-main-dark)
+               );
                margin-right: 4rem;
             }
          }

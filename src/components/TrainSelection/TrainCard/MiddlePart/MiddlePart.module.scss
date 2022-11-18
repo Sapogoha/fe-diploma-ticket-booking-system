@@ -1,22 +1,25 @@
+@import '../../../../scss/mixins';
+
 @mixin info {
    &__time {
-      font-weight: 700;
-      font-size: 2.4rem;
-      line-height: 2.8rem;
-      color: var(--color-black);
+      @include font(
+         var(--fw-7),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-black)
+      );
    }
    &__city {
-      font-weight: 400;
-      font-size: 1.8rem;
-      line-height: 2.1rem;
-      color: var(--color-main-dark);
+      @include font(
+         var(--fw-4),
+         var(--fs-18),
+         var(--fh-21),
+         var(--color-main-dark)
+      );
       text-transform: capitalize;
    }
    &__station {
-      font-weight: 400;
-      font-size: 1.6rem;
-      line-height: 1.9rem;
-      color: var(--color-grey);
+      @include font(var(--fw-4), var(--fs-16), var(--fh-19), var(--color-grey));
    }
 }
 
@@ -40,10 +43,12 @@
       flex-direction: column;
       .time {
          &__time {
-            font-weight: 400;
-            font-size: 1.8rem;
-            line-height: 2.1rem;
-            color: var(--color-bars-light);
+            @include font(
+               var(--fw-4),
+               var(--fs-18),
+               var(--fh-21),
+               var(--color-bars-light)
+            );
          }
          &__arrow {
             width: 3rem;

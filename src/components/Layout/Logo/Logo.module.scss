@@ -1,7 +1,12 @@
+@import '../../../scss/mixins';
+
 .logo {
-   font-size: 3.6rem;
-   font-weight: 900;
-   color: var(--color-secondary-light);
+   @include font(
+      var(--fw-9),
+      var(--fs-36),
+      var(--fh-42),
+      var(--color-secondary-light)
+   );
    height: 4.9rem;
    margin-top: 1.5rem;
 

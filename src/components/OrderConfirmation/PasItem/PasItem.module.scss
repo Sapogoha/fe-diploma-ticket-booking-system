@@ -13,7 +13,12 @@
       padding-bottom: 9rem;
    }
 
-   @include font(400, 1.8rem, 2.1rem, var(--color-main-dark));
+   @include font(
+      var(--fw-4),
+      var(--fs-18),
+      var(--fh-21),
+      var(--color-main-dark)
+   );
    .left {
       margin-right: 3rem;
       text-align: center;

@@ -15,10 +15,12 @@
 
    .direction {
       &__city {
-         font-size: 2rem;
-         line-height: 23px;
-
-         color: var(--color-main-dark);
+         @include font(
+            var(--fw-4),
+            var(--fs-20),
+            var(--fh-23),
+            var(--color-main-dark)
+         );
          text-transform: capitalize;
          display: flex;
          flex-direction: column;
@@ -59,11 +61,12 @@
       }
 
       &__number {
-         font-weight: 700;
-         font-size: 3.6rem;
-         line-height: 4.2rem;
-
-         color: var(--color-yellow-orange);
+         @include font(
+            var(--fw-7),
+            var(--fs-36),
+            var(--fh-42),
+            var(--color-yellow-orange)
+         );
       }
       &__currency {
          margin-left: 0.5rem;

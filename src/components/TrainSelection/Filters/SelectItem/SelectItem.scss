@@ -1,11 +1,14 @@
+@import '../../../../scss/mixins';
+
 .select-item {
    .ant-select {
+      @include font(
+         var(--fw-4),
+         var(--fs-18),
+         var(--fh-21),
+         var(--color-main-dark)
+      );
       min-width: 15rem;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 21px;
-
-      color: var(--color-main-dark);
 
       &-arrow {
          display: none;
@@ -35,7 +38,7 @@
    }
 
    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-      font-weight: 400;
+      font-weight: var(--fw-4);
       background-color: var(--color-tertiarly-light);
    }
 

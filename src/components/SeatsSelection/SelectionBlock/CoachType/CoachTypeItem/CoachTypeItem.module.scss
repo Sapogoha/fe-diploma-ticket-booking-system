@@ -11,7 +11,7 @@
       }
    }
    .name {
-      @include font(400, 2.4rem, 2.8rem, var(--color-grey));
+      @include font(var(--fw-4), var(--fs-24), var(--fh-28), var(--color-grey));
       text-transform: capitalize;
       margin-top: 2rem;
    }

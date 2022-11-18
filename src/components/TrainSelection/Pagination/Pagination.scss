@@ -1,13 +1,12 @@
+@import '../../../scss/mixins';
+
 @mixin box {
    width: 8.5rem;
    height: 7.5rem;
-   color: var(--color-grey);
    border: 0.2rem solid var(--color-bars-light);
    padding: 2rem;
    border-radius: 0.5rem;
-   font-weight: 700;
-   font-size: 3rem;
-   line-height: 3.5rem;
+   @include font(var(--fw-7), var(--fs-30), var(--fh-35), var(--color-grey));
 }
 
 .pagination {

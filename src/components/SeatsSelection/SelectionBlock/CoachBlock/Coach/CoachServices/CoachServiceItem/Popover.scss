@@ -1,3 +1,5 @@
+@import '../../../../../../../scss/mixins';
+
 .icons-tooltip {
    background: var(--color-popover);
    box-shadow: var(--box-shadow-popover);
@@ -5,11 +7,12 @@
    border-radius: 0.8rem;
 
    .ant-tooltip-inner {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 19px;
+      @include font(
+         var(--fw-4),
+         var(--fs-16),
+         var(--fh-19),
+         var(--color-main-dark)
+      );
       text-align: center;
-
-      color: #292929;
    }
 }

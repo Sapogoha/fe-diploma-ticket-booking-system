@@ -6,7 +6,12 @@
    height: 5rem;
    border: 0.1rem solid var(--color-grey);
    border-radius: 5px;
-   @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+   @include font(
+      var(--fw-4),
+      var(--fs-24),
+      var(--fh-28),
+      var(--color-main-dark)
+   );
 }
 
 .closedPassengerCard {
@@ -16,7 +21,12 @@
    @include cardClosed;
    @include padding;
    .text {
-      @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-30),
+         var(--fh-35),
+         var(--color-main-dark)
+      );
       margin-left: 2rem;
    }
    margin-bottom: 3.5rem;
@@ -30,7 +40,12 @@
       @include padding;
       border-bottom: 1px dashed var(--color-grey);
       .errorText {
-         @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+         @include font(
+            var(--fw-4),
+            var(--fs-24),
+            var(--fh-28),
+            var(--color-main-dark)
+         );
       }
    }
    &__header {
@@ -44,7 +59,12 @@
          display: flex;
          align-items: center;
          .text {
-            @include font(400, 3rem, 3.5rem, var(--color-main-dark));
+            @include font(
+               var(--fw-4),
+               var(--fs-30),
+               var(--fh-35),
+               var(--color-main-dark)
+            );
             margin-left: 2rem;
          }
       }
@@ -68,7 +88,12 @@
    .row {
       display: flex;
       justify-content: space-between;
-      @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
+      @include font(
+         var(--fw-4),
+         var(--fs-24),
+         var(--fh-28),
+         var(--color-main-dark)
+      );
 
       &:not(:last-child) {
          margin-bottom: 5rem;
@@ -83,8 +108,6 @@
          height: 5rem;
          border: 0.1rem solid var(--color-grey);
          border-radius: 5px;
-         // @include font(400, 2.4rem, 2.8rem, var(--color-main-dark));
-         // text-transform: capitalize;
       }
 
       .inputFieldPassport {
@@ -93,8 +116,7 @@
       .inputFieldBirthSertif {
          @include inputFieldShort;
          &::placeholder {
-            font-size: 1.8rem;
-            line-height: 2.1rem;
+            @include font-no-color(var(--fw-4), var(--fs-18), var(--fh-21));
          }
       }
       .seats {

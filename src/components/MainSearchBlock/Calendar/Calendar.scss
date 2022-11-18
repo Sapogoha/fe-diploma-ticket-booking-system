@@ -22,7 +22,7 @@
       width: 100%;
    }
    &-header {
-      font-size: 2.4rem;
+      @include font-no-color(var(--fw-5), var(--fs-24), var(--fh-28));
       border-bottom: solid 0.2rem var(--color-secondary-light);
       padding-bottom: 1rem;
       .ant-picker-month-btn {
@@ -38,7 +38,7 @@
    }
    &-input {
       > input {
-         font-size: 1.8rem;
+         @include font-no-color(var(--fw-4), var(--fs-18), var(--fh-21));
          &::placeholder {
             color: var(--color-secondary-light);
             text-transform: uppercase;
@@ -60,7 +60,7 @@
       display: none;
    }
    &-content {
-      font-size: 1.8rem;
+      @include font-no-color(var(--fw-4), var(--fs-18), var(--fh-21));
       > thead {
          display: none;
       }

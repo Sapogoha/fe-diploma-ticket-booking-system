@@ -1,3 +1,5 @@
+@import '../../../../scss/mixins';
+
 .contact {
    &__item {
       display: flex;
@@ -14,8 +16,6 @@
       margin-right: 4rem;
    }
    &__text {
-      font-size: 2.4rem;
-      height: 2.8rem;
-      font-weight: 400;
+      @include font-no-color(var(--fw-4), var(--fs-24), var(--fh-28));
    }
 }

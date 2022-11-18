@@ -1,7 +1,12 @@
 @import '../../scss/mixins';
 
 @mixin header {
-   @include font(700, 3rem, 3.5rem, var(--color-main-light));
+   @include font(
+      var(--fw-7),
+      var(--fs-30),
+      var(--fh-35),
+      var(--color-main-light)
+   );
 }
 
 .wrapper {
@@ -14,7 +19,12 @@
       border-bottom: 0.1rem solid var(--color-secondary-light);
 
       .main-header {
-         @include font(500, 3rem, 3.5rem, var(--color-secondary-light));
+         @include font(
+            var(--fw-5),
+            var(--fs-30),
+            var(--fh-35),
+            var(--color-secondary-light)
+         );
          text-transform: uppercase;
          text-align: center;
          padding-top: 1.5rem;
@@ -37,7 +47,12 @@
          text-transform: uppercase;
       }
       .sum {
-         @include font(700, 4.8rem, 5rem, var(--color-yellow-orange));
+         @include font(
+            var(--fw-7),
+            var(--fs-48),
+            var(--fh-50),
+            var(--color-yellow-orange)
+         );
          display: flex;
          .currency {
             margin-left: 1rem;
